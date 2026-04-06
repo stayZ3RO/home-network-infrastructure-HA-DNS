@@ -23,6 +23,18 @@ Each phase builds toward a more resilient, observable, and production-like infra
 
 Internet → ISP Gateway (Bridge Mode) → Deco Mesh Router → Pi-hole DNS → Clients
 
+---
+
+## 📡 Current State
+
+* ISP routing removed (bridge mode enabled)
+* Mesh system acting as primary router
+* Centralized DNS via Pi-hole
+* Network-wide ad blocking active
+* DNS query visibility enabled
+
+---
+
 ## 🧱 Current Progress
 
 * ✅ Phase 1 — Network Control
@@ -31,20 +43,12 @@ Internet → ISP Gateway (Bridge Mode) → Deco Mesh Router → Pi-hole DNS → 
 * ⬜ Phase 4 — Monitoring & Alerting
 * ⬜ Phase 5 — Remote Access
 
-## 📡 Current State
-
-- ISP routing removed (bridge mode enabled)
-- Mesh system acting as primary router
-- Centralized DNS via Pi-hole
-- Network-wide ad blocking active
-- DNS query visibility enabled
-
 ---
 
 ## 📚 Documentation
 
-* [Phase 1 – Network Control Overview](docs/phase-1-network-control/phase-1overview.md)
-* [Phase 1 – Step-by-Step Guide](docs/phase-1-netowrk-control/phase-1step-by-step.md)
+* [Phase 1 – Network Control Overview](docs/phase-1-network-control/phase-1-overview.md)
+* [Phase 1 – Step-by-Step Guide](docs/phase-1-network-control/phase-1-step-by-step.md)
 * [Phase 2 – DNS Control Overview](docs/phase-2-dns-control/phase-2-overview.md)
 * [Phase 2 – Step-by-Step Guide](docs/phase-2-dns-control/phase-2-step-by-step.md)
 
@@ -59,13 +63,15 @@ Internet → ISP Gateway (Bridge Mode) → Deco Mesh Router → Pi-hole DNS → 
 * Laptop (Test Node)
 * Raspberry Pi Nodes (Phase 2+)
 
+---
+
 ## 🧠 What This Project Demonstrates
 
-- Network architecture design
-- Infrastructure ownership
-- High availability concepts
-- Observability and monitoring
-- Secure remote access design
+* Network architecture design
+* Infrastructure ownership
+* High availability concepts
+* Observability and monitoring
+* Secure remote access design
 
 ---
 
@@ -118,4 +124,9 @@ To build a home lab that simulates **real-world infrastructure engineering**, co
 
 ## 🚀 Next Step
 
-Phase 2 will introduce Pi-hole for DNS control and network-wide filtering.
+Phase 3 will introduce **high availability DNS**, eliminating the single point of failure by:
+
+* Adding a secondary Pi-hole node
+* Synchronizing configurations between nodes
+* Implementing failover using a virtual IP
+* Ensuring continuous DNS availability even if one node fails
