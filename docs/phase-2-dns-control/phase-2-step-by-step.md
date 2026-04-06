@@ -31,7 +31,7 @@ ssh pi@192.168.1.10
 
 - SSH login successful
 
-![SSH Session](../../screenshots/phase-2/3-ssh-connected.png)
+![SSH Session](../../screenshots/phase-2/3-ssh-connect.png)
 
 ---
 
