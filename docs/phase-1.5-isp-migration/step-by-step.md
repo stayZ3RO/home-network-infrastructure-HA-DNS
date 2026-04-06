@@ -32,6 +32,8 @@ AT&T Gateway (LAN) → Deco Router (WAN)
    * Allocation Mode: Passthrough
    * Mode: DHCPS-fixed
    * Device: Deco router
+  
+![IP Passthrough](../../screenshots/phase-1.5/1-ip-passthrough.png)
 
 Save settings
 
@@ -48,6 +50,8 @@ Save settings
 
 * Turn off 2.4 GHz and 5 GHz radios
 
+![WiFi Disabled](../../screenshots/phase-1.5/4-att-wifi-disabled.png)
+
 ---
 
 ## Step 6 – Verify Public IP
@@ -55,12 +59,16 @@ Save settings
 * Check Deco WAN IP
 * Confirm it is NOT private
 
+![WiFi Disabled](../../screenshots/phase-1.5/2-deco-wan-ip.png)
+
 ---
 
 ## Step 7 – Verify Pi-hole
 
 * Open Pi-hole dashboard
 * Confirm queries are active
+
+![Public IP](../../screenshots/phase-1.5/3-pihole-dashboard.png)
 
 ---
 
