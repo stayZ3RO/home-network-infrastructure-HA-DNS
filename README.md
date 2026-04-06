@@ -15,24 +15,38 @@ Instead of relying on ISP-managed networking, the goal is to design a system tha
 * Observability and monitoring
 * Secure remote access
 
-Each phase builds toward a more resilient and production-like system.
+Each phase builds toward a more resilient, observable, and production-like infrastructure environment.
 
 ---
+
+## 🧭 Architecture Overview
+
+Internet → ISP Gateway (Bridge Mode) → Deco Mesh Router → Pi-hole DNS → Clients
 
 ## 🧱 Current Progress
 
 * ✅ Phase 1 — Network Control
-* ⬜ Phase 2 — DNS Control (Pi-hole)
+* ✅ Phase 2 — DNS Control (Pi-hole)
 * ⬜ Phase 3 — High Availability DNS
 * ⬜ Phase 4 — Monitoring & Alerting
 * ⬜ Phase 5 — Remote Access
+
+## 📡 Current State
+
+- ISP routing removed (bridge mode enabled)
+- Mesh system acting as primary router
+- Centralized DNS via Pi-hole
+- Network-wide ad blocking active
+- DNS query visibility enabled
 
 ---
 
 ## 📚 Documentation
 
-* [Phase 1 – Network Control Overview](docs/phase-1-network-control.md)
-* [Phase 1 – Step-by-Step Guide](docs/phase-1-step-by-step.md)
+* [Phase 1 – Network Control Overview](docs/phase-1-network-control/phase-1overview.md)
+* [Phase 1 – Step-by-Step Guide](docs/phase-1-netowrk-control/phase-1step-by-step.md)
+* [Phase 2 – DNS Control Overview](docs/phase-2-dns-control/phase-2-overview.md)
+* [Phase 2 – Step-by-Step Guide](docs/phase-2-dns-control/phase-2-step-by-step.md)
 
 ---
 
