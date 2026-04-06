@@ -126,11 +126,11 @@ This phase improved network security by:
 ## 📸 Screenshots
 
 ## Bridge Mode Enabled / ISP WiFi Disabled
-![Bridge Mode Enabled](../screenshots/phase-1/bridge-mode-enabled.png)
+![Bridge Mode Enabled](../../screenshots/phase-1/bridge-mode-enabled.png)
 
 ## Deco Mesh Network Active
-![Deco Network](../screenshots/phase-1/deco-network-connected.png)
-![Deco - Connected Devices](../screenshots/phase-1/deco-connected-devices.png)
+![Deco Network](../../screenshots/phase-1/deco-network-connected.png)
+![Deco - Connected Devices](../../screenshots/phase-1/deco-connected-devices.png)
 
 ---
 
