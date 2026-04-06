@@ -124,10 +124,10 @@ Reserve IP addresses for critical devices in the Deco app.
 
 Suggested reservations:
 
-- Pi-hole primary: `192.168.68.10`
-- Pi-hole secondary: `192.168.68.11`
-- Future HA VIP: `192.168.68.20`
-- Desktop: `192.168.68.50`
+- Pi-hole primary: `192.168.1.10`
+- Pi-hole secondary: `192.168.1.11`
+- Future HA VIP: `192.168.1.20`
+- Desktop: `192.168.1.50`
 
 ---
 
