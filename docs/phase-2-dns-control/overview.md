@@ -95,7 +95,7 @@ Internet → Deco Router → Pi-hole → Clients
 
 ### Live DNS Queries/ Ads Blocked
 
-![Queries](../../screenshots/phase-2/7-dns-queries-working.png)
+![Queries](../../screenshots/phase-2/9-dns-queries-working.png)
 
 
 ---
