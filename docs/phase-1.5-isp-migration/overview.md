@@ -30,6 +30,20 @@ Internet → Xfinity Gateway (Bridge Mode) → Deco → Pi-hole → Clients
 
 Internet → ONT → AT&T Gateway (IP Passthrough) → Deco → Pi-hole → Clients
 
+## Architecture Change
+
+### Before (Xfinity)
+
+...
+
+### After (AT&T Fiber)
+
+...
+
+### Network Diagram
+
+![Architecture](../../diagrams/network-architecture-phase-2.png)
+
 ---
 
 ## Key Changes
@@ -38,6 +52,10 @@ Internet → ONT → AT&T Gateway (IP Passthrough) → Deco → Pi-hole → Clie
 
 * Migrated from cable to fiber
 * Introduced ONT for fiber termination
+
+### IP Passthrough Configuration
+
+![IP Passthrough](../../screenshots/phase-1.5/1-ip-passthrough.png)
 
 ---
 
@@ -57,6 +75,16 @@ Internet → ONT → AT&T Gateway (IP Passthrough) → Deco → Pi-hole → Clie
 ---
 
 ## Validation
+
+### Public IP Confirmed on Deco
+
+![Deco WAN](../../screenshots/phase-1.5/2-deco-wan-ip.png)
+
+---
+
+### Pi-hole DNS Still Active
+
+![Pi-hole](../../screenshots/phase-1.5/3-pihole-dashboard.png)
 
 * Deco WAN IP confirmed as public
 * Pi-hole receiving queries
