@@ -79,7 +79,7 @@ Internet → Deco Router → Pi-hole → Clients
 
 ### SSH Connection to Pi
 
-![ssh](..screenshots/phase-2/3-ssh-connect.png)
+![ssh](..screenshots/phase-2/3-ssh-connected.png)
 
 ### Pi-Hole Install
 
