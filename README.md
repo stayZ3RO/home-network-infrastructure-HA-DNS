@@ -21,23 +21,25 @@ Each phase builds toward a more resilient, observable, and production-like infra
 
 ## 🧭 Architecture Overview
 
-Internet → ISP Gateway (Bridge Mode) → Deco Mesh Router → Pi-hole DNS → Clients
+Internet (AT&T Fiber) → ONT → AT&T Gateway (IP Passthrough) → Deco Mesh Router → Pi-hole DNS → Clients
 
 ---
 
 ## 📡 Current State
 
-* ISP routing removed (bridge mode enabled)
-* Mesh system acting as primary router
+* ISP routing removed (IP Passthrough enabled)
+* Deco mesh system acting as primary router
 * Centralized DNS via Pi-hole
 * Network-wide ad blocking active
 * DNS query visibility enabled
+* Fiber connection integrated via ONT
 
 ---
 
 ## 🧱 Current Progress
 
 * ✅ Phase 1 — Network Control
+* ✅ Phase 1.5 — ISP Migration (AT&T Fiber)
 * ✅ Phase 2 — DNS Control (Pi-hole)
 * ⬜ Phase 3 — High Availability DNS
 * ⬜ Phase 4 — Monitoring & Alerting
@@ -47,21 +49,36 @@ Internet → ISP Gateway (Bridge Mode) → Deco Mesh Router → Pi-hole DNS → 
 
 ## 📚 Documentation
 
-* [Phase 1 – Network Control Overview](docs/phase-1-network-control/phase-1-overview.md)
-* [Phase 1 – Step-by-Step Guide](docs/phase-1-network-control/phase-1-step-by-step.md)
-* [Phase 2 – DNS Control Overview](docs/phase-2-dns-control/phase-2-overview.md)
-* [Phase 2 – Step-by-Step Guide](docs/phase-2-dns-control/phase-2-step-by-step.md)
+* [Phase 1 – Network Control Overview](docs/phase-1-network-control/overview.md)
+
+* [Phase 1 – Step-by-Step Guide](docs/phase-1-network-control/step-by-step.md)
+
+* [Phase 1.5 – ISP Migration Overview](docs/phase-1.5-isp-migration/overview.md)
+
+* [Phase 1.5 – Step-by-Step Guide](docs/phase-1.5-isp-migration/step-by-step.md)
+
+* [Phase 2 – DNS Control Overview](docs/phase-2-dns-control/overview.md)
+
+* [Phase 2 – Step-by-Step Guide](docs/phase-2-dns-control/step-by-step.md)
+
+---
+
+## 🗺️ Network Diagram
+
+![Network Architecture](diagrams/network-architecture-phase-2.png)
 
 ---
 
 ## 🖥️ Hardware
 
-* TP-Link X25 Mesh System
-* Xfinity Gateway (Bridge Mode)
+* AT&T Fiber Connection
+* ONT (Optical Network Terminal)
+* AT&T Gateway (IP Passthrough)
+* TP-Link Deco X25 Mesh System
 * D-Link 16-Port Switch
 * Desktop (Control Node)
 * Laptop (Test Node)
-* Raspberry Pi Nodes (Phase 2+)
+* Raspberry Pi Nodes
 
 ---
 
@@ -71,48 +88,41 @@ Internet → ISP Gateway (Bridge Mode) → Deco Mesh Router → Pi-hole DNS → 
 * Infrastructure ownership
 * High availability concepts
 * Observability and monitoring
-* Secure remote access design
+* DNS and traffic control
+* Real-world troubleshooting
 
 ---
 
 ## 🧭 How to Navigate This Project
 
 * Start with the README for an overview
-* Review each phase overview to understand design decisions
-* Follow the step-by-step guide to replicate the setup
-* Use screenshots to validate your own configuration
+* Review each phase overview for design decisions
+* Follow step-by-step guides to replicate setup
+* Use screenshots for validation
 
 ---
 
 ## 📐 Documentation Structure
 
-Each phase in this project follows a consistent documentation pattern:
+Each phase includes:
 
-### 1. Overview Document
-
-Explains:
+### Overview
 
 * What changed
 * Why it matters
 * Lessons learned
 
-### 2. Step-by-Step Guide
+### Step-by-Step
 
-Explains:
-
-* Exact setup process
+* Exact setup
 * Order of operations
 * Validation checkpoints
 
-### 3. Screenshots
-
-Shows:
+### Screenshots
 
 * Proof of implementation
 * UI validation
-* Before and after states
-
-This structure reflects real-world engineering documentation practices.
+* Before/after states
 
 ---
 
@@ -127,6 +137,6 @@ To build a home lab that simulates **real-world infrastructure engineering**, co
 Phase 3 will introduce **high availability DNS**, eliminating the single point of failure by:
 
 * Adding a secondary Pi-hole node
-* Synchronizing configurations between nodes
-* Implementing failover using a virtual IP
-* Ensuring continuous DNS availability even if one node fails
+* Synchronizing configurations
+* Implementing failover with a virtual IP
+* Ensuring uninterrupted DNS availability
