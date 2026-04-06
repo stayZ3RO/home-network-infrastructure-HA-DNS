@@ -83,15 +83,25 @@ Before changing the gateway, verify:
 
 In some cases, Xfinity WiFi can continue broadcasting even after bridge mode is enabled.
 
+### ⚠️ Issue: WiFi Still Broadcasting
+
+![WiFi Still On](../screenshots/phase-1/ISP-wifi-active.png)
+
+
 If that happens:
 
 1. Go to the gateway WiFi settings
 2. Disable 2.4 GHz WiFi
 3. Disable 5 GHz WiFi
 
+### ✅ After Disabling WiFi
+
+![WiFi Disabled](../screenshots/phase-1/bridge-mode-enabled.png)
+
 ### Verify
-- The old Xfinity SSID is gone
-- Only the Deco WiFi remains visible
+
+- The old Xfinity SSID is gone  
+- Only the Deco WiFi remains visible  
 
 ---
 
