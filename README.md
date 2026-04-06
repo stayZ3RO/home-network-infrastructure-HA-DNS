@@ -1,3 +1,9 @@
+# Home Network Infrastructure Lab 🚀
+
+### Building a Production-Style Home Network with HA DNS, Monitoring, and Secure Access
+
+---
+
 ## 📖 About This Project
 
 This project documents the process of building a **self-managed home network infrastructure lab** from the ground up.
@@ -11,6 +17,43 @@ Instead of relying on ISP-managed networking, the goal is to design a system tha
 
 Each phase builds toward a more resilient and production-like system.
 
+---
+
+## 🧱 Current Progress
+
+* ✅ Phase 1 — Network Control
+* ⬜ Phase 2 — DNS Control (Pi-hole)
+* ⬜ Phase 3 — High Availability DNS
+* ⬜ Phase 4 — Monitoring & Alerting
+* ⬜ Phase 5 — Remote Access
+
+---
+
+## 📚 Documentation
+
+* [Phase 1 – Network Control Overview](docs/phase-1-network-control.md)
+* [Phase 1 – Step-by-Step Guide](docs/phase-1-step-by-step.md)
+
+---
+
+## 🖥️ Hardware
+
+* TP-Link X25 Mesh System
+* Xfinity Gateway (Bridge Mode)
+* D-Link 16-Port Switch
+* Desktop (Control Node)
+* Laptop (Test Node)
+* Raspberry Pi Nodes (Phase 2+)
+
+## 🧠 What This Project Demonstrates
+
+- Network architecture design
+- Infrastructure ownership
+- High availability concepts
+- Observability and monitoring
+- Secure remote access design
+
+---
 
 ## 🧭 How to Navigate This Project
 
@@ -18,6 +61,8 @@ Each phase builds toward a more resilient and production-like system.
 * Review each phase overview to understand design decisions
 * Follow the step-by-step guide to replicate the setup
 * Use screenshots to validate your own configuration
+
+---
 
 ## 📐 Documentation Structure
 
@@ -47,4 +92,16 @@ Shows:
 * UI validation
 * Before and after states
 
-This structure is designed to reflect real-world engineering documentation practices.
+This structure reflects real-world engineering documentation practices.
+
+---
+
+## 🎯 Goal
+
+To build a home lab that simulates **real-world infrastructure engineering**, covering networking, DNS, monitoring, and secure remote access.
+
+---
+
+## 🚀 Next Step
+
+Phase 2 will introduce Pi-hole for DNS control and network-wide filtering.
