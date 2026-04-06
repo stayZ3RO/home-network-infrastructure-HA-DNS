@@ -30,18 +30,6 @@ Internet → Xfinity Gateway (Bridge Mode) → Deco → Pi-hole → Clients
 
 Internet → ONT → AT&T Gateway (IP Passthrough) → Deco → Pi-hole → Clients
 
-## Architecture Change
-
-Before (Xfinity)
-
-Internet → Xfinity Gateway (Bridge Mode) → Deco → Pi-hole → Clients
-
-...
-
-After (AT&T Fiber)
-
-Internet → ONT → AT&T Gateway (IP Passthrough) → Deco → Pi-hole → Clients
-
 ...
 
 ### Network Diagram
