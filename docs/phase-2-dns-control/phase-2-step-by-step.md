@@ -6,237 +6,143 @@ Deploy Pi-hole as the primary DNS server so all devices on the network use centr
 
 ---
 
-## Hardware Used
+## Step 1 – Boot and Connect Pi
 
-- Raspberry Pi (primary DNS node)
-- MicroSD card
-- Ethernet connection
-- TP-Link Deco mesh system
-- Desktop or laptop for SSH
+1. Insert SD card into Raspberry Pi  
+2. Connect Ethernet to switch  
+3. Power on Pi  
+4. Wait 1–2 minutes  
 
----
+### Verify
 
-## Before You Start
+- Pi appears in network
 
-Make sure:
-
-- Phase 1 is complete
-- Deco is the primary router
-- Pi is connected via Ethernet
-- SSH is enabled
-- Pi is visible in the network (Deco app)
+![Pi Connected](../../screenshots/phase-2/1-pi-device-on-network.png)
 
 ---
 
-## Step 1 – Flash Raspberry Pi OS
+## Step 2 – SSH into Pi
 
-1. Open Raspberry Pi Imager
-2. Select Raspberry Pi OS Lite (64-bit)
-3. Select SD card
-4. Open advanced settings
-
-Set:
-
-- Hostname: pihole-1
-- Username: pi
-- Password: your choice
-- Enable SSH (password auth)
-- Skip WiFi
-
-5. Flash SD card
-6. Insert into Pi
-
-Verify:
-
-- Flash completes successfully
-
----
-
-## Step 2 – Boot and Connect Pi
-
-1. Insert SD card
-2. Connect Ethernet to switch
-3. Power on Pi
-4. Wait 1–2 minutes
-
-Verify:
-
-- Pi appears in Deco app
-- Pi receives IP address
-
----
-
-## Step 3 – Find Pi IP
-
-Use Deco app:
-
-- Look for device: pihole-1
-- Note IP (example: 192.168.1.10)
-
----
-
-## Step 4 – Reserve IP
-
-In Deco app:
-
-1. Go to More → Advanced → Address Reservation
-2. Select Pi
-3. Assign IP:
-
-192.168.1.10
-
-4. Save
-5. Reboot Pi
-
-Verify:
-
-- Pi now uses reserved IP
-
----
-
-## Step 5 – SSH into Pi
-
-From terminal:
+From your terminal:
 
 ssh pi@192.168.1.10
 
-Enter password
+### Verify
 
-Verify:
+- SSH login successful
 
-- SSH login works
-- You see pi@pihole-1 prompt
+![SSH Session](../../screenshots/phase-2/3-ssh-connected.png)
 
 ---
 
-## Step 6 – Update System
+## Step 3 – Update System
 
 Run:
 
 sudo apt update && sudo apt upgrade -y
 
-Verify:
+### Verify
 
-- Update completes successfully
+- System updates successfully
 
 ---
 
-## Step 7 – Install Pi-hole
+## Step 4 – Install Pi-hole
 
 Run:
 
 curl -sSL https://install.pi-hole.net | bash
 
-During setup choose:
+### During setup choose:
 
-- Interface: eth0
-- Static IP: confirm 192.168.1.10
-- Upstream DNS: Cloudflare (1.1.1.1)
-- Blocklists: default
-- Web UI: Yes
-- Logging: Yes
+- Interface: eth0  
+- Static IP: 192.168.1.10  
+- Upstream DNS: Cloudflare  
+- Web UI: Yes  
+- Logging: Yes  
 
-Verify:
+### Verify
 
-- Installation completes
-- Admin password shown
+- Installation completes successfully
+
+![Pi-hole Install](../../screenshots/phase-2/5-pihole-complete.png)
 
 ---
 
-## Step 8 – Access Dashboard
+## Step 5 – Access Dashboard
 
-Open browser:
+Open:
 
-http://192.168.68.10/admin
+http://192.168.1.10/admin
 
-Login using password
-
-Verify:
+### Verify
 
 - Dashboard loads
-- Login works
+
+![Pi-hole Dashboard](../../screenshots/phase-2/6-pihole-dashboard.png)
 
 ---
 
-## Step 9 – Set DNS in Router
+## Step 6 – Configure DNS in Router
 
 In Deco app:
 
-1. Go to More → Advanced → DHCP Server
-2. Set:
+- Advanced → DHCP Server  
+- Set Primary DNS to:
 
-Primary DNS: 192.168.68.60  
-Secondary DNS: leave blank
+[EX: 192.168.1.10] 
 
-Save
+### Verify
 
-Verify:
-
-- DNS saved successfully
+- DNS applied
 
 ---
 
-## Step 10 – Refresh Devices
+## Step 7 – Verify DNS Traffic
 
-On all devices:
+Refresh Pi-hole dashboard
 
-- Toggle WiFi off/on OR
-- Restart device
+### Verify
 
-Verify:
+- Queries increasing  
+- Devices listed  
 
-- Devices reconnect successfully
+![Live Queries](../../screenshots/phase-2/7-dns-queries-working.png)
 
 ---
 
-## Step 11 – Verify Pi-hole
+## Step 8 – Test Ad Blocking
 
-Test DNS traffic:
-
-- Open Pi-hole dashboard
-- Confirm queries increasing
-
-Test blocking:
+Open:
 
 http://doubleclick.net
 
-Verify:
+### Verify
 
-- Query appears in Pi-hole
-- Domain is blocked
+- Page blocked or fails to load
 
----
-
-## Step 12 – Screenshots to Capture
-
-- Pi visible in network
-- SSH session
-- Pi-hole install complete
-- Pi-hole dashboard
-- DNS settings in Deco
-- Live queries
-- Ad blocking proof
+![Ads Blocked](../../screenshots/phase-2/8-ads-blocked.png)
 
 ---
 
 ## Final Validation Checklist
 
-- Pi reachable at reserved IP
-- SSH works
-- Pi-hole dashboard accessible
-- DNS configured in router
-- Queries visible in dashboard
-- Devices browsing normally
-- Ads blocked
+- Pi reachable at reserved IP  
+- SSH works  
+- Pi-hole dashboard accessible  
+- DNS configured in router  
+- Queries visible in dashboard  
+- Devices browsing normally  
+- Ads blocked  
 
 ---
 
 ## Result
 
-- Pi-hole is now the network DNS server
-- DNS traffic is centralized
-- Ad/tracking domains are blocked
-- Network visibility is improved
+- Pi-hole is now the network DNS server  
+- DNS traffic is centralized  
+- Ad/tracking domains are blocked  
+- Network visibility is improved  
 
 ---
 
@@ -244,7 +150,7 @@ Verify:
 
 Proceed to Phase 3:
 
-- Add second Pi-hole node
-- Configure Gravity Sync
-- Implement Keepalived
-- Create virtual IP for failover
+- Add second Pi-hole node  
+- Configure Gravity Sync  
+- Implement Keepalived  
+- Create virtual IP for failover  
