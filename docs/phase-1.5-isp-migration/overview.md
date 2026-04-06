@@ -32,11 +32,15 @@ Internet → ONT → AT&T Gateway (IP Passthrough) → Deco → Pi-hole → Clie
 
 ## Architecture Change
 
-### Before (Xfinity)
+Before (Xfinity)
+
+Internet → Xfinity Gateway (Bridge Mode) → Deco → Pi-hole → Clients
 
 ...
 
-### After (AT&T Fiber)
+After (AT&T Fiber)
+
+Internet → ONT → AT&T Gateway (IP Passthrough) → Deco → Pi-hole → Clients
 
 ...
 
