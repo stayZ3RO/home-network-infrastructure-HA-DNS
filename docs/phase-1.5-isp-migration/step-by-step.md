@@ -1,87 +1,88 @@
-# Phase 1.5 — ISP Migration & Edge Control
+# Phase 1.5 – Step-by-Step Guide
 
-## Overview
+## Goal
 
-The network environment was migrated from Xfinity (cable) to AT&T Fiber to improve performance and reliability.
-
-This required reconfiguring the network edge while maintaining internal routing, DNS control, and existing infrastructure design.
+Migrate from Xfinity to AT&T Fiber while maintaining full network control and DNS functionality.
 
 ---
 
-## Objective
+## Step 1 – Connect ONT to Gateway
 
-* Replace ISP without disrupting internal network
-* Maintain Deco as the primary router
-* Preserve Pi-hole DNS functionality
-* Avoid double NAT
-* Integrate fiber via ONT
+* Fiber line terminates at ONT
+* Connect Ethernet:
 
----
-
-## Architecture Change
-
-### Before (Xfinity)
-
-Internet → Xfinity Gateway (Bridge Mode) → Deco → Pi-hole → Clients
+ONT → AT&T Gateway (WAN)
 
 ---
 
-### After (AT&T Fiber)
+## Step 2 – Connect Gateway to Deco
 
-Internet → ONT → AT&T Gateway (IP Passthrough) → Deco → Pi-hole → Clients
+* Use Ethernet:
 
----
-
-## Key Changes
-
-### ISP Replacement
-
-* Migrated from cable to fiber
-* Introduced ONT for fiber termination
+AT&T Gateway (LAN) → Deco Router (WAN)
 
 ---
 
-### Edge Reconfiguration
+## Step 3 – Enable IP Passthrough
 
-* Enabled IP Passthrough on AT&T gateway
-* Assigned public IP to Deco router
+1. Go to: http://192.168.1.254
+2. Navigate to Firewall → IP Passthrough
+3. Set:
 
----
+   * Allocation Mode: Passthrough
+   * Mode: DHCPS-fixed
+   * Device: Deco router
 
-### Internal Network Preservation
-
-* Maintained subnet: 192.168.68.x
-* Preserved DHCP reservations
-* Kept Pi-hole as DNS
-
----
-
-## Validation
-
-* Deco WAN IP confirmed as public
-* Pi-hole receiving queries
-* DNS resolution functioning correctly
-* No connectivity issues
+Save settings
 
 ---
 
-## Lessons Learned
+## Step 4 – Reboot Devices
 
-* AT&T does not support true bridge mode
-* IP Passthrough is required for router control
-* Fiber introduces ONT as an additional layer
-* Maintaining internal IP structure simplifies migration
+* Restart gateway
+* Restart Deco router
+
+---
+
+## Step 5 – Disable Gateway WiFi
+
+* Turn off 2.4 GHz and 5 GHz radios
+
+---
+
+## Step 6 – Verify Public IP
+
+* Check Deco WAN IP
+* Confirm it is NOT private
+
+---
+
+## Step 7 – Verify Pi-hole
+
+* Open Pi-hole dashboard
+* Confirm queries are active
+
+---
+
+## Step 8 – Test Connectivity
+
+* Browse internet
+* Run DNS test
+* Confirm stable network
+
+---
+
+## Validation Checklist
+
+* Deco receives public IP
+* No double NAT
+* Pi-hole receives queries
+* Devices connect normally
 
 ---
 
 ## Result
 
-* Successfully migrated ISP without breaking architecture
-* Improved performance and stability
-* Maintained full network control
-
----
-
-## Next Step
-
-Proceed to Phase 3 to implement high availability DNS.
+* ISP successfully migrated
+* Network control preserved
+* DNS functionality maintained
