@@ -79,15 +79,15 @@ Internet → Deco Router → Pi-hole → Clients
 
 ### SSH Connection to Pi
 
-![ssh](..screenshots/phase-2/3-ssh-connected.png)
+![ssh](../screenshots/phase-2/3-ssh-connected.png)
 
 ### Pi-Hole Install
 
-![piholeinstall](..screenshots/phase-2/4-pihole-install.png)
+![piholeinstall](../screenshots/phase-2/4-pihole-install.png)
 
 ### Pi-Hole Install (Complete)
 
-![piholedone](..screenshots/phase-2/5-pihole-complete.png)
+![piholedone](../screenshots/phase-2/5-pihole-complete.png)
 
 ### Pi-hole Dashboard
 
@@ -95,7 +95,7 @@ Internet → Deco Router → Pi-hole → Clients
 
 ### Live DNS Queries/ Ads Blocked
 
-![Queries](../screenshots/phase-2/7-dns-queries.png)
+![Queries](../screenshots/phase-2/7-dns-queries-working.png)
 
 
 ---
