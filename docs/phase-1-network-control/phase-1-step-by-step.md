@@ -85,7 +85,7 @@ In some cases, Xfinity WiFi can continue broadcasting even after bridge mode is 
 
 ### ⚠️ Issue: WiFi Still Broadcasting
 
-![WiFi Still On](../screenshots/phase-1/ISP-wifi-active.png)
+![WiFi Still On](../../screenshots/phase-1/ISP-wifi-active.png)
 
 
 If that happens:
@@ -96,7 +96,7 @@ If that happens:
 
 ### ✅ After Disabling WiFi
 
-![WiFi Disabled](../screenshots/phase-1/bridge-mode-enabled.png)
+![WiFi Disabled](../../screenshots/phase-1/bridge-mode-enabled.png)
 
 ### Verify
 
