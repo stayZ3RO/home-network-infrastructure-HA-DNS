@@ -71,31 +71,31 @@ Internet → Deco Router → Pi-hole → Clients
 
 ### Pi's on Deco Network
 
-![pis](../screenshots/phase-2/1-pi-device-on-network.png)
+![pis](../../screenshots/phase-2/1-pi-device-on-network.png)
 
 ### Pi Update and Upgrade
 
-![piupdate](../screenshots/phase-2/2-pi-update-upgrade.png)
+![piupdate](../../screenshots/phase-2/2-pi-update-upgrade.png)
 
 ### SSH Connection to Pi
 
-![ssh](../screenshots/phase-2/3-ssh-connected.png)
+![ssh](../../screenshots/phase-2/3-ssh-connected.png)
 
 ### Pi-Hole Install
 
-![piholeinstall](../screenshots/phase-2/4-pihole-install.png)
+![piholeinstall](../../screenshots/phase-2/4-pihole-install.png)
 
 ### Pi-Hole Install (Complete)
 
-![piholedone](../screenshots/phase-2/5-pihole-complete.png)
+![piholedone](../../screenshots/phase-2/5-pihole-complete.png)
 
 ### Pi-hole Dashboard
 
-![Dashboard](../screenshots/phase-2/6-pihole-dashboard.png)
+![Dashboard](../../screenshots/phase-2/6-pihole-dashboard.png)
 
 ### Live DNS Queries/ Ads Blocked
 
-![Queries](../screenshots/phase-2/7-dns-queries-working.png)
+![Queries](../../screenshots/phase-2/7-dns-queries-working.png)
 
 
 ---
