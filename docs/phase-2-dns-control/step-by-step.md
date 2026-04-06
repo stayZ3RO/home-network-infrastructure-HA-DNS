@@ -107,7 +107,7 @@ Refresh Pi-hole dashboard
 - Queries increasing  
 - Devices listed  
 
-![Live Queries](../../screenshots/phase-2/7-dns-queries-working.png)
+![Live Queries](../../screenshots/phase-2/9-dns-queries-working.png)
 
 ---
 
