@@ -49,6 +49,34 @@ Main Computer → ashpi-1 → ashpi-2
 
 ---
 
+## Before Phase 3
+
+- Single Pi-hole
+- DNS outage risk
+
+## After Phase 3
+
+- Dual Pi-hole nodes
+- Automatic failover
+- Zero DNS downtime
+
+## 🔁 Failover Concept
+
+Clients send DNS queries to a Virtual IP (VIP).  
+The VIP always points to the active Pi-hole node.
+
+---
+
+## 📸 Primary Active
+
+![Primary](../../screenshots/phase-3/step-12-vip-assigned-primary.png)
+
+---
+
+## 📸 After Failover
+
+![Secondary](../../screenshots/phase-3/step-16-after-failover-secondary.png)
+
 ## Benefits
 
 - Redundancy
