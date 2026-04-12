@@ -21,7 +21,7 @@ Each phase builds toward a more resilient, observable, and production-like infra
 
 ## 🧭 Architecture Overview
 
-Internet (AT&T Fiber) → ONT → AT&T Gateway (IP Passthrough) → Deco Mesh Router → Pi-hole DNS → Clients
+Internet (AT&T Fiber) → ONT → AT&T Gateway (IP Passthrough) → Deco Mesh Router → HA Pi-hole VIP → Active Pi-hole Node → Local Unbound Resolver → Clients
 
 ---
 
@@ -33,6 +33,11 @@ Internet (AT&T Fiber) → ONT → AT&T Gateway (IP Passthrough) → Deco Mesh Ro
 * Network-wide ad blocking active
 * DNS query visibility enabled
 * Fiber connection integrated via ONT
+* Secondary Pi-hole node added for redundancy
+* Gravity Sync configured for Pi-hole replication
+* keepalived configured for VIP-based DNS failover
+* Unbound configured on both Pi-hole nodes
+* DNS failover and recursive resolution successfully tested
 
 ---
 
@@ -41,7 +46,7 @@ Internet (AT&T Fiber) → ONT → AT&T Gateway (IP Passthrough) → Deco Mesh Ro
 * ✅ Phase 1 — Network Control
 * ✅ Phase 1.5 — ISP Migration (AT&T Fiber)
 * ✅ Phase 2 — DNS Control (Pi-hole)
-* ⬜ Phase 3 — High Availability DNS
+* ✅ Phase 3 — High Availability DNS
 * ⬜ Phase 4 — Monitoring & Alerting
 * ⬜ Phase 5 — Remote Access
 
@@ -50,22 +55,24 @@ Internet (AT&T Fiber) → ONT → AT&T Gateway (IP Passthrough) → Deco Mesh Ro
 ## 📚 Documentation
 
 * [Phase 1 – Network Control Overview](docs/phase-1-network-control/overview.md)
-
 * [Phase 1 – Step-by-Step Guide](docs/phase-1-network-control/step-by-step.md)
 
 * [Phase 1.5 – ISP Migration Overview](docs/phase-1.5-isp-migration/overview.md)
-
 * [Phase 1.5 – Step-by-Step Guide](docs/phase-1.5-isp-migration/step-by-step.md)
 
 * [Phase 2 – DNS Control Overview](docs/phase-2-dns-control/overview.md)
-
 * [Phase 2 – Step-by-Step Guide](docs/phase-2-dns-control/step-by-step.md)
+
+* [Phase 3 – HA DNS Overview](docs/phase-3-ha-dns/overview.md)
+* [Phase 3 – Step-by-Step Guide](docs/phase-3-ha-dns/step-by-step.md)
+* [Phase 3 – Validation and Failover Tests](docs/phase-3-ha-dns/validation-and-failover-tests.md)
+* [Phase 3 – Diagrams](docs/phase-3-ha-dns/diagrams.md)
 
 ---
 
 ## 🗺️ Network Diagram
 
-![Network Architecture](diagrams/network-architecture-phase-2.png)
+![Network Architecture](diagrams/network-architecture-phase-3.png)
 
 ---
 
@@ -78,7 +85,8 @@ Internet (AT&T Fiber) → ONT → AT&T Gateway (IP Passthrough) → Deco Mesh Ro
 * D-Link 16-Port Switch
 * Desktop (Control Node)
 * Laptop (Test Node)
-* Raspberry Pi Nodes
+* Raspberry Pi 1 (Primary DNS Node)
+* Raspberry Pi 2 (Secondary DNS Node)
 
 ---
 
@@ -87,8 +95,9 @@ Internet (AT&T Fiber) → ONT → AT&T Gateway (IP Passthrough) → Deco Mesh Ro
 * Network architecture design
 * Infrastructure ownership
 * High availability concepts
-* Observability and monitoring
-* DNS and traffic control
+* DNS redundancy and failover
+* Recursive DNS with Unbound
+* Observability and monitoring preparation
 * Real-world troubleshooting
 
 ---
@@ -123,6 +132,7 @@ Each phase includes:
 * Proof of implementation
 * UI validation
 * Before/after states
+* Failover evidence
 
 ---
 
@@ -134,9 +144,22 @@ To build a home lab that simulates **real-world infrastructure engineering**, co
 
 ## 🚀 Next Step
 
-Phase 3 will introduce **high availability DNS**, eliminating the single point of failure by:
+Phase 4 will introduce **monitoring and alerting**, including:
 
-* Adding a secondary Pi-hole node
-* Synchronizing configurations
-* Implementing failover with a virtual IP
-* Ensuring uninterrupted DNS availability
+* Node and service health visibility
+* DNS service monitoring
+* Resource usage tracking
+* Alerting and validation logic
+* Better operational visibility before VLANs and segmentation
+
+---
+
+## 🛣️ Long-Term Roadmap
+
+After monitoring and remote access are complete, the next major network evolution will include:
+
+* Managed switching
+* VLANs and segmentation
+* Guest / trusted / admin separation
+* Inter-network policy control
+* A more production-style security model
