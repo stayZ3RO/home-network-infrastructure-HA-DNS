@@ -1,50 +1,33 @@
-# Phase 3: High Availability DNS (HA-DNS)
+# Phase 3 — High Availability DNS
 
-## Overview
+## 📖 Summary
 
-In this phase, I expanded my homelab from a single-node DNS setup to a **highly available DNS infrastructure** using:
+This phase introduces redundancy and failover to the DNS layer using:
 
-- `Pi-hole` (Primary + Secondary)
-- `keepalived` (failover with Virtual IP)
-- `gravity-sync` (synchronization)
-- SSH **jump box** model for secure access
-
----
-
-## Goals
-
-- Eliminate single point of failure
-- Ensure DNS remains available during outages
-- Synchronize configurations across nodes
-- Improve administrative access and security
+- Dual Pi-hole nodes
+- Gravity Sync (config replication)
+- Keepalived (Virtual IP failover)
 
 ---
 
-## Components
+## 🧱 Architecture
 
-| Component       | Purpose                          |
-|----------------|----------------------------------|
-| Pi-hole        | DNS filtering / ad blocking      |
-| keepalived     | High availability (VIP failover) |
-| gravity-sync   | Sync Pi-hole configs             |
-| SSH Jump Box   | Secure centralized access        |
+- ashpi-1 → 192.168.68.60 (Primary)
+- ashpi-2 → 192.168.68.61 (Secondary)
+- VIP → 192.168.68.20
 
 ---
 
-## Documentation
+## 📸 Key Result
 
-- [Phase 3 Overview](./overview.md)
-- [Step-by-Step Guide](./step-by-step.md)
-- [Jump Box Access](./jump-box-access.md)
-- [Validation & Failover Testing](./validation-and-failover-tests.md)
+![Failover](../../screenshots/phase-3/step-16-after-failover-secondary.png)
+
+---
+
+## 📚 Documentation
+
+- [Overview](./phase-3-overview.md)
+- [Step-by-Step](./phase-3-step-by-step.md)
+- [Jumpbox Access](./jump-box-access.md)
+- [Validation](./validation-and-failover-tests.md)
 - [Diagrams](./diagrams.md)
-
----
-
-## Outcome
-
-This phase transforms the lab into a **production-style HA DNS system** with:
-
-- Automatic failover
-- Data consistency between nodes
-- Secure and structured access
