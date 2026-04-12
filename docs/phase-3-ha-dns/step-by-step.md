@@ -1,313 +1,297 @@
-# Phase 3 — Step-by-Step Guide
+# Phase 3 — Step-by-Step Guide 🛠️
 
-## Goal
+## 📖 Purpose
 
-Upgrade DNS from a single Pi-hole node to a highly available DNS setup using:
+This guide documents the implementation of the **high-availability DNS layer** for the home network lab.
 
-* a second Pi-hole node
-* Gravity Sync
-* Keepalived
-* a Virtual IP (VIP)
+Phase 3 builds on the single-node Pi-hole deployment from Phase 2 and adds:
 
----
-
-## Node Details
-
-* `ashpi-1` → `192.168.68.60`
-* `ashpi-2` → `192.168.68.61`
-* VIP → `192.168.68.20`
+- a secondary Pi-hole node
+- Gravity Sync replication
+- keepalived failover with a VIP
+- Unbound recursive DNS on both nodes
 
 ---
 
-## Step 1 — Prepare the Secondary Node
+## ✅ Prerequisites
 
-Flash and boot the second Raspberry Pi, then confirm it is reachable on the network.
+Before starting Phase 3, the following were already complete:
 
-### Validate
-
-* `ashpi-2` is online
-* static IP is set to `192.168.68.61`
-* SSH works
-
-### Screenshot
-
-![Pi 2 Prep](../../screenshots/phase-3/step-01-pi2-prep.png)
+- AT&T Fiber migration with IP Passthrough
+- Deco mesh router acting as the primary router
+- a working primary Pi-hole node
+- DHCP configured to hand out Pi-hole as DNS
+- SSH access to the Raspberry Pi nodes
 
 ---
 
-## Step 2 — Install Pi-hole on ashpi-2
+## 1. Add the Secondary Raspberry Pi 🖥️
 
-Install Pi-hole on the second node and confirm the dashboard loads.
+The first step was adding a second Raspberry Pi to the network so DNS would no longer depend on a single node.
 
-### Validate
+### Tasks completed
 
-* Pi-hole admin page opens on `http://192.168.68.61/admin`
-* dashboard loads without errors
+1. connected the second Raspberry Pi to power and Ethernet
+2. confirmed it appeared on the network
+3. assigned or reserved a static IP
+4. verified SSH access
 
-### Screenshots
+### Validation
 
-![Pi-hole Node 2 Dashboard](../../screenshots/phase-3/step-02-pi2-dashboard.png)
+- secondary Pi was visible on the network
+- SSH access worked correctly
 
-![Pi-hole Node 2 Queries](../../screenshots/phase-3/step-03-pi2-dashboard-queries.png)
+![Secondary Pi added](../../screenshots/phase-3/secondary-pi-added.png)
 
 ---
 
-## Step 3 — Generate SSH Key on ashpi-1
+## 2. Install Pi-hole on the Secondary Node 🕳️
 
-On `ashpi-1`, generate an SSH key for passwordless access to `ashpi-2`.
+Pi-hole was installed on the second Raspberry Pi so both nodes could serve DNS.
 
-```bash
-ssh-keygen -t ed25519
+### Tasks completed
+
+1. updated the system
+2. installed Pi-hole
+3. confirmed the admin web UI loaded
+4. confirmed local DNS queries succeeded
+
+### Validation
+
+- Pi-hole installed successfully on ashpi-2
+- Pi-hole dashboard was reachable
+- local queries resolved successfully
+
+---
+
+## 3. Configure Gravity Sync 🔄
+
+Gravity Sync was added so both Pi-hole nodes would stay aligned.
+
+### Tasks completed
+
+1. installed Gravity Sync
+2. configured trust between both nodes
+3. defined the primary and secondary roles
+4. performed the initial sync
+5. validated that replication completed successfully
+
+### Validation
+
+- sync completed successfully
+- both Pi-hole nodes showed matching configuration
+
+![Gravity Sync installed](../../screenshots/phase-3/gravity-sync-installed.png)
+![Gravity Sync verified](../../screenshots/phase-3/gravity-sync-verified.png)
+
+---
+
+## 4. Configure keepalived and the VIP ⚖️
+
+keepalived was used to provide a floating virtual IP (VIP) for client DNS.
+
+### Tasks completed
+
+1. installed keepalived on both nodes
+2. configured node priority and failover behavior
+3. defined the shared VIP
+4. started and enabled the service
+5. confirmed the VIP was owned by the primary node
+
+### Validation
+
+- VIP appeared on the primary node
+- keepalived service was active
+
+![VIP on primary](../../screenshots/phase-3/vip-on-primary.png)
+
+---
+
+## 5. Validate VIP Failover 🔁
+
+Failover was tested to confirm that the secondary node could take over DNS service.
+
+### Tasks completed
+
+1. stopped keepalived on the active node
+2. confirmed the VIP moved to the standby node
+3. restored keepalived on the original node
+4. confirmed normal service returned
+
+### Validation
+
+- VIP transferred successfully to ashpi-2
+- failover occurred as expected
+
+![VIP failover to secondary](../../screenshots/phase-3/vip-failover-to-secondary.png)
+
+---
+
+## 6. Install Unbound on ashpi-1 🌐
+
+Unbound was installed on the primary Pi-hole node to provide local recursive DNS resolution.
+
+### Tasks completed
+
+1. installed `unbound`
+2. created the Pi-hole Unbound configuration
+3. downloaded `root.hints`
+4. validated the configuration with `unbound-checkconf`
+5. started and enabled the service
+6. tested direct recursion with `dig @127.0.0.1 -p 5335`
+
+### Validation
+
+- Unbound service was running
+- direct recursive DNS queries succeeded
+
+![Unbound ashpi-1 status](../../screenshots/phase-3/unbound-status-ashpi1.png)
+![Unbound ashpi-1 dig test](../../screenshots/phase-3/unbound-dig-ashpi1.png)
+
+---
+
+## 7. Point ashpi-1 Pi-hole to Local Unbound 🔗
+
+Pi-hole on ashpi-1 was updated to use the local Unbound resolver.
+
+### Upstream DNS configured
+
+```text
+127.0.0.1#5335
 ```
 
-### Screenshot
+### Tasks completed
 
-![SSH Key Generation](../../screenshots/phase-3/step-04-keygen.png)
+1. opened the Pi-hole admin interface on ashpi-1
+2. navigated to **Settings → DNS**
+3. disabled public upstream resolvers as needed
+4. added `127.0.0.1#5335` as the custom upstream resolver
+5. restarted Pi-hole DNS
+6. tested both normal and blocked DNS queries
 
----
+### Validation
 
-## Step 4 — Copy SSH Key to ashpi-2
+- normal domains resolved correctly
+- blocked domains remained filtered
+- ashpi-1 successfully used local Unbound
 
-From `ashpi-1`, copy the key to `ashpi-2`.
-
-```bash
-ssh-copy-id pi@192.168.68.61
-```
-
-### Screenshot
-
-![Copy SSH Key](../../screenshots/phase-3/step-05-copy-key.png)
-
----
-
-## Step 5 — Validate Passwordless SSH
-
-Confirm `ashpi-1` can SSH into `ashpi-2` without a password prompt.
-
-```bash
-ssh pi@192.168.68.61
-```
-
-### Screenshot
-
-![Passwordless SSH](../../screenshots/phase-3/step-06-passwordless-ssh.png)
+![Pi-hole upstream ashpi-1](../../screenshots/phase-3/pihole-upstream-unbound-ashpi1.png)
 
 ---
 
-## Step 6 — Install Gravity Sync
+## 8. Install Unbound on ashpi-2 🌐
 
-Install Gravity Sync on both nodes.
+The same Unbound configuration process was repeated on the secondary node.
 
-```bash
-curl -sSL https://raw.githubusercontent.com/vmstan/gs-install/main/gs-install.sh | bash
-```
+### Tasks completed
 
----
+1. installed `unbound`
+2. created the same Unbound configuration
+3. downloaded `root.hints`
+4. validated the config
+5. started and enabled Unbound
+6. tested direct recursion locally
 
-## Step 7 — Configure Gravity Sync on ashpi-1
+### Validation
 
-Configure `ashpi-1` as the source node and point it to `ashpi-2`.
+- Unbound service was running on ashpi-2
+- direct recursive DNS queries succeeded
 
-```bash
-gravity-sync config
-```
-
-Use:
-
-* Remote host: `192.168.68.61`
-* Remote user: `pi`
-
-### Screenshot
-
-![Gravity Sync Config](../../screenshots/phase-3/step-07-gravity-sync-config.png)
+![Unbound ashpi-2 status](../../screenshots/phase-3/unbound-status-ashpi2.png)
+![Unbound ashpi-2 dig test](../../screenshots/phase-3/unbound-dig-ashpi2.png)
 
 ---
 
-## Step 8 — Push Configuration to ashpi-2
+## 9. Point ashpi-2 Pi-hole to Local Unbound 🔗
 
-Run the initial sync from `ashpi-1`.
+Pi-hole on ashpi-2 was then updated to use its own local Unbound resolver.
 
-```bash
-gravity-sync push
+### Upstream DNS configured
+
+```text
+127.0.0.1#5335
 ```
 
-### Screenshot
+### Tasks completed
 
-![Gravity Sync Push](../../screenshots/phase-3/step-08-gravity-sync-push.png)
+1. opened the Pi-hole admin interface on ashpi-2
+2. navigated to **Settings → DNS**
+3. configured `127.0.0.1#5335` as the custom upstream resolver
+4. restarted Pi-hole DNS
+5. tested normal and blocked domains locally
+
+### Validation
+
+- ashpi-2 successfully used local Unbound
+- Pi-hole filtering remained functional
+
+![Pi-hole upstream ashpi-2](../../screenshots/phase-3/pihole-upstream-unbound-ashpi2.png)
 
 ---
 
-## Step 9 — Compare Both Nodes
+## 10. Validate DNS Through the VIP 📡
 
-Confirm that the nodes are in sync.
+The next step was validating the end-to-end DNS path through the shared VIP.
 
-```bash
-gravity-sync compare
-```
+### Tasks completed
 
-A successful result may show that no replication is required.
+1. queried a normal domain against the VIP
+2. queried a blocked domain against the VIP
+3. confirmed that responses were correct through the HA DNS path
 
-### Screenshot
+### Validation
 
-![Gravity Sync Compare](../../screenshots/phase-3/step-09-gravity-sync-compare.png)
+- normal DNS resolution worked through the VIP
+- blocked domains remained filtered through the VIP
 
----
-
-## Step 10 — Install Keepalived
-
-Install Keepalived on both nodes.
-
-```bash
-sudo apt install keepalived -y
-```
+![VIP DNS test success](../../screenshots/phase-3/vip-dns-test-success.png)
 
 ---
 
-## Step 11 — Configure Keepalived on ashpi-1
+## 11. Validate Failover with Recursive DNS 🧪
 
-Edit the Keepalived configuration on `ashpi-1`.
+After Unbound was configured on both nodes, failover testing was repeated.
 
-```bash
-sudo nano /etc/keepalived/keepalived.conf
-```
+### Tasks completed
 
-Use:
+1. forced failover again
+2. confirmed the VIP moved to ashpi-2
+3. queried DNS through the VIP
+4. confirmed recursive DNS still succeeded
+5. restored the original state if needed
 
-```conf
-vrrp_instance VI_1 {
-    state MASTER
-    interface eth0
-    virtual_router_id 51
-    priority 100
-    advert_int 1
+### Validation
 
-    authentication {
-        auth_type PASS
-        auth_pass dnsfailover
-    }
+- DNS remained available after failover
+- recursion still worked through the standby node
+- no new internal single point of failure was introduced
 
-    virtual_ipaddress {
-        192.168.68.20
-    }
-}
-```
-
-### Screenshot
-
-![Keepalived Primary Config](../../screenshots/phase-3/step-10-keepalived-primary-config.png)
+![Failover recursion success](../../screenshots/phase-3/failover-dns-recursion-success.png)
 
 ---
 
-## Step 12 — Configure Keepalived on ashpi-2
+## ✅ Final Validation Checklist
 
-Edit the Keepalived configuration on `ashpi-2`.
-
-```bash
-sudo nano /etc/keepalived/keepalived.conf
-```
-
-Use:
-
-```conf
-vrrp_instance VI_1 {
-    state BACKUP
-    interface eth0
-    virtual_router_id 51
-    priority 90
-    advert_int 1
-
-    authentication {
-        auth_type PASS
-        auth_pass dnsfailover
-    }
-
-    virtual_ipaddress {
-        192.168.68.20
-    }
-}
-```
-
-### Screenshot
-
-![Keepalived Secondary Config](../../screenshots/phase-3/step-11-keepalived-secondary-config.png)
+- [x] secondary Pi added to the network
+- [x] Pi-hole installed on both nodes
+- [x] Gravity Sync functioning
+- [x] keepalived configured
+- [x] VIP failover validated
+- [x] Unbound installed on ashpi-1
+- [x] Unbound installed on ashpi-2
+- [x] Pi-hole on both nodes using local Unbound
+- [x] DNS resolution works locally on both nodes
+- [x] DNS resolution works through the VIP
+- [x] recursive DNS survives failover
 
 ---
 
-## Step 13 — Start Keepalived
+## 🏁 Result
 
-Enable and start Keepalived on both nodes.
+Phase 3 completed the HA DNS layer by adding:
 
-```bash
-sudo systemctl enable keepalived
-sudo systemctl start keepalived
-```
-
----
-
-## Step 14 — Confirm VIP on ashpi-1
-
-Check that the VIP is assigned to the primary node.
-
-```bash
-ip a
-sudo systemctl status keepalived
-```
-
-Look for:
-
-* `192.168.68.20/32`
-* service status `active (running)`
-
-### Screenshots
-
-![VIP Assigned to Primary](../../screenshots/phase-3/step-12-vip-assigned-primary.png)
-
-![VIP Active on Primary](../../screenshots/phase-3/step-13-vip-active-primary-status.png)
-
----
-
-## Step 15 — Perform Failover Test
-
-On `ashpi-1`, simulate failure by stopping Keepalived.
-
-```bash
-sudo systemctl stop keepalived
-```
-
-Then on `ashpi-2`, run:
-
-```bash
-ip a
-sudo systemctl status keepalived
-```
-
-Confirm the VIP moved to `ashpi-2`.
-
-### Screenshots
-
-![Before Failover](../../screenshots/phase-3/step-14-before-failover.png)
-
-![Failover Triggered](../../screenshots/phase-3/step-15-trigger-failover.png)
-
-![After Failover on Secondary](../../screenshots/phase-3/step-16-after-failover-secondary.png)
-
----
-
-## Step 16 — Update Router DNS
-
-After validating failover, update Deco DNS to use the VIP instead of a single Pi-hole node.
-
-Use:
-
-* DNS → `192.168.68.20`
-
----
-
-## Result
-
-At the end of this phase:
-
-* both Pi-hole nodes are deployed
-* config replication is working
-* VIP failover is working
-* DNS is highly available
+- dual Pi-hole nodes
+- synchronized configuration
+- VIP-based failover
+- local recursive DNS on both nodes
+- validated DNS continuity during failover
