@@ -26,8 +26,8 @@ This phase introduces redundancy and failover to the DNS layer using:
 
 ## 📚 Documentation
 
-- [Overview](./phase-3-overview.md)
-- [Step-by-Step](./phase-3-step-by-step.md)
+- [Overview](./overview.md)
+- [Step-by-Step](./step-by-step.md)
 - [Jumpbox Access](./jump-box-access.md)
 - [Validation](./validation-and-failover-tests.md)
 - [Diagrams](./diagrams.md)
