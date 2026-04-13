@@ -1,4 +1,4 @@
-# Roadmap
+# Roadmap 🛣️
 
 This roadmap outlines the planned evolution of the home network infrastructure lab.
 
@@ -16,9 +16,9 @@ This roadmap outlines the planned evolution of the home network infrastructure l
 ## Phase 1.5 — ISP Migration (AT&T Fiber) ✅
 
 * Migrated from Xfinity to AT&T Fiber
-* Integrated ONT into network
+* Integrated ONT into the network
 * Configured IP Passthrough
-* Preserved internal network structure
+* Preserved the internal network structure
 * Maintained Pi-hole DNS functionality
 
 ---
@@ -29,40 +29,47 @@ This roadmap outlines the planned evolution of the home network infrastructure l
 * Configured DHCP DNS routing
 * Enabled network-wide ad blocking
 * Gained DNS query visibility
-* Resolved gravity database issue
+* Resolved the gravity database issue
 
 ---
 
-## Phase 3 — High Availability DNS (In Progress)
+## Phase 3 — High Availability DNS ✅
 
-* Deploy second Pi-hole node
-* Configure Gravity Sync
-* Implement Keepalived
-* Create virtual IP (VIP)
-* Test DNS failover
-
----
-
-## Phase 4 — Monitoring & Observability
-
-* Deploy Prometheus
-* Configure Grafana dashboards
-* Monitor DNS and system metrics
-* Implement alerting
+* Deployed a second Pi-hole node
+* Configured Gravity Sync
+* Implemented keepalived
+* Created a virtual IP (VIP)
+* Added Unbound on both nodes
+* Validated DNS failover and recursive DNS continuity
 
 ---
 
-## Phase 5 — Secure Remote Access
+## Phase 4 — Monitoring & Alerting ✅
 
-* Deploy Tailscale or similar VPN
-* Enable secure remote access to services
-* Implement access control
+* Deployed Prometheus
+* Configured Grafana dashboards
+* Added Blackbox Exporter for DNS probing
+* Added Alertmanager for alert handling
+* Installed Node Exporter on both Pi nodes
+* Monitored node health and DNS service availability
+* Validated alert lifecycle and failover visibility
 
 ---
 
-## Long-Term Goals
+## Phase 5 — Secure Remote Access 🔐
+
+* Refine the jump-box workflow
+* Introduce hardened remote administrative access
+* Restrict exposure of internal services
+* Implement a cleaner long-term management path
+
+---
+
+## Long-Term Goals 🌐
 
 * Introduce VLAN segmentation
-* Add containerization (Docker)
-* Explore Proxmox or virtualization
-* Simulate production-style infrastructure
+* Add a managed switch
+* Separate admin / trusted / guest / IoT networks
+* Move monitoring to a dedicated always-on management host
+* Expand containerization and virtualization
+* Explore Proxmox and more production-style infrastructure patterns
