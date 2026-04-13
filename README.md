@@ -33,11 +33,13 @@ Internet (AT&T Fiber) → ONT → AT&T Gateway (IP Passthrough) → Deco Mesh Ro
 * Network-wide ad blocking active
 * DNS query visibility enabled
 * Fiber connection integrated via ONT
-* Secondary Pi-hole node added for redundancy
+* High availability DNS implemented with dual Pi-hole nodes
 * Gravity Sync configured for Pi-hole replication
-* keepalived configured for VIP-based DNS failover
+* keepalived configured for VIP-based failover
 * Unbound configured on both Pi-hole nodes
-* DNS failover and recursive resolution successfully tested
+* Prometheus, Grafana, Alertmanager, and Blackbox Exporter deployed for observability
+* Node Exporter configured on both Raspberry Pi nodes
+* DNS failover and monitoring validations completed successfully
 
 ---
 
@@ -47,7 +49,7 @@ Internet (AT&T Fiber) → ONT → AT&T Gateway (IP Passthrough) → Deco Mesh Ro
 * ✅ Phase 1.5 — ISP Migration (AT&T Fiber)
 * ✅ Phase 2 — DNS Control (Pi-hole)
 * ✅ Phase 3 — High Availability DNS
-* ⬜ Phase 4 — Monitoring & Alerting
+* ✅ Phase 4 — Monitoring & Alerting
 * ⬜ Phase 5 — Remote Access
 
 ---
@@ -65,8 +67,14 @@ Internet (AT&T Fiber) → ONT → AT&T Gateway (IP Passthrough) → Deco Mesh Ro
 
 * [Phase 3 – HA DNS Overview](docs/phase-3-ha-dns/overview.md)
 * [Phase 3 – Step-by-Step Guide](docs/phase-3-ha-dns/step-by-step.md)
-* [Phase 3 – Validation and Failover Tests](docs/phase-3-ha-dns/validation-and-failover-tests.md)
-* [Phase 3 – Diagrams](docs/phase-3-ha-dns/diagrams.md)
+* [Phase 3 – Jump Box Access](docs/phase-3-ha-dns/jump-box-access.md)
+* [Phase 3 – DNS Recursion with Unbound](docs/phase-3-ha-dns/DNS-recursion-unbound.md)
+
+* [Phase 4 – Monitoring & Alerting Overview](docs/phase-4-monitoring-alerting/overview.md)
+* [Phase 4 – Step-by-Step Guide](docs/phase-4-monitoring-alerting/step-by-step.md)
+* [Phase 4 – Dashboards](docs/phase-4-monitoring-alerting/dashboards.md)
+* [Phase 4 – Alerting](docs/phase-4-monitoring-alerting/alerting.md)
+* [Phase 4 – Validation](docs/phase-4-monitoring-alerting/validation.md)
 
 ---
 
@@ -83,10 +91,10 @@ Internet (AT&T Fiber) → ONT → AT&T Gateway (IP Passthrough) → Deco Mesh Ro
 * AT&T Gateway (IP Passthrough)
 * TP-Link Deco X25 Mesh System
 * D-Link 16-Port Switch
-* Desktop (Control Node)
-* Laptop (Test Node)
-* Raspberry Pi 1 (Primary DNS Node)
-* Raspberry Pi 2 (Secondary DNS Node)
+* Gaming PC (temporary monitoring host)
+* Desktop / Laptop (admin and test devices)
+* Raspberry Pi 1 — `ashpi-1`
+* Raspberry Pi 2 — `ashpi-2`
 
 ---
 
@@ -97,17 +105,19 @@ Internet (AT&T Fiber) → ONT → AT&T Gateway (IP Passthrough) → Deco Mesh Ro
 * High availability concepts
 * DNS redundancy and failover
 * Recursive DNS with Unbound
-* Observability and monitoring preparation
-* Real-world troubleshooting
+* Host and service monitoring
+* Alerting with reduced noise
+* Real-world troubleshooting and validation
 
 ---
 
 ## 🧭 How to Navigate This Project
 
-* Start with the README for an overview
-* Review each phase overview for design decisions
-* Follow step-by-step guides to replicate setup
-* Use screenshots for validation
+* Start with the README for a full project overview
+* Review each phase overview for design decisions and architecture updates
+* Use the step-by-step guides to follow implementation order
+* Use screenshots and validation documents as proof of successful deployment
+* Review the changelog and lessons learned to understand how the environment evolved
 
 ---
 
@@ -119,6 +129,7 @@ Each phase includes:
 
 * What changed
 * Why it matters
+* Architecture updates
 * Lessons learned
 
 ### Step-by-Step
@@ -132,7 +143,7 @@ Each phase includes:
 * Proof of implementation
 * UI validation
 * Before/after states
-* Failover evidence
+* Failover and monitoring evidence
 
 ---
 
@@ -144,22 +155,22 @@ To build a home lab that simulates **real-world infrastructure engineering**, co
 
 ## 🚀 Next Step
 
-Phase 4 will introduce **monitoring and alerting**, including:
+Phase 5 will focus on **secure remote access**, including:
 
-* Node and service health visibility
-* DNS service monitoring
-* Resource usage tracking
-* Alerting and validation logic
-* Better operational visibility before VLANs and segmentation
+* refining the jump-box workflow
+* introducing hardened remote administrative access
+* reducing direct exposure of internal services
+* preparing for future segmented management access
 
 ---
 
 ## 🛣️ Long-Term Roadmap
 
-After monitoring and remote access are complete, the next major network evolution will include:
+After remote access is complete, the next major infrastructure evolution will include:
 
 * Managed switching
 * VLANs and segmentation
-* Guest / trusted / admin separation
+* Admin / trusted / guest / IoT separation
 * Inter-network policy control
+* Migration of monitoring to a dedicated always-on host
 * A more production-style security model
