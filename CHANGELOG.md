@@ -85,9 +85,27 @@ All notable changes to this project are documented here.
 
 ---
 
-## Upcoming — Phase 5 (Remote Access) 🔐
+## Phase 5 — Remote Access 🔐
 
-* Refine the jump-box workflow
-* Introduce hardened remote administrative access
-* Restrict exposure of internal services
-* Prepare for future segmented management access
+* Deployed Tailscale for secure remote administration
+* Added gaming PC to the tailnet
+* Added laptop to the tailnet
+* Added `ashpi-1` to the tailnet
+* Added `ashpi-2` to the tailnet
+* Confirmed MagicDNS-based device naming
+* Validated `tailscale ping` connectivity to both Raspberry Pi nodes
+* Successfully SSH’d to `ashpi-1` over Tailscale
+* Successfully SSH’d to `ashpi-2` over Tailscale
+* Successfully validated remote SSH access from outside the home network using a phone hotspot
+* Avoided public SSH exposure and router port forwarding
+* Established a private remote admin path to the HA DNS environment
+
+---
+
+## Next Infrastructure Layer 🌐
+
+* Add managed switching
+* Introduce VLANs and segmentation
+* Separate trusted / guest / IoT networks
+* Refine policy-driven access between networks
+* Migrate monitoring to a dedicated always-on management host
