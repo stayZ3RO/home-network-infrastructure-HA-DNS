@@ -64,6 +64,18 @@
 
 ---
 
+## Monitoring and Alerting 📈
+
+* Metrics collection and service probing solve different problems
+* Node Exporter helps monitor host health, while Blackbox Exporter verifies service behavior from the outside
+* Monitoring should observe the service path, not just whether the host is alive
+* Healthy failover should not be treated as a service outage
+* Alerting becomes more useful when warning, critical, and informational conditions are separated clearly
+* `for:` windows reduce noise and help prevent flapping alerts
+* A temporary gaming PC can work well as a monitoring host, but long term a dedicated always-on system is the better design
+
+---
+
 ## Troubleshooting and Validation 🧪
 
 * Small misconfigurations can affect the behavior of the entire network
