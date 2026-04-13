@@ -56,20 +56,21 @@ This roadmap outlines the planned evolution of the home network infrastructure l
 
 ---
 
-## Phase 5 — Secure Remote Access 🔐
+## Phase 5 — Secure Remote Access ✅
 
-* Refine the jump-box workflow
-* Introduce hardened remote administrative access
-* Restrict exposure of internal services
-* Implement a cleaner long-term management path
+* Deployed Tailscale
+* Added admin endpoints to the tailnet
+* Added both Raspberry Pi nodes to the tailnet
+* Validated secure SSH access over Tailscale
+* Confirmed off-site access without public SSH exposure
 
 ---
 
-## Long-Term Goals 🌐
+## Next Infrastructure Layer 🌐
 
-* Introduce VLAN segmentation
-* Add a managed switch
+* Introduce a managed switch
+* Add VLAN segmentation
 * Separate admin / trusted / guest / IoT networks
+* Refine inter-network policy design
 * Move monitoring to a dedicated always-on management host
-* Expand containerization and virtualization
-* Explore Proxmox and more production-style infrastructure patterns
+* Expand infrastructure with mini workstation / Proxmox-based services
