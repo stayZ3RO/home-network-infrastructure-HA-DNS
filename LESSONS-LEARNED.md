@@ -76,13 +76,23 @@
 
 ---
 
+## Secure Remote Access 🔐
+
+* Secure remote administration does not require exposing SSH to the public internet
+* A tailnet-based access path is much cleaner than maintaining router port forwards
+* Verifying remote access from outside the home network is more meaningful than only testing from inside the LAN
+* Basic SSH over Tailscale is enough to establish a strong Phase 5 implementation without adding more complexity immediately
+* Running Tailscale inside WSL is not necessary when the Windows host is already connected to the tailnet
+
+---
+
 ## Troubleshooting and Validation 🧪
 
 * Small misconfigurations can affect the behavior of the entire network
 * Pi-hole gravity errors can often be resolved by rebuilding or reapplying list data
 * Testing failure and recovery is just as important as testing the working state
 * Layered troubleshooting works best: network → node → service → client path
-* Validation needs to include normal operation, failover, and restoration
+* Validation needs to include normal operation, failover, monitoring behavior, and remote access
 
 ---
 
