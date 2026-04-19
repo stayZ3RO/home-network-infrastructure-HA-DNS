@@ -45,6 +45,8 @@ The gaming PC was used as a temporary always-on monitoring host.
 * `docker version` worked in Ubuntu WSL
 * `docker compose version` worked in Ubuntu WSL
 
+![Docker working inside Ubuntu WSL](../../screenshots/phase-4/docker-wsl-working.svg)
+
 ---
 
 ## 2. Create the Monitoring Workspace 📂
@@ -88,6 +90,8 @@ The monitoring stack was defined in `docker-compose.yml`.
 
 * all containers started successfully with `docker compose up -d`
 * `docker compose ps` showed the services running
+
+![Monitoring stack running](../../screenshots/phase-4/monitoring-stack-running.svg)
 
 ---
 
@@ -223,6 +227,9 @@ Panels included:
   * Last not null
 * time-series panels showed historical trends correctly
 
+![Grafana Node Health dashboard](../../screenshots/phase-4/grafana-node-health-dashboard.svg)
+![Grafana DNS and Failover dashboard](../../screenshots/phase-4/grafana-dns-failover-dashboard.svg)
+
 ---
 
 ## 10. Configure Alert Rules 🚨
@@ -264,6 +271,8 @@ A single-node-down test was performed by stopping Node Exporter on `ashpi-2`.
 
 The alert lifecycle behaved as expected from pending → firing → cleared.
 
+![Alert lifecycle evidence](../../screenshots/phase-4/alert-lifecycle.svg)
+
 ---
 
 ## 12. Validate Failover Monitoring 🔁
@@ -283,6 +292,8 @@ A keepalived failover test was performed to confirm monitoring reflected healthy
 
 Monitoring correctly reflected a healthy failover event without misclassifying it as a service outage.
 
+![Failover monitoring evidence](../../screenshots/phase-4/failover-monitoring.svg)
+
 ---
 
 ## 13. Back Up the Monitoring Configuration 💾
@@ -293,6 +304,8 @@ The monitoring configuration was archived from Ubuntu WSL.
 
 * backup archive was created successfully
 * dashboard JSON exports were also saved for reuse
+
+![Monitoring configuration backup](../../screenshots/phase-4/monitoring-config-backup.svg)
 
 ---
 
