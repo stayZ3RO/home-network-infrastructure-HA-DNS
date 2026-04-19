@@ -45,6 +45,8 @@ The gaming PC was used as a temporary always-on monitoring host.
 * `docker version` worked in Ubuntu WSL
 * `docker compose version` worked in Ubuntu WSL
 
+![Docker working inside Ubuntu WSL](../../screenshots/phase-4/00-docker-working-in-wsl.png)
+
 ---
 
 ## 2. Create the Monitoring Workspace 📂
@@ -64,6 +66,8 @@ A dedicated monitoring workspace was created inside the Ubuntu WSL Linux filesys
 ### Validation
 
 * the directory structure existed under `~/monitoring`
+
+![Monitoring folders created](../../screenshots/phase-4/02-monitoring-folders-created.png)
 
 ---
 
@@ -89,6 +93,9 @@ The monitoring stack was defined in `docker-compose.yml`.
 * all containers started successfully with `docker compose up -d`
 * `docker compose ps` showed the services running
 
+![Monitoring files created](../../screenshots/phase-4/03-monitoring-files-created.png)
+![Docker containers running](../../screenshots/phase-4/13-docker-containers-running.png)
+
 ---
 
 ## 4. Configure Prometheus 📡
@@ -111,6 +118,9 @@ Prometheus was configured to scrape both host metrics and DNS probe targets.
 * the `up` query returned healthy results for the configured scrape jobs
 * the `probe_success` query returned healthy results for the DNS probe targets
 
+![Grafana up query](../../screenshots/phase-4/11-grafana-up-query.png)
+![Grafana probe_success query](../../screenshots/phase-4/12-grafana-probe-success-query.png)
+
 ---
 
 ## 5. Configure Blackbox Exporter 🌐
@@ -131,6 +141,8 @@ Blackbox Exporter was configured to perform DNS-based probes against the HA DNS 
   * `ashpi-1`
   * `ashpi-2`
 
+![Grafana probe_success query](../../screenshots/phase-4/12-grafana-probe-success-query.png)
+
 ---
 
 ## 6. Install Node Exporter on ashpi-1 📈
@@ -150,6 +162,9 @@ Node Exporter was installed on `ashpi-1` to expose Linux host metrics.
 * `systemctl status node_exporter` showed the service as active
 * `curl http://localhost:9100/metrics | head` returned metrics successfully
 
+![ashpi-1 Node Exporter status](../../screenshots/phase-4/08-node-exporter-ashpi1-status.png)
+![ashpi-1 Node Exporter metrics](../../screenshots/phase-4/09-node-exporter-ashpi1-metrics.png)
+
 ---
 
 ## 7. Install Node Exporter on ashpi-2 📈
@@ -160,6 +175,8 @@ The same Node Exporter process was repeated on `ashpi-2`.
 
 * `systemctl status node_exporter` showed the service as active
 * `curl http://localhost:9100/metrics | head` returned metrics successfully
+
+![ashpi-2 Node Exporter status and metrics](../../screenshots/phase-4/10-node-exporter-ashpi2-status-metrics.png)
 
 ---
 
@@ -188,6 +205,11 @@ probe_success
 
 * Grafana successfully returned live Prometheus data
 * both dashboards could be built from the query results
+
+![Grafana home](../../screenshots/phase-4/06-grafana-home.png)
+![Prometheus datasource configured](../../screenshots/phase-4/07-prometheus-datasource.png)
+![Grafana up query](../../screenshots/phase-4/11-grafana-up-query.png)
+![Grafana probe_success query](../../screenshots/phase-4/12-grafana-probe-success-query.png)
 
 ---
 
@@ -223,6 +245,9 @@ Panels included:
   * Last not null
 * time-series panels showed historical trends correctly
 
+![Node Health dashboard](../../screenshots/phase-4/14-node-health-dashboard.png)
+![DNS & Failover dashboard](../../screenshots/phase-4/15-dns-failover-dashboard.png)
+
 ---
 
 ## 10. Configure Alert Rules 🚨
@@ -246,6 +271,8 @@ Prometheus alert rules were added for:
 * alert rules loaded successfully
 * `ALERTS` queries returned expected alert states
 
+![Grafana test alert](../../screenshots/phase-4/16-grafana-test-alert.png)
+
 ---
 
 ## 11. Validate Alert Lifecycle ✅
@@ -263,6 +290,9 @@ A single-node-down test was performed by stopping Node Exporter on `ashpi-2`.
 ### Result
 
 The alert lifecycle behaved as expected from pending → firing → cleared.
+
+![Single node down firing](../../screenshots/phase-4/18-single-node-down-firing.png)
+![Single node down cleared](../../screenshots/phase-4/19-single-node-down-cleared.png)
 
 ---
 
@@ -283,6 +313,15 @@ A keepalived failover test was performed to confirm monitoring reflected healthy
 
 Monitoring correctly reflected a healthy failover event without misclassifying it as a service outage.
 
+![VIP owner before failover](../../screenshots/phase-4/21-vip-owner-before-failover.png)
+![Dashboards healthy before failover](../../screenshots/phase-4/22-dashboards-healthy-before-failover.png)
+![VIP owner after failover](../../screenshots/phase-4/23-vip-owner-after-failover.png)
+![VIP probe during failover](../../screenshots/phase-4/24-vip-probe-during-failover.png)
+![Node DNS probes during failover](../../screenshots/phase-4/25-node-dns-probes-during-failover.png)
+![Alert state during failover](../../screenshots/phase-4/26-alert-state-during-failover.png)
+![DNS dashboard during failover](../../screenshots/phase-4/27-dns-dashboard-during-failover.png)
+![Failover restored](../../screenshots/phase-4/28-failover-restored.png)
+
 ---
 
 ## 13. Back Up the Monitoring Configuration 💾
@@ -293,6 +332,8 @@ The monitoring configuration was archived from Ubuntu WSL.
 
 * backup archive was created successfully
 * dashboard JSON exports were also saved for reuse
+
+![Monitoring backup created](../../screenshots/phase-4/20-monitoring-backup-created.png)
 
 ---
 
