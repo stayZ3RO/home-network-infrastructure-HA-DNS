@@ -83,9 +83,6 @@ Confirmed that both dashboards rendered correct live data:
 
 Passed ✅
 
-![Grafana Node Health dashboard](../../screenshots/phase-4/grafana-node-health-dashboard.svg)
-![Grafana DNS and Failover dashboard](../../screenshots/phase-4/grafana-dns-failover-dashboard.svg)
-
 ---
 
 ## Validation 4 — SingleNodeDown Alert Lifecycle 🚨
@@ -108,8 +105,6 @@ Passed ✅
 
 The full pending → firing → cleared lifecycle was observed successfully.
 
-![Alert lifecycle evidence](../../screenshots/phase-4/alert-lifecycle.svg)
-
 ---
 
 ## Validation 5 — Failover Monitoring Behavior 🔁
@@ -130,8 +125,6 @@ Stopped keepalived on the current VIP owner.
 Passed ✅
 
 Monitoring correctly reflected healthy failover without misclassifying it as a service outage.
-
-![Failover monitoring evidence](../../screenshots/phase-4/failover-monitoring.svg)
 
 ---
 
@@ -169,7 +162,21 @@ Created a compressed archive of the monitoring configuration from Ubuntu WSL.
 
 Passed ✅
 
-![Monitoring configuration backup](../../screenshots/phase-4/monitoring-config-backup.svg)
+---
+
+## 📸 Suggested Screenshots
+
+Recommended evidence for this validation document:
+
+* `up` query results
+* `probe_success` query results
+* alert pending
+* alert firing
+* alert cleared
+* VIP owner before failover
+* VIP owner after failover
+* DNS dashboard during failover
+* monitoring backup file created
 
 ---
 
