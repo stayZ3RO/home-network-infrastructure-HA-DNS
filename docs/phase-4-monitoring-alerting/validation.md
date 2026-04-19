@@ -38,6 +38,8 @@ Passed ✅
 
 Both Raspberry Pi nodes were successfully scraped through Node Exporter.
 
+![Grafana up query](../../screenshots/phase-4/11-grafana-up-query.png)
+
 ---
 
 ## Validation 2 — DNS Probe Success 🌐
@@ -62,6 +64,8 @@ Passed ✅
 
 The VIP and both direct DNS node endpoints were successfully probed.
 
+![Grafana probe_success query](../../screenshots/phase-4/12-grafana-probe-success-query.png)
+
 ---
 
 ## Validation 3 — Dashboard Rendering 📊
@@ -82,6 +86,9 @@ Confirmed that both dashboards rendered correct live data:
 ### Result
 
 Passed ✅
+
+![Node Health dashboard](../../screenshots/phase-4/14-node-health-dashboard.png)
+![DNS & Failover dashboard](../../screenshots/phase-4/15-dns-failover-dashboard.png)
 
 ---
 
@@ -105,6 +112,9 @@ Passed ✅
 
 The full pending → firing → cleared lifecycle was observed successfully.
 
+![Single node down firing](../../screenshots/phase-4/18-single-node-down-firing.png)
+![Single node down cleared](../../screenshots/phase-4/19-single-node-down-cleared.png)
+
 ---
 
 ## Validation 5 — Failover Monitoring Behavior 🔁
@@ -126,6 +136,11 @@ Passed ✅
 
 Monitoring correctly reflected healthy failover without misclassifying it as a service outage.
 
+![VIP owner before failover](../../screenshots/phase-4/21-vip-owner-before-failover.png)
+![VIP owner after failover](../../screenshots/phase-4/23-vip-owner-after-failover.png)
+![VIP probe during failover](../../screenshots/phase-4/24-vip-probe-during-failover.png)
+![Node DNS probes during failover](../../screenshots/phase-4/25-node-dns-probes-during-failover.png)
+
 ---
 
 ## Validation 6 — Dashboard Visibility During Failover 📋
@@ -145,6 +160,10 @@ Observed the **DNS & Failover** dashboard during the keepalived failover event.
 
 Passed ✅
 
+![Alert state during failover](../../screenshots/phase-4/26-alert-state-during-failover.png)
+![DNS dashboard during failover](../../screenshots/phase-4/27-dns-dashboard-during-failover.png)
+![Failover restored](../../screenshots/phase-4/28-failover-restored.png)
+
 ---
 
 ## Validation 7 — Monitoring Configuration Backup 💾
@@ -161,6 +180,8 @@ Created a compressed archive of the monitoring configuration from Ubuntu WSL.
 ### Result
 
 Passed ✅
+
+![Monitoring backup created](../../screenshots/phase-4/20-monitoring-backup-created.png)
 
 ---
 
