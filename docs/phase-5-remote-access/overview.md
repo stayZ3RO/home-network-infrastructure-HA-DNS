@@ -99,18 +99,19 @@ Phase 5 was validated by confirming:
 
 ---
 
-## 📸 Screenshot Asset Map
+## 📸 Suggested Screenshots
 
-Phase 5 screenshot links now point to committed placeholder assets under [`../../screenshots/phase-5/`](../../screenshots/phase-5/README.md).
+Recommended screenshots for this phase include:
 
-Replace each placeholder with the real screenshot while keeping the same filename.
-
-![Tailscale admin console](../../screenshots/phase-5/tailscale-admin-console.svg)
-![Tailnet devices connected](../../screenshots/phase-5/tailscale-devices-connected.svg)
-![tailscale ping success](../../screenshots/phase-5/tailscale-ping-success.svg)
-![SSH to ashpi-1 over Tailscale](../../screenshots/phase-5/ssh-ashpi-1-over-tailscale.svg)
-![SSH to ashpi-2 over Tailscale](../../screenshots/phase-5/ssh-ashpi-2-over-tailscale.svg)
-![Off-site SSH success](../../screenshots/phase-5/offsite-ssh-success.svg)
+* Tailscale admin console
+* MagicDNS enabled
+* gaming PC connected
+* laptop connected
+* `ashpi-1` connected
+* `ashpi-2` connected
+* successful SSH to `ashpi-1` over Tailscale
+* successful SSH to `ashpi-2` over Tailscale
+* successful off-site SSH test
 
 ---
 
