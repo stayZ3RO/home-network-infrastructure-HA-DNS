@@ -156,6 +156,10 @@ This confirmed:
 * the `for:` timer behaved correctly
 * the alert cleared correctly after recovery
 
+![Grafana test alert](../../screenshots/phase-4/16-grafana-test-alert.png)
+![Single node down alert firing](../../screenshots/phase-4/18-single-node-down-firing.png)
+![Single node down alert cleared](../../screenshots/phase-4/19-single-node-down-cleared.png)
+
 ---
 
 ## Failover Alert Behavior 🔁
@@ -179,6 +183,8 @@ This confirms that the monitoring stack can distinguish between:
 
 That distinction is one of the most important outcomes of Phase 4.
 
+![Alert state during failover](../../screenshots/phase-4/26-alert-state-during-failover.png)
+
 ---
 
 ## Active Alerts in Grafana 📋
@@ -186,6 +192,8 @@ That distinction is one of the most important outcomes of Phase 4.
 The **DNS & Failover** dashboard includes an **Active Alerts** panel so currently pending or firing alerts can be seen directly from the operational dashboard.
 
 This gives a quick summary of alert state without leaving the dashboard view.
+
+![DNS & Failover dashboard with alerts](../../screenshots/phase-4/15-dns-failover-dashboard.png)
 
 ---
 
