@@ -28,6 +28,8 @@ Confirmed the following devices successfully joined the tailnet:
 
 Passed ✅
 
+![Tailnet devices connected](../../screenshots/phase-5/tailscale-devices-connected.svg)
+
 ---
 
 ## Validation 2 — Tailnet Connectivity 📡
@@ -49,6 +51,8 @@ Passed ✅
 
 Both Pi nodes returned successful `tailscale ping` responses.
 
+![tailscale ping success](../../screenshots/phase-5/tailscale-ping-success.svg)
+
 ---
 
 ## Validation 3 — SSH to ashpi-1 🔐
@@ -56,7 +60,7 @@ Both Pi nodes returned successful `tailscale ping` responses.
 ### Validation command
 
 ```bash
-ssh <pi-username>@ashpi-1
+ssh your-user@ashpi-1
 ```
 
 ### Expected result
@@ -76,6 +80,8 @@ Passed ✅
 
 SSH to `ashpi-1` over Tailscale succeeded.
 
+![SSH to ashpi-1 over Tailscale](../../screenshots/phase-5/ssh-ashpi-1-over-tailscale.svg)
+
 ---
 
 ## Validation 4 — SSH to ashpi-2 🔐
@@ -83,7 +89,7 @@ SSH to `ashpi-1` over Tailscale succeeded.
 ### Validation command
 
 ```bash
-ssh <pi-username>@ashpi-2
+ssh your-user@ashpi-2
 ```
 
 ### Expected result
@@ -103,6 +109,8 @@ Passed ✅
 
 SSH to `ashpi-2` over Tailscale succeeded.
 
+![SSH to ashpi-2 over Tailscale](../../screenshots/phase-5/ssh-ashpi-2-over-tailscale.svg)
+
 ---
 
 ## Validation 5 — Off-Site Remote Access 📶
@@ -121,6 +129,8 @@ Passed ✅
 
 Remote SSH access to the Pi nodes worked successfully from outside the home network.
 
+![Off-site SSH success](../../screenshots/phase-5/offsite-ssh-success.svg)
+
 ---
 
 ## Validation 6 — No Public SSH Exposure 🚫
@@ -138,20 +148,6 @@ Remote administration should work through Tailscale only.
 Passed ✅
 
 The homelab remained remotely manageable without exposing SSH directly to the public internet.
-
----
-
-## 📸 Suggested Screenshots
-
-Recommended evidence for this validation document:
-
-* Tailscale admin console
-* `tailscale ping ashpi-1`
-* `tailscale ping ashpi-2`
-* SSH to `ashpi-1` over Tailscale
-* SSH to `ashpi-2` over Tailscale
-* off-site Tailscale connection
-* off-site SSH success
 
 ---
 
