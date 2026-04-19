@@ -117,6 +117,8 @@ time() - node_boot_time_seconds{job="node"}
 * unit set to **duration (s)**
 * neutral color used to avoid treating high uptime as a failure condition
 
+![Node Health dashboard](../../screenshots/phase-4/14-node-health-dashboard.png)
+
 ---
 
 ## Dashboard 2 — Phase 4: DNS & Failover 🌐
@@ -215,6 +217,8 @@ Shows currently pending or firing alerts related to the monitoring stack and HA 
 
 * Alert list
 
+![DNS & Failover dashboard](../../screenshots/phase-4/15-dns-failover-dashboard.png)
+
 ---
 
 ## Dashboard Design Notes 📝
@@ -225,6 +229,9 @@ Several cleanup adjustments were made after the initial build:
 * stat panels used **Last not null** to avoid showing historical placeholder data
 * dashboard time ranges were adjusted to reduce confusion from old bad series
 * uptime styling was changed to avoid showing large uptime values as failures
+
+![Grafana up query](../../screenshots/phase-4/11-grafana-up-query.png)
+![Grafana probe_success query](../../screenshots/phase-4/12-grafana-probe-success-query.png)
 
 ---
 
@@ -249,6 +256,9 @@ Answers:
 * is probe latency normal?
 * are any relevant alerts active?
 * did failover preserve DNS availability?
+
+![Dashboards healthy before failover](../../screenshots/phase-4/22-dashboards-healthy-before-failover.png)
+![DNS dashboard during failover](../../screenshots/phase-4/27-dns-dashboard-during-failover.png)
 
 ---
 
