@@ -39,6 +39,8 @@ Tailscale was selected as the Phase 5 remote access platform.
 * admin console loaded successfully
 * tailnet was available for device enrollment
 
+![Tailscale admin console](../../screenshots/phase-5/tailscale-admin-console.svg)
+
 ---
 
 ## 2. Confirm MagicDNS 🧭
@@ -125,6 +127,8 @@ hostname
 
 * `ashpi-2` joined the tailnet successfully
 
+![Tailnet devices connected](../../screenshots/phase-5/tailscale-devices-connected.svg)
+
 ---
 
 ## 7. Rename Devices Cleanly 🏷️
@@ -161,6 +165,8 @@ tailscale ping ashpi-2
 
 * `tailscale ping` returned successful responses for both Raspberry Pi nodes
 
+![tailscale ping success](../../screenshots/phase-5/tailscale-ping-success.svg)
+
 ---
 
 ## 9. Test SSH over Tailscale 🔐
@@ -186,6 +192,9 @@ ip a
 * successful SSH session to `ashpi-1`
 * successful SSH session to `ashpi-2`
 
+![SSH to ashpi-1 over Tailscale](../../screenshots/phase-5/ssh-ashpi-1-over-tailscale.svg)
+![SSH to ashpi-2 over Tailscale](../../screenshots/phase-5/ssh-ashpi-2-over-tailscale.svg)
+
 ---
 
 ## 10. Validate Off-Site Remote Access 📶
@@ -202,6 +211,8 @@ The final validation was performed from outside the home network using a phone h
 
 * successful remote SSH access to both Pi nodes from outside the home network
 * no router SSH port forwarding was required
+
+![Off-site SSH success](../../screenshots/phase-5/offsite-ssh-success.svg)
 
 ---
 
