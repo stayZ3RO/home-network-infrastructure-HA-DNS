@@ -186,19 +186,22 @@ Phase 4 was validated by confirming:
 
 ---
 
-## 📸 Screenshot Asset Map
+## 📸 Suggested Screenshots
 
-Phase 4 screenshot links now point to committed placeholder assets under [`../../screenshots/phase-4/`](../../screenshots/phase-4/README.md).
+Recommended screenshots for this phase include:
 
-Replace each placeholder with the real screenshot while keeping the same filename.
-
-![Docker working inside Ubuntu WSL](../../screenshots/phase-4/docker-wsl-working.svg)
-![Monitoring stack running](../../screenshots/phase-4/monitoring-stack-running.svg)
-![Grafana Node Health dashboard](../../screenshots/phase-4/grafana-node-health-dashboard.svg)
-![Grafana DNS and Failover dashboard](../../screenshots/phase-4/grafana-dns-failover-dashboard.svg)
-![Alert lifecycle evidence](../../screenshots/phase-4/alert-lifecycle.svg)
-![Failover monitoring evidence](../../screenshots/phase-4/failover-monitoring.svg)
-![Monitoring configuration backup](../../screenshots/phase-4/monitoring-config-backup.svg)
+* Docker working inside Ubuntu WSL
+* monitoring stack running
+* Grafana login
+* Node Health dashboard
+* DNS & Failover dashboard
+* alert pending
+* alert firing
+* alert cleared
+* VIP owner before failover
+* VIP owner after failover
+* DNS dashboard during failover
+* monitoring config backup created
 
 ---
 
