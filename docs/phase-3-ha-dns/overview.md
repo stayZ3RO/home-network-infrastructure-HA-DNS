@@ -22,7 +22,7 @@ The goals of this phase were to:
 
 - remove the single-node DNS dependency
 - keep Pi-hole configuration synchronized across both nodes
-- provide seamless DNS failover through a shared Virtual IP
+- provide DNS failover through a shared Virtual IP
 - add local recursive DNS resolution with Unbound
 - validate that DNS stays functional during failover
 
@@ -41,7 +41,7 @@ Pi-hole continues to provide:
 
 ### Gravity Sync 🔄
 
-Gravity Sync keeps both Pi-hole nodes aligned by replicating important Pi-hole configuration between them.
+Gravity Sync keeps both Pi-hole nodes aligned by replicating Pi-hole configuration between them.
 
 This helps ensure that:
 
@@ -65,8 +65,6 @@ This means each Pi-hole node can resolve DNS queries directly instead of dependi
 ---
 
 ## 🧭 Architecture Summary
-
-The Phase 3 DNS path now looks like this:
 
 ```text
 Internet
@@ -110,45 +108,25 @@ This phase included the following work:
 
 ---
 
-## 📸 Implementation Evidence
+## 📸 High-Level Evidence
 
-### Secondary Pi Preparation
+The detailed screenshot walkthrough is documented in the [Step-by-Step Guide](./step-by-step.md). This overview only includes the major proof points.
 
-![Pi 2 prep](../../screenshots/phase-3/1-pi2-prep.png)
-
-### Gravity Sync Validation
-
-![Gravity Sync config complete](../../screenshots/phase-3/7-gravity-sync-config-complete.png)
-
-![Gravity Sync push confirmed](../../screenshots/phase-3/8-gravity-sync-push-confirmed.png)
+### Gravity Sync confirmed between nodes
 
 ![Gravity Sync compare confirmed](../../screenshots/phase-3/9-gravity-sync-compare-confirmed.png)
 
-### keepalived and VIP Validation
-
-![VIP assigned primary node](../../screenshots/phase-3/12-vip-assigned-primary-node.png)
+### VIP active on the primary node
 
 ![VIP active on primary node](../../screenshots/phase-3/13-vip-active-on-primary-node.png)
 
-### Failover Validation
-
-![Before failover primary active](../../screenshots/phase-3/14-before-failover-primary-active.png)
-
-![Failover triggered](../../screenshots/phase-3/15-failover-triggered.png)
+### VIP moved after failover
 
 ![After failover secondary active](../../screenshots/phase-3/16-after-failover-secondary-active.png)
 
-![DNS active after failover](../../screenshots/phase-3/17-dns-active-after-failover.png)
-
-### Unbound Validation
-
-![Unbound active on pi1](../../screenshots/phase-3/20-unbound-active-on-pi1.png)
-
-![Pi 2 Unbound active](../../screenshots/phase-3/24-pi2-unbound-active.png)
+### Client DNS continued after failover
 
 ![Client DNS test after failover](../../screenshots/phase-3/34-client-dns-test-after-failover.png)
-
-![Ad block test after failover](../../screenshots/phase-3/35-adblock-test-after-failover.png)
 
 ---
 
