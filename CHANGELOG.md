@@ -108,6 +108,24 @@ All notable changes to this project are documented here.
 
 ---
 
+## Phase 6 — Proxmox Host Environment & Monitoring Migration 🖥️
+
+- Deployed a Proxmox host environment
+- Created an Ubuntu VM for infrastructure services
+- Installed Docker Engine and Docker Compose on the Ubuntu VM
+- Migrated the monitoring stack from gaming PC / Docker Desktop to the Ubuntu VM
+- Restored Grafana, Prometheus, Alertmanager, and Blackbox Exporter
+- Recreated Alertmanager Discord webhook secret handling on the VM
+- Mounted Alertmanager secrets into the container as read-only
+- Validated Prometheus target health after migration
+- Validated Blackbox DNS probes after migration
+- Validated Grafana dashboards after migration
+- Validated Alertmanager and Discord alert delivery after migration
+- Stopped the old gaming PC Docker monitoring stack
+- Confirmed monitoring no longer depends on the gaming PC
+
+---
+
 ## Next Infrastructure Layer 🌐
 
 - Add managed switching
