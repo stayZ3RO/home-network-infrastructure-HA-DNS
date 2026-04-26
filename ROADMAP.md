@@ -94,9 +94,7 @@ This roadmap outlines the planned evolution of the home network infrastructure l
 
 ---
 
-## Next Infrastructure Layer — Managed Network Segmentation 🌐
-
-Planned next phase:
+## Next Infrastructure Layer — Network Segmentation 🌐
 
 - introduce a managed router / firewall
 - introduce a managed switch
@@ -105,7 +103,7 @@ Planned next phase:
 - preserve HA DNS and ad blocking across segmented networks
 - refine inter-network policy design
 - document firewall rules and VLAN behavior
-- validate DNS and monitoring across segmented networks
+- validate DNS, monitoring, and remote access across segmented networks
 
 
 ---
