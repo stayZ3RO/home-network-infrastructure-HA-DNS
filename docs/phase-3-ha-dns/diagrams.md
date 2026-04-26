@@ -39,57 +39,45 @@ Recursive DNS Resolution
 
 ---
 
-## ⚖️ VIP Ownership — Normal State
+## ⚖️ Normal State
 
 ```text
 Clients
   ↓
 DNS VIP: 192.168.68.20
   ↓
-ashpi-1 / Primary
+ashpi-1 / Primary Node
   ├── Pi-hole
   ├── Unbound
   └── keepalived MASTER
 
-ashpi-2 / Secondary
+ashpi-2 / Secondary Node
   ├── Pi-hole
   ├── Unbound
   └── keepalived BACKUP
 ```
 
-Supporting screenshots:
-
-![VIP assigned primary node](../../screenshots/phase-3/12-vip-assigned-primary-node.png)
-
-![VIP active on primary node](../../screenshots/phase-3/13-vip-active-on-primary-node.png)
+In the normal state, `ashpi-1` owns the VIP and handles client DNS traffic.
 
 ---
 
-## 🔁 VIP Ownership — Failover State
+## 🔁 Failover State
 
 ```text
 Clients
   ↓
 DNS VIP: 192.168.68.20
   ↓
-ashpi-2 / Secondary
+ashpi-2 / Secondary Node
   ├── Pi-hole
   ├── Unbound
   └── keepalived ACTIVE
 
-ashpi-1 / Primary
+ashpi-1 / Primary Node
   └── unavailable or temporarily stopped
 ```
 
-Supporting screenshots:
-
-![Before failover primary active](../../screenshots/phase-3/14-before-failover-primary-active.png)
-
-![Failover triggered](../../screenshots/phase-3/15-failover-triggered.png)
-
-![After failover secondary active](../../screenshots/phase-3/16-after-failover-secondary-active.png)
-
-![DNS active after failover](../../screenshots/phase-3/17-dns-active-after-failover.png)
+During failover, `ashpi-2` takes over the VIP and continues serving DNS.
 
 ---
 
@@ -104,14 +92,6 @@ ashpi-2 / Secondary Pi-hole
 ```
 
 Gravity Sync keeps important Pi-hole configuration aligned between both nodes.
-
-Supporting screenshots:
-
-![Gravity Sync config complete](../../screenshots/phase-3/7-gravity-sync-config-complete.png)
-
-![Gravity Sync push confirmed](../../screenshots/phase-3/8-gravity-sync-push-confirmed.png)
-
-![Gravity Sync compare confirmed](../../screenshots/phase-3/9-gravity-sync-compare-confirmed.png)
 
 ---
 
@@ -133,13 +113,41 @@ Root DNS / Authoritative DNS
 
 Each Pi-hole node uses its own local Unbound instance.
 
-Supporting screenshots:
+This avoids relying on a public upstream resolver and keeps recursive DNS available on whichever node owns the VIP.
 
-![Unbound active on pi1](../../screenshots/phase-3/20-unbound-active-on-pi1.png)
+---
 
-![Pi 2 Unbound active](../../screenshots/phase-3/24-pi2-unbound-active.png)
+## 🧩 Component Relationship
 
-![Client DNS test after failover](../../screenshots/phase-3/34-client-dns-test-after-failover.png)
+```text
+                ┌─────────────────────┐
+                │       Clients       │
+                └──────────┬──────────┘
+                           │
+                           ↓
+                ┌─────────────────────┐
+                │ DNS VIP 192.168.68.20│
+                └──────────┬──────────┘
+                           │
+              ┌────────────┴────────────┐
+              │                         │
+              ↓                         ↓
+┌────────────────────────┐   ┌────────────────────────┐
+│ ashpi-1                │   │ ashpi-2                │
+│ Primary DNS Node       │   │ Secondary DNS Node     │
+│                        │   │                        │
+│ Pi-hole                │   │ Pi-hole                │
+│ Unbound                │   │ Unbound                │
+│ keepalived MASTER      │   │ keepalived BACKUP      │
+└────────────────────────┘   └────────────────────────┘
+              │                         │
+              └────────────┬────────────┘
+                           ↓
+                ┌─────────────────────┐
+                │   Gravity Sync       │
+                │ Config Replication   │
+                └─────────────────────┘
+```
 
 ---
 
