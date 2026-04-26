@@ -2,32 +2,36 @@
 
 ## 📖 Overview
 
-This document explains how administrative SSH access was structured for the HA DNS environment using a **jump box model**.
+This document explains how administrative SSH access was structured for the HA DNS environment.
 
-The goal of this approach was to improve administrative consistency and reduce the need to manage access to each DNS node separately from every device.
+The goal of this approach was to improve administrative consistency and reduce the need to manually manage access to each DNS node from every device.
 
 ---
 
 ## 🎯 Purpose
 
-The jump box workflow provides:
+The jump box and SSH trust workflow provides:
 
 - a cleaner SSH administration path
 - a central point for managing access to internal nodes
 - more consistent operational access to both Pi-hole nodes
+- support for repeatable synchronization and maintenance tasks
 - a structure that better reflects real-world infrastructure administration
 
 ---
 
 ## 🧱 Role in the HA DNS Environment
 
-In this project, the jump box acts as the controlled entry point for accessing:
+In this project, the access workflow supports administration of:
 
 - ashpi-1
 - ashpi-2
-- internal lab services as needed
+- Gravity Sync replication
+- keepalived validation
+- Unbound validation
+- internal DNS troubleshooting
 
-Rather than treating each node as a separate manual access target, the jump box creates a cleaner admin workflow.
+Rather than treating each node as a separate manual access target, this workflow creates a cleaner admin model for managing the HA DNS layer.
 
 ---
 
@@ -36,9 +40,11 @@ Rather than treating each node as a separate manual access target, the jump box 
 ```text
 Admin Device
   ↓
-SSH to Jump Box
+SSH Access
   ↓
-SSH to Internal Pi-hole Nodes
+Primary Admin Node / Jump Path
+  ↓
+Internal Pi-hole Nodes
   ├── ashpi-1
   └── ashpi-2
 ```
@@ -47,23 +53,24 @@ SSH to Internal Pi-hole Nodes
 
 ## ✅ What Was Implemented
 
-The jump box workflow included:
+The access workflow included:
 
-- configuring SSH access to a designated administration host
-- validating connectivity from the jump box to internal Pi-hole nodes
-- confirming access to ashpi-1
-- confirming access to ashpi-2
-- using the jump box as a stable admin path for HA DNS work
+- generating an SSH key for node-to-node access
+- copying the SSH key to the secondary Pi-hole node
+- validating passwordless SSH access
+- confirming that administrative commands could be run without repeated password prompts
+- supporting Gravity Sync replication between Pi-hole nodes
 
 ---
 
 ## 🔑 Why This Matters
 
-Using a jump box improves the structure of the project because it:
+Using a cleaner SSH workflow improves the structure of the project because it:
 
 - centralizes administration
 - keeps SSH workflows more consistent
 - supports repeatable maintenance tasks
+- allows Gravity Sync to replicate configuration reliably
 - fits naturally with future remote access hardening
 - prepares the lab for later segmentation and admin network design
 
@@ -73,9 +80,9 @@ Using a jump box improves the structure of the project because it:
 
 A typical workflow looks like this:
 
-1. SSH into the jump box
+1. SSH into the administration system
 2. verify connectivity to the target Pi
-3. SSH from the jump box into the desired node
+3. SSH into the desired node
 4. perform maintenance, validation, or troubleshooting
 5. exit back through the same path
 
@@ -85,35 +92,31 @@ A typical workflow looks like this:
 
 Administrative access was considered successful after confirming:
 
-- the jump box was reachable
-- ashpi-1 was reachable from the jump box
-- ashpi-2 was reachable from the jump box
-- administrative commands could be run successfully on both nodes
+- SSH key generation completed
+- SSH key was copied to ashpi-2
+- passwordless SSH worked successfully
+- Gravity Sync could communicate between nodes
+- administrative commands could be run successfully
 
 ---
 
-## 📸 Suggested Screenshots
+## 📸 Validation Screenshots
 
-Add screenshots that prove the workflow clearly:
+The screenshots below confirm the SSH trust workflow used during Phase 3.
 
-- SSH session into the jump box
-- SSH from jump box to ashpi-1
-- SSH from jump box to ashpi-2
-- `hostname` output confirming the correct target node
-- successful command execution from the jump box path
+![Keygen for Pi sync](../../screenshots/phase-3/4-keygen-for-pi-sync.png)
 
-Example image references:
+![Copy key to pi2](../../screenshots/phase-3/5-copy-key-to-pi2.png)
 
-![Jump box access](../../screenshots/phase-3/jump-box-access.png)
-![Jump box to ashpi-1](../../screenshots/phase-3/jump-box-to-ashpi1.png)
-![Jump box to ashpi-2](../../screenshots/phase-3/jump-box-to-ashpi2.png)
+![SSH no password confirmation](../../screenshots/phase-3/6-ssh-nopassword-confirmation.png)
 
 ---
 
 ## 🧠 Lessons Learned
 
 - centralizing administration makes node management cleaner
-- a jump box simplifies repeatable SSH workflows
+- SSH key-based authentication simplifies repeatable workflows
+- Gravity Sync depends on reliable SSH trust between nodes
 - access design should be treated as part of infrastructure design, not just convenience
 - this model lays a good foundation for later remote access hardening
 
@@ -121,4 +124,4 @@ Example image references:
 
 ## 🚀 Next Step
 
-The jump box workflow provides a clean administrative path now and will fit naturally into the later **remote access** phase of the project.
+This access workflow supports the HA DNS layer now and will fit naturally into later remote access and segmentation phases.
