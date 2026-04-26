@@ -136,6 +136,18 @@
 
 ---
 
+## Proxmox and Virtualization 🖥️
+
+- Moving infrastructure services off a personal workstation makes the lab more reliable
+- Docker Desktop is useful for initial testing, but Linux VM hosting is cleaner for always-on services
+- Proxmox provides a stronger foundation for separating services, testing, and future workloads
+- VM resource planning matters because monitoring should stay lightweight but reliable
+- Migrating services requires validating more than container startup; dashboards, probes, alerts, and notifications all need to be tested
+- Secrets should be recreated on the destination host instead of copied into Git
+- Stopping the old stack after migration is an important validation step because it proves the new environment is actually serving production monitoring
+
+---
+
 ## Personal Takeaways
 
 - Building is one of the fastest ways to learn infrastructure
