@@ -81,6 +81,19 @@ This roadmap outlines the planned evolution of the home network infrastructure l
 
 ---
 
+## Phase 6 — Proxmox Host Environment & Monitoring Migration ✅
+
+- Deployed a Proxmox host environment
+- Created an Ubuntu VM for monitoring services
+- Installed Docker Engine on the Ubuntu VM
+- Migrated Grafana, Prometheus, Alertmanager, and Blackbox Exporter from Docker Desktop
+- Restored monitoring dashboards and alerting
+- Recreated local secret handling for Discord alerts
+- Validated Prometheus targets, Blackbox probes, dashboards, and Discord alert delivery
+- Removed the gaming PC dependency for monitoring uptime
+
+---
+
 ## Next Infrastructure Layer — Managed Network Segmentation 🌐
 
 Planned next phase:
