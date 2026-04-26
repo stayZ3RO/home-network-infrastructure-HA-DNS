@@ -91,7 +91,11 @@ ashpi-1 / ashpi-2
 - Discord webhook stored locally as a secret and excluded from Git
 - Secure remote administrative access implemented with Tailscale
 - Remote SSH access to both Pi nodes validated from outside the home network
-- No public SSH port forwarding required
+- No public SSH port forwarding required- Proxmox host environment deployed for virtualization
+- Ubuntu monitoring VM created under Proxmox
+- Monitoring stack migrated from gaming PC / Docker Desktop to Ubuntu VM / Docker Engine
+- Grafana, Prometheus, Alertmanager, and Blackbox Exporter restored on the VM
+- Monitoring no longer depends on the gaming PC being powered on
 
 ---
 
@@ -103,6 +107,7 @@ ashpi-1 / ashpi-2
 - ✅ Phase 3 — High Availability DNS
 - ✅ Phase 4 — Monitoring & Alerting
 - ✅ Phase 5 — Remote Access
+- ✅ Phase 6 — Proxmox Host Environment & Monitoring Migration
 
 ---
 
@@ -145,6 +150,13 @@ ashpi-1 / ashpi-2
 - [Phase 5 – Remote Access Overview](docs/phase-5-remote-access/overview.md)
 - [Phase 5 – Step-by-Step Guide](docs/phase-5-remote-access/step-by-step.md)
 - [Phase 5 – Validation](docs/phase-5-remote-access/validation.md)
+
+### Phase 6 — Proxmox Host Environment & Monitoring Migration
+
+- [Phase 6 – Overview](docs/phase-6-proxmox-monitoring-migration/overview.md)
+- [Phase 6 – Step-by-Step Guide](docs/phase-6-proxmox-monitoring-migration/step-by-step.md)
+- [Phase 6 – Validation](docs/phase-6-proxmox-monitoring-migration/validation.md)
+- [Phase 6 – Diagrams](docs/phase-6-proxmox-monitoring-migration/diagrams.md)
 
 ---
 
@@ -201,6 +213,9 @@ ashpi-1 / ashpi-2
 - Secure remote administration
 - Real-world troubleshooting and validation
 - GitHub-based technical documentation
+- virtualization with Proxmox
+- service migration from workstation Docker Desktop to Linux VM Docker Engine
+- infrastructure service separation
 
 ---
 
