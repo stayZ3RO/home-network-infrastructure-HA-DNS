@@ -107,18 +107,6 @@ Planned next phase:
 - document firewall rules and VLAN behavior
 - validate DNS and monitoring across segmented networks
 
----
-
-## Dedicated Management and Virtualization Layer 🖥️
-
-Planned infrastructure expansion:
-
-- migrate monitoring to a dedicated always-on management host
-- introduce Proxmox on mini PC hardware
-- separate production services from test/dev services
-- host lightweight infrastructure services
-- evaluate backup and restore workflows
-- document service placement and resource allocation
 
 ---
 
