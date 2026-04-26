@@ -6,10 +6,11 @@ This document describes the alerting logic used during Phase 4.
 
 The main goal was to build alerts that are:
 
-* useful
-* low-noise
-* service-impact focused
-* aware of the difference between degraded redundancy and real outages
+- useful
+- low-noise
+- service-impact focused
+- aware of the difference between degraded redundancy and real outages
+- routed to Discord through Alertmanager
 
 ---
 
@@ -21,11 +22,12 @@ The alerting model used in this phase was based on a simple principle:
 
 That means:
 
-* a healthy failover should not be treated like a critical outage
-* losing one node should be treated as degraded redundancy, not total failure
-* losing the VIP should be treated as the primary DNS service outage condition
+- a healthy failover should not be treated like a critical outage
+- losing one node should be treated as degraded redundancy, not total failure
+- losing the VIP should be treated as the primary DNS service outage condition
+- notification delivery should be useful without creating unnecessary noise
 
-This made the alerts easier to trust and reduced unnecessary noise.
+This made the alerts easier to trust.
 
 ---
 
@@ -55,7 +57,7 @@ Detect when the HA DNS VIP is no longer answering DNS probes.
 
 **Type**
 
-* Critical
+- Critical
 
 **Why it matters**
 
@@ -71,7 +73,7 @@ Detect when one monitored Raspberry Pi node is no longer reachable through Node 
 
 **Type**
 
-* Warning
+- Warning
 
 **Why it matters**
 
@@ -87,7 +89,7 @@ Detect when both monitored Raspberry Pi nodes are unreachable.
 
 **Type**
 
-* Critical
+- Critical
 
 **Why it matters**
 
@@ -103,7 +105,7 @@ Detect elevated DNS probe response time for the VIP over a sustained window.
 
 **Type**
 
-* Warning
+- Warning
 
 **Why it matters**
 
@@ -119,7 +121,7 @@ Detect when direct probing of one Pi-hole DNS endpoint fails.
 
 **Type**
 
-* Warning
+- Warning
 
 **Why it matters**
 
@@ -133,12 +135,109 @@ Each alert rule used a `for:` duration so alerts would not fire immediately on a
 
 Examples:
 
-* `1m` for VIP DNS down
-* `2m` for single node down
-* `10m` for elevated DNS latency
-* `15m` for CPU, memory, and disk pressure conditions
+- `1m` for VIP DNS down
+- `2m` for single node down
+- `10m` for elevated DNS latency
+- `15m` for CPU, memory, and disk pressure conditions
 
-This made the alert set much cleaner and reduced flapping.
+This made the alert set cleaner and reduced flapping.
+
+---
+
+## Alertmanager Routing 🔔
+
+Alertmanager was configured to route Prometheus alerts to Discord.
+
+The alert path is:
+
+```text
+Prometheus alert.rules.yml
+        ↓
+Alertmanager
+        ↓
+Discord webhook
+        ↓
+homelab-alerts
+```
+
+### Discord Receiver
+
+The receiver name inside Alertmanager does not need to match the Discord server name. It only needs to match the route configuration.
+
+Example:
+
+```yaml
+route:
+  receiver: discord-home-lab
+
+receivers:
+  - name: discord-home-lab
+```
+
+The Discord server/channel destination is controlled by the webhook URL.
+
+---
+
+## Discord Webhook Secret Handling 🔐
+
+The Discord webhook URL is stored locally on the monitoring host.
+
+### Host path
+
+```text
+alertmanager/secrets/discord_webhook_url
+```
+
+### Container path
+
+```text
+/etc/alertmanager/secrets/discord_webhook_url
+```
+
+### Docker Compose mount
+
+```yaml
+- ./alertmanager/secrets:/etc/alertmanager/secrets:ro
+```
+
+### Alertmanager config
+
+```yaml
+discord_configs:
+  - webhook_url_file: /etc/alertmanager/secrets/discord_webhook_url
+    send_resolved: true
+```
+
+The secret file is excluded from Git using `.gitignore`.
+
+```gitignore
+# Alertmanager secrets
+alertmanager/secrets/
+*.secret
+.env
+```
+
+---
+
+## Discord Alert Delivery Validation ✅
+
+Discord alert delivery was validated by sending a manual test alert directly to Alertmanager.
+
+This confirmed:
+
+- the webhook file existed on the host
+- the webhook file was mounted into the Alertmanager container
+- Alertmanager could read the webhook file
+- Alertmanager could send the firing alert to Discord
+- resolved alert delivery was enabled with `send_resolved: true`
+
+A key troubleshooting step was recreating the Alertmanager container after adding the new secret mount:
+
+```bash
+docker compose up -d --force-recreate alertmanager
+```
+
+A normal restart was not enough because the container needed to be recreated for the new volume mount to appear.
 
 ---
 
@@ -152,12 +251,16 @@ A full pending → firing → cleared test was performed by stopping and restori
 
 This confirmed:
 
-* the rule loaded successfully
-* the `for:` timer behaved correctly
-* the alert cleared correctly after recovery
+- the rule loaded successfully
+- the `for:` timer behaved correctly
+- the alert fired correctly
+- the alert cleared correctly after recovery
+- Discord notification routing worked through Alertmanager
 
 ![Grafana test alert](../../screenshots/phase-4/16-grafana-test-alert.png)
+
 ![Single node down alert firing](../../screenshots/phase-4/18-single-node-down-firing.png)
+
 ![Single node down alert cleared](../../screenshots/phase-4/19-single-node-down-cleared.png)
 
 ---
@@ -168,18 +271,19 @@ A keepalived failover test was performed during Phase 4 to confirm that monitori
 
 ### Expected behavior during healthy failover
 
-* the VIP moves to the standby node
-* DNS service through the VIP remains healthy
-* `VIPDNSDown` does **not** fire
-* dashboards continue to show service continuity
+- the VIP moves to the standby node
+- DNS service through the VIP remains healthy
+- `VIPDNSDown` does not fire
+- dashboards continue to show service continuity
+- Discord does not receive a false critical VIP outage alert
 
 ### Why this matters
 
 This confirms that the monitoring stack can distinguish between:
 
-* a real outage
-* a degraded redundancy event
-* a healthy HA failover
+- a real outage
+- a degraded redundancy event
+- a healthy HA failover
 
 That distinction is one of the most important outcomes of Phase 4.
 
@@ -201,11 +305,11 @@ This gives a quick summary of alert state without leaving the dashboard view.
 
 Later improvements could include:
 
-* notification routing beyond the local UI
-* grouped alert handling by severity
-* maintenance silencing
-* notification integration for email, webhook, or chat tools
-* more advanced failover-state alert logic
+- additional Discord routing by severity
+- separate notification channels for warning and critical alerts
+- maintenance silencing
+- alert templates with cleaner summaries
+- more advanced failover-state alert logic
 
 ---
 
@@ -213,7 +317,8 @@ Later improvements could include:
 
 The Phase 4 alerting implementation successfully delivered:
 
-* useful warning and critical conditions
-* a cleaner low-noise alert set
-* validated alert lifecycle behavior
-* correct interpretation of healthy HA failover
+- useful warning and critical conditions
+- a cleaner low-noise alert set
+- validated alert lifecycle behavior
+- Alertmanager-based Discord alert delivery
+- correct interpretation of healthy HA failover
