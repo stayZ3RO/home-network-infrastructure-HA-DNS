@@ -6,8 +6,8 @@ This document describes the Grafana dashboards created during Phase 4.
 
 Two dashboards were built:
 
-* **Phase 4 — Node Health**
-* **Phase 4 — DNS & Failover**
+- **Phase 4 — Node Health**
+- **Phase 4 — DNS & Failover**
 
 These dashboards were designed to provide quick operational visibility without creating unnecessary noise.
 
@@ -31,12 +31,12 @@ up{job="node"}
 
 **Visualization**
 
-* Stat
+- Stat
 
 **Configuration notes**
 
-* query type set to **Instant**
-* calculation set to **Last not null**
+- query type set to **Instant**
+- calculation set to **Last not null**
 
 ---
 
@@ -54,7 +54,7 @@ Shows CPU utilization trend over time for both nodes.
 
 **Visualization**
 
-* Time series
+- Time series
 
 ---
 
@@ -72,7 +72,7 @@ Shows memory usage trend over time.
 
 **Visualization**
 
-* Time series
+- Time series
 
 ---
 
@@ -90,7 +90,7 @@ Shows the remaining free space percentage on the root filesystem.
 
 **Visualization**
 
-* Time series
+- Time series
 
 ---
 
@@ -108,14 +108,14 @@ time() - node_boot_time_seconds{job="node"}
 
 **Visualization**
 
-* Stat
+- Stat
 
 **Configuration notes**
 
-* query type set to **Instant**
-* calculation set to **Last not null**
-* unit set to **duration (s)**
-* neutral color used to avoid treating high uptime as a failure condition
+- query type set to **Instant**
+- calculation set to **Last not null**
+- unit set to **duration (s)**
+- neutral color used to avoid treating high uptime as a failure condition
 
 ![Node Health dashboard](../../screenshots/phase-4/14-node-health-dashboard.png)
 
@@ -139,12 +139,12 @@ probe_success{job="dns_vip"}
 
 **Visualization**
 
-* Stat
+- Stat
 
 **Configuration notes**
 
-* query type set to **Instant**
-* calculation set to **Last not null**
+- query type set to **Instant**
+- calculation set to **Last not null**
 
 ---
 
@@ -162,12 +162,12 @@ probe_success{job="dns_nodes"}
 
 **Visualization**
 
-* Stat
+- Stat
 
 **Configuration notes**
 
-* query type set to **Instant**
-* calculation set to **Last not null**
+- query type set to **Instant**
+- calculation set to **Last not null**
 
 ---
 
@@ -185,7 +185,7 @@ probe_duration_seconds{job="dns_vip"}
 
 **Visualization**
 
-* Time series
+- Time series
 
 ---
 
@@ -203,7 +203,7 @@ probe_duration_seconds{job="dns_nodes"}
 
 **Visualization**
 
-* Time series
+- Time series
 
 ---
 
@@ -215,7 +215,7 @@ Shows currently pending or firing alerts related to the monitoring stack and HA 
 
 **Visualization**
 
-* Alert list
+- Alert list
 
 ![DNS & Failover dashboard](../../screenshots/phase-4/15-dns-failover-dashboard.png)
 
@@ -225,51 +225,42 @@ Shows currently pending or firing alerts related to the monitoring stack and HA 
 
 Several cleanup adjustments were made after the initial build:
 
-* stat panels were switched to **Instant** mode
-* stat panels used **Last not null** to avoid showing historical placeholder data
-* dashboard time ranges were adjusted to reduce confusion from old bad series
-* uptime styling was changed to avoid showing large uptime values as failures
+- stat panels were switched to **Instant** mode
+- stat panels used **Last not null** to avoid showing historical placeholder data
+- dashboard time ranges were adjusted to reduce confusion from old bad series
+- uptime styling was changed to avoid showing large uptime values as failures
 
 ![Grafana up query](../../screenshots/phase-4/11-grafana-up-query.png)
+
 ![Grafana probe_success query](../../screenshots/phase-4/12-grafana-probe-success-query.png)
 
 ---
 
-## Why These Dashboards Matter
+## Operational Use
 
-These two dashboards provide both layers of visibility needed for the environment:
+These two dashboards provide both layers of visibility needed for the environment.
 
 ### Node Health
 
 Answers:
 
-* are both Raspberry Pi nodes up?
-* are CPU, memory, and disk conditions healthy?
-* has either node rebooted?
+- are both Raspberry Pi nodes up?
+- are CPU, memory, and disk conditions healthy?
+- has either node rebooted?
 
 ### DNS & Failover
 
 Answers:
 
-* is the VIP currently healthy?
-* are both direct DNS nodes healthy?
-* is probe latency normal?
-* are any relevant alerts active?
-* did failover preserve DNS availability?
+- is the VIP currently healthy?
+- are both direct DNS nodes healthy?
+- is probe latency normal?
+- are any relevant alerts active?
+- did failover preserve DNS availability?
 
 ![Dashboards healthy before failover](../../screenshots/phase-4/22-dashboards-healthy-before-failover.png)
+
 ![DNS dashboard during failover](../../screenshots/phase-4/27-dns-dashboard-during-failover.png)
-
----
-
-## 📸 Suggested Screenshots
-
-Include screenshots such as:
-
-* completed Node Health dashboard
-* completed DNS & Failover dashboard
-* cleaned stat panels using Instant mode
-* Active Alerts panel during testing
 
 ---
 
@@ -277,7 +268,8 @@ Include screenshots such as:
 
 The dashboards created in Phase 4 provide:
 
-* quick host visibility
-* quick DNS service visibility
-* useful trend data over time
-* a cleaner operational view of HA behavior during failover
+- quick host visibility
+- quick DNS service visibility
+- useful trend data over time
+- active alert visibility
+- a cleaner operational view of HA behavior during failover
