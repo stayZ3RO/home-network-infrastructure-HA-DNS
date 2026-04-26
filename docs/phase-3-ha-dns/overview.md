@@ -10,7 +10,7 @@ To remove that single point of failure, Phase 3 introduced:
 
 - a second Raspberry Pi DNS node
 - Gravity Sync for Pi-hole replication
-- keepalived for virtual IP (VIP) failover
+- keepalived for Virtual IP failover
 - Unbound on both nodes for recursive DNS resolution
 - validation testing for failover and DNS continuity
 
@@ -22,7 +22,7 @@ The goals of this phase were to:
 
 - remove the single-node DNS dependency
 - keep Pi-hole configuration synchronized across both nodes
-- provide seamless DNS failover through a shared virtual IP
+- provide seamless DNS failover through a shared Virtual IP
 - add local recursive DNS resolution with Unbound
 - validate that DNS stays functional during failover
 
@@ -46,13 +46,13 @@ Gravity Sync keeps both Pi-hole nodes aligned by replicating important Pi-hole c
 This helps ensure that:
 
 - blocklists stay consistent
-- allowlists and deny lists stay consistent
+- allowlists and denylists stay consistent
 - local DNS records stay consistent
 - both nodes behave the same during failover
 
 ### keepalived ⚖️
 
-keepalived provides the **virtual IP (VIP)** that clients use as their DNS target.
+keepalived provides the **Virtual IP**, or **VIP**, that clients use as their DNS target.
 
 Instead of pointing devices directly to one Pi-hole node, clients use the VIP. If the active node fails, the VIP moves to the secondary node.
 
@@ -60,7 +60,7 @@ Instead of pointing devices directly to one Pi-hole node, clients use the VIP. I
 
 Unbound was added to both Pi-hole nodes to provide **local recursive DNS resolution**.
 
-This means each Pi-hole node can resolve DNS queries directly rather than depending on a third-party public upstream DNS provider.
+This means each Pi-hole node can resolve DNS queries directly instead of depending on a public upstream DNS provider.
 
 ---
 
@@ -75,13 +75,13 @@ AT&T Fiber
   ↓
 ONT
   ↓
-AT&T Gateway (IP Passthrough)
+AT&T Gateway / IP Passthrough
   ↓
 Deco Mesh Router
   ↓
 Clients
   ↓
-Virtual IP (VIP)
+Virtual IP / VIP
   ↓
 Active Pi-hole Node
   ↓
@@ -98,14 +98,57 @@ This phase included the following work:
 
 - deployed a secondary Raspberry Pi node
 - installed Pi-hole on both Raspberry Pi nodes
+- configured passwordless SSH between nodes
 - configured Gravity Sync between nodes
-- configured keepalived with a shared virtual IP
+- configured keepalived with a shared Virtual IP
 - validated VIP ownership and failover behavior
 - installed Unbound on both Pi-hole nodes
 - configured each Pi-hole instance to use its own local Unbound resolver
 - validated DNS recursion on both nodes
 - validated DNS resolution through the VIP
 - validated recursive DNS continuity during failover
+
+---
+
+## 📸 Implementation Evidence
+
+### Secondary Pi Preparation
+
+![Pi 2 prep](../../screenshots/phase-3/1-pi2-prep.png)
+
+### Gravity Sync Validation
+
+![Gravity Sync config complete](../../screenshots/phase-3/7-gravity-sync-config-complete.png)
+
+![Gravity Sync push confirmed](../../screenshots/phase-3/8-gravity-sync-push-confirmed.png)
+
+![Gravity Sync compare confirmed](../../screenshots/phase-3/9-gravity-sync-compare-confirmed.png)
+
+### keepalived and VIP Validation
+
+![VIP assigned primary node](../../screenshots/phase-3/12-vip-assigned-primary-node.png)
+
+![VIP active on primary node](../../screenshots/phase-3/13-vip-active-on-primary-node.png)
+
+### Failover Validation
+
+![Before failover primary active](../../screenshots/phase-3/14-before-failover-primary-active.png)
+
+![Failover triggered](../../screenshots/phase-3/15-failover-triggered.png)
+
+![After failover secondary active](../../screenshots/phase-3/16-after-failover-secondary-active.png)
+
+![DNS active after failover](../../screenshots/phase-3/17-dns-active-after-failover.png)
+
+### Unbound Validation
+
+![Unbound active on pi1](../../screenshots/phase-3/20-unbound-active-on-pi1.png)
+
+![Pi 2 Unbound active](../../screenshots/phase-3/24-pi2-unbound-active.png)
+
+![Client DNS test after failover](../../screenshots/phase-3/34-client-dns-test-after-failover.png)
+
+![Ad block test after failover](../../screenshots/phase-3/35-adblock-test-after-failover.png)
 
 ---
 
@@ -121,41 +164,17 @@ Phase 3 was considered successful after confirming:
 - Pi-hole filtering still worked after switching to Unbound
 - clients could resolve DNS using the VIP
 - DNS recursion continued to work after failover
-
----
-
-## 📸 Suggested Screenshots
-
-Add the screenshots that best prove the final state of the environment:
-
-- secondary Pi added to the network
-- Gravity Sync installed and verified
-- VIP active on the primary node
-- VIP moved to the secondary node during failover
-- Unbound running on ashpi-1
-- Unbound running on ashpi-2
-- direct Unbound DNS test on ashpi-1
-- direct Unbound DNS test on ashpi-2
-- Pi-hole upstream DNS set to `127.0.0.1#5335` on ashpi-1
-- Pi-hole upstream DNS set to `127.0.0.1#5335` on ashpi-2
-- successful DNS resolution through the VIP
-- successful DNS recursion after failover
-
-Example image references:
-
-![VIP on primary](../../screenshots/phase-3/vip-on-primary.png)
-![VIP failover to secondary](../../screenshots/phase-3/vip-failover-to-secondary.png)
-![Unbound ashpi-1 status](../../screenshots/phase-3/unbound-status-ashpi1.png)
-![Unbound ashpi-2 status](../../screenshots/phase-3/unbound-status-ashpi2.png)
+- ad blocking continued after failover
 
 ---
 
 ## 🧠 Lessons Learned
 
 - high availability requires more than just adding a second node
-- configuration consistency matters just as much as node redundancy
+- configuration consistency matters as much as node redundancy
 - failover must be tested, not assumed
 - each Pi-hole node should use its own local Unbound instance
+- the VIP should sit outside the DHCP lease range
 - adding Unbound made the DNS layer more complete before moving into monitoring
 
 ---
