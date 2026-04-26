@@ -6,128 +6,223 @@ This document captures the validation steps used to confirm that secure remote a
 
 The validation process focused on:
 
-* successful device enrollment into the tailnet
-* successful tailnet connectivity to both Raspberry Pi nodes
-* successful SSH over Tailscale
-* successful off-site remote administration
+- successful device enrollment into the tailnet
+- successful Raspberry Pi enrollment
+- successful tailnet visibility
+- SSH service readiness
+- secure remote administration without public SSH exposure
 
 ---
 
-## Validation 1 — Tailnet Enrollment 🌐
+## Validation 1 — Tailnet Creation 🌐
 
 ### Validation performed
 
-Confirmed the following devices successfully joined the tailnet:
-
-* gaming PC
-* laptop
-* `ashpi-1`
-* `ashpi-2`
-
-### Result
-
-Passed ✅
-
----
-
-## Validation 2 — Tailnet Connectivity 📡
-
-### Validation commands
-
-```bash
-tailscale ping ashpi-1
-tailscale ping ashpi-2
-```
+Confirmed that the Tailscale account and tailnet were available for device enrollment.
 
 ### Expected result
 
-Both Raspberry Pi nodes should respond successfully inside the tailnet.
+The Tailscale admin console should prompt for the first device and then show the Machines view.
 
 ### Result
 
 Passed ✅
 
-Both Pi nodes returned successful `tailscale ping` responses.
+![Tailscale first device setup](../../screenshots/phase-5/01-tailscale-first-device-setup.png)
+
+![Tailnet before devices were added](../../screenshots/phase-5/02-tailscale-machines-empty-state.png)
 
 ---
 
-## Validation 3 — SSH to ashpi-1 🔐
-
-### Validation command
-
-```bash
-ssh <pi-username>@ashpi-1
-```
-
-### Expected result
-
-A successful remote shell session should open to `ashpi-1`.
-
-### Verification commands run after login
-
-```bash
-hostname
-ip a
-```
-
-### Result
-
-Passed ✅
-
-SSH to `ashpi-1` over Tailscale succeeded.
-
----
-
-## Validation 4 — SSH to ashpi-2 🔐
-
-### Validation command
-
-```bash
-ssh <pi-username>@ashpi-2
-```
-
-### Expected result
-
-A successful remote shell session should open to `ashpi-2`.
-
-### Verification commands run after login
-
-```bash
-hostname
-ip a
-```
-
-### Result
-
-Passed ✅
-
-SSH to `ashpi-2` over Tailscale succeeded.
-
----
-
-## Validation 5 — Off-Site Remote Access 📶
+## Validation 2 — Windows Admin Device Enrollment 💻
 
 ### Validation performed
 
-Moved the admin endpoint off the home network using a phone hotspot, then repeated remote access testing.
+Confirmed that the first Windows admin endpoint joined the tailnet.
 
 ### Expected result
 
-The admin endpoint should remain connected to the tailnet and still be able to SSH into both Raspberry Pi nodes.
+The Windows desktop should appear in the Tailscale Machines list.
 
 ### Result
 
 Passed ✅
 
-Remote SSH access to the Pi nodes worked successfully from outside the home network.
+![Windows desktop added to tailnet](../../screenshots/phase-5/03-windows-desktop-added-to-tailnet.png)
 
 ---
 
-## Validation 6 — No Public SSH Exposure 🚫
+## Validation 3 — Second Admin Device Enrollment 🖥️
 
 ### Validation performed
 
-Confirmed that the secure remote access design did not require public SSH port forwarding.
+Confirmed that a second Windows admin endpoint joined the tailnet.
+
+### Expected result
+
+Both Windows admin devices should appear in the Machines list.
+
+### Result
+
+Passed ✅
+
+![Second Windows admin device added to tailnet](../../screenshots/phase-5/04-second-windows-device-added-to-tailnet.png)
+
+---
+
+## Validation 4 — ashpi-1 Tailnet Enrollment 📡
+
+### Validation performed
+
+Installed and authenticated Tailscale on `ashpi-1`.
+
+### Expected result
+
+`ashpi-1` should:
+
+- receive a Tailscale IP address
+- appear in `tailscale status`
+- appear in the Tailscale admin console
+- show the correct hostname
+
+### Result
+
+Passed ✅
+
+![Tailscale installation started on ashpi-1](../../screenshots/phase-5/05-ashpi-1-tailscale-install-started.png)
+
+![ashpi-1 authenticated and visible in Tailscale status](../../screenshots/phase-5/06-ashpi-1-tailscale-authenticated-status.png)
+
+![ashpi-1 visible in Tailscale admin console](../../screenshots/phase-5/07-ashpi-1-visible-in-admin-console.png)
+
+---
+
+## Validation 5 — ashpi-2 Tailnet Enrollment 📡
+
+### Validation performed
+
+Installed and authenticated Tailscale on `ashpi-2`.
+
+### Expected result
+
+`ashpi-2` should:
+
+- receive a Tailscale IP address
+- appear in `tailscale status`
+- appear in the Tailscale admin console
+- show the correct hostname
+
+### Result
+
+Passed ✅
+
+![Tailscale installation and authentication on ashpi-2](../../screenshots/phase-5/08-ashpi-2-tailscale-install-authenticated.png)
+
+![ashpi-2 authenticated and visible in Tailscale status](../../screenshots/phase-5/09-ashpi-2-tailscale-status.png)
+
+---
+
+## Validation 6 — All Core Devices Visible in Tailnet ✅
+
+### Validation performed
+
+Confirmed that all intended devices appeared in the Tailscale Machines list.
+
+### Expected result
+
+The admin console should show:
+
+- Windows desktop
+- second Windows admin device
+- `ashpi-1`
+- `ashpi-2`
+
+### Result
+
+Passed ✅
+
+![All core devices visible in the tailnet](../../screenshots/phase-5/10-all-core-devices-visible-in-tailnet.png)
+
+---
+
+## Validation 7 — Tailscale SSH Enabled 🔐
+
+### Validation performed
+
+Enabled Tailscale SSH on both Raspberry Pi nodes.
+
+### Commands used
+
+```bash
+sudo tailscale set --ssh
+```
+
+### Expected result
+
+The command should complete successfully on each Pi node.
+
+### Result
+
+Passed ✅
+
+![Tailscale SSH enabled on ashpi-1](../../screenshots/phase-5/11-ashpi-1-tailscale-ssh-enabled.png)
+
+![Tailscale SSH enabled on ashpi-2](../../screenshots/phase-5/12-ashpi-2-tailscale-ssh-enabled.png)
+
+---
+
+## Validation 8 — SSH Service Status on Pi Nodes 🧪
+
+### Validation performed
+
+Confirmed that the SSH service was enabled and running on both Pi nodes.
+
+### Command used
+
+```bash
+sudo systemctl status ssh
+```
+
+### Expected result
+
+The SSH service should show:
+
+- `enabled`
+- `active (running)`
+
+### Result
+
+Passed ✅
+
+![SSH service active on ashpi-1](../../screenshots/phase-5/13-ashpi-1-ssh-service-active.png)
+
+![SSH service active on ashpi-2](../../screenshots/phase-5/14-ashpi-2-ssh-service-active.png)
+
+---
+
+## Validation 9 — Admin Endpoint Testing Note 📌
+
+### Validation performed
+
+Tested Tailscale commands from the admin endpoint environment.
+
+### Result
+
+Partially useful ✅
+
+The test showed that Ubuntu WSL on the Windows admin machine was not the authenticated Tailscale context.
+
+This clarified that the correct admin path was the Windows Tailscale client rather than a separate unauthenticated WSL Tailscale context.
+
+![Tailscale ping validation from admin device](../../screenshots/phase-5/15-tailscale-ping-validation-from-admin-device.png)
+
+---
+
+## Validation 10 — No Public SSH Exposure 🚫
+
+### Validation performed
+
+Confirmed that the remote access design did not require public SSH port forwarding.
 
 ### Expected result
 
@@ -141,27 +236,15 @@ The homelab remained remotely manageable without exposing SSH directly to the pu
 
 ---
 
-## 📸 Suggested Screenshots
-
-Recommended evidence for this validation document:
-
-* Tailscale admin console
-* `tailscale ping ashpi-1`
-* `tailscale ping ashpi-2`
-* SSH to `ashpi-1` over Tailscale
-* SSH to `ashpi-2` over Tailscale
-* off-site Tailscale connection
-* off-site SSH success
-
----
-
 ## 🏁 Conclusion
 
 Phase 5 validation confirmed that the homelab now has:
 
-* working secure remote access
-* private SSH administration through Tailscale
-* successful off-site access to both Raspberry Pi nodes
-* no need for public SSH exposure or router port forwarding
+- working secure remote access
+- Windows admin endpoints joined to the tailnet
+- both Raspberry Pi nodes joined to the tailnet
+- Tailscale SSH enabled on both Pi nodes
+- SSH service active on both Pi nodes
+- no need for public SSH exposure or router port forwarding
 
 This completes the secure remote access phase of the project.
