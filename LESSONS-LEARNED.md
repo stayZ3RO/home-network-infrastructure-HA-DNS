@@ -1,157 +1,128 @@
-# Lessons Learned 🧠
+# Lessons Learned
 
-## Network Foundation
-
-- Bridge mode does not always disable WiFi automatically
-- Double NAT can create inconsistent or misleading network behavior
-- Router and gateway roles need to be clearly separated
-- Planning IP structure early makes later expansion easier
+This document captures the technical lessons learned while building the Home Network Infrastructure Lab.
 
 ---
 
-## ISP and Edge Design
+## Network Control
 
-- Different ISPs handle passthrough and routing differently
-- Xfinity supports true bridge mode
-- AT&T requires IP Passthrough instead of traditional bridge mode
-- Fiber introduces the ONT as an additional infrastructure layer
-- Understanding the ISP handoff is critical before building internal services
-
----
-
-## DNS and Pi-hole
-
-- DNS must be enforced through DHCP to affect the full network
-- Devices may need to reconnect or renew leases before DNS changes take effect
-- Centralized DNS provides strong visibility into device and traffic behavior
-- Pi-hole adds both control and observability, not just ad blocking
+- Understanding the role of each device matters before making changes.
+- ISP gateways, routers, switches, DNS servers, and clients all have separate responsibilities.
+- A stable IP plan makes future expansion easier.
+- Documenting the baseline network helps reduce confusion during later changes.
 
 ---
 
-## High Availability DNS 🛡️
+## ISP Migration
 
-- A single Pi-hole instance still creates a single point of failure
-- High availability requires both redundancy and validation
-- Client simplicity matters, and a VIP helps by keeping one consistent DNS target
-- Failover should be tested deliberately rather than assumed from configuration alone
-- HA should be validated from the client perspective, not just from the node itself
-
----
-
-## Gravity Sync 🔄
-
-- Multiple Pi-hole nodes need synchronized configuration to behave consistently
-- HA is weaker if local DNS records, blocklists, or settings drift between nodes
-- Replication reduces manual effort and improves operational consistency
-- Configuration sync is a core part of HA, not just a convenience feature
+- Xfinity bridge mode and AT&T IP Passthrough solve similar problems differently.
+- ISP equipment behavior affects topology, NAT, routing, and troubleshooting.
+- Migrating ISPs is not just a speed change; it can change how the entire edge network is designed.
+- Updating diagrams after ISP changes helps prevent outdated assumptions.
 
 ---
 
-## keepalived and VIP Failover ⚖️
+## DNS Control
 
-- The standby node must be fully functional before failover testing
-- VIP movement alone is not enough; end-to-end DNS behavior also needs validation
-- Service ownership, failover, and successful query resolution should be tested together
-- HA should be validated from the client side to confirm real service continuity
-
----
-
-## Recursive DNS with Unbound 🌐
-
-- Running Unbound locally on each Pi-hole node removes reliance on third-party public upstream resolvers
-- Each Pi-hole node should use its own local Unbound instance to avoid introducing a new internal single point of failure
-- Recursive DNS should be tested both locally on each node and through the HA VIP path
-- Adding Unbound completed the core DNS service layer before moving on to monitoring
+- Centralized DNS gives better visibility into client behavior.
+- Pi-hole works best when DHCP consistently hands out the Pi-hole DNS address.
+- DNS changes can appear broken if clients keep old leases or cached DNS settings.
+- DNS should be treated as a core infrastructure service, not just an ad-blocking tool.
 
 ---
 
-## Monitoring and Alerting 📈
+## High Availability DNS
 
-- Metrics collection and service probing solve different problems
-- Node Exporter helps monitor host health, while Blackbox Exporter verifies service behavior from the outside
-- Monitoring should observe the service path, not just whether the host is alive
-- Healthy failover should not be treated as a service outage
-- Alerting becomes more useful when warning, critical, and informational conditions are separated clearly
-- `for:` windows reduce noise and help prevent flapping alerts
-- Grafana dashboards are useful for visibility, while Alertmanager is better suited for routing and notification delivery
-- Alertmanager routes should be tested directly before relying on production alert conditions
-- A temporary Docker host can work well for monitoring, but long term a dedicated always-on management host is the better design
+- A single Pi-hole creates a single point of failure.
+- Keepalived allows multiple nodes to share a virtual IP.
+- Gravity Sync keeps Pi-hole configuration consistent between nodes.
+- Unbound adds local recursive DNS capability.
+- Failover should be tested intentionally, not assumed.
 
 ---
 
-## Discord Alerting 🔔
+## Monitoring and Alerting
 
-- Discord webhooks are controlled by the webhook URL, not the Alertmanager receiver name
-- The Alertmanager receiver name only needs to match the route configuration
-- Webhook URLs should never be committed to GitHub
-- Storing the webhook in a local secret file keeps the configuration safer and cleaner
-- Mounting the secret into the container as read-only limits accidental modification
-- Adding a new Docker volume mount requires recreating the container, not just restarting it
-- Alertmanager logs are the fastest way to troubleshoot notification delivery failures
-- Testing with a manual Alertmanager API alert is cleaner than breaking a real service first
+- Monitoring makes infrastructure issues easier to see and explain.
+- Grafana provides useful visibility for both technical validation and documentation.
+- Prometheus is useful for collecting metrics over time.
+- Blackbox Exporter helps validate endpoint and DNS availability.
+- Alertmanager adds operational awareness instead of relying on manual checks.
 
 ---
 
-## Secure Remote Access 🔐
+## Remote Access
 
-- Secure remote administration does not require exposing SSH to the public internet
-- A tailnet-based access path is cleaner than maintaining router port forwards
-- Verifying remote access from outside the home network is more meaningful than only testing from inside the LAN
-- Basic SSH over Tailscale is enough to establish a strong Phase 5 implementation without adding more complexity immediately
-- Running Tailscale inside WSL is not necessary when the Windows host is already connected to the tailnet
-
----
-
-## Troubleshooting and Validation 🧪
-
-- Small misconfigurations can affect the behavior of the entire network
-- Pi-hole gravity errors can often be resolved by rebuilding or reapplying list data
-- Testing failure and recovery is just as important as testing the working state
-- Layered troubleshooting works best: network → node → service → client path
-- Validation needs to include normal operation, failover, monitoring behavior, alert delivery, and remote access
-- Logs should be checked before assuming a tool or service is broken
-- If a file exists on the host but not in a container, the issue is usually a volume mount or container recreation problem
+- Remote access should be secure by design.
+- Tailscale provides a safer remote access model without exposing internal services directly.
+- Remote SSH access should be tested from multiple devices.
+- Remote access becomes more valuable as the lab grows beyond a single device.
 
 ---
 
-## Documentation Lessons 📝
+## Proxmox and Virtualization
 
-- Good screenshots should prove configuration, status, and successful validation
-- Step-by-step guides are easier to follow when commands and outcomes stay grouped together
-- Keeping the same documentation structure across phases makes the repo easier to read and present
-- Screenshot-heavy walkthroughs should live in step-by-step or validation docs
-- Overview docs should stay cleaner and only show high-level proof points
-- Secrets, tokens, and webhook URLs should be redacted before screenshots are committed
-- Writing documentation helps turn lab work into something repeatable and reviewable
+- A dedicated virtualization host is better for always-on services than a gaming PC.
+- Proxmox makes the lab feel more like a real infrastructure environment.
+- Separating services into VMs and LXCs improves organization and recovery options.
+- The gaming PC should not be required for core infrastructure services.
+- VM/LXC backups are easier to manage when storage is planned early.
 
 ---
 
-## Infrastructure Thinking
+## Docker Migration
 
-- Systems should be built in layers: network → DNS → HA → monitoring → alerting → secure access
-- Reducing single points of failure should be part of the design from the beginning
-- Architecture decisions should support both resilience and operational simplicity
-- Alerting should reflect real service impact, not just every individual component state
-- Building first and refining later is often the fastest way to understand how infrastructure actually behaves
-
----
-
-## Proxmox and Virtualization 🖥️
-
-- Moving infrastructure services off a personal workstation makes the lab more reliable
-- Docker Desktop is useful for initial testing, but Linux VM hosting is cleaner for always-on services
-- Proxmox provides a stronger foundation for separating services, testing, and future workloads
-- VM resource planning matters because monitoring should stay lightweight but reliable
-- Migrating services requires validating more than container startup; dashboards, probes, alerts, and notifications all need to be tested
-- Secrets should be recreated on the destination host instead of copied into Git
-- Stopping the old stack after migration is an important validation step because it proves the new environment is actually serving production monitoring
+- Docker images are replaceable; persistent data is not.
+- Compose files, `.env` files, bind mounts, and named volumes are the critical backup items.
+- Stopping a stack before backing up volumes reduces risk of inconsistent data.
+- Restoring Grafana and Prometheus data requires restoring named Docker volumes correctly.
+- Moving monitoring to the Proxmox Docker VM removed the gaming PC dependency.
 
 ---
 
-## Personal Takeaways
+## Omada Controller and Network Management
 
-- Building is one of the fastest ways to learn infrastructure
-- Real troubleshooting creates deeper understanding than theory alone
-- Testing and documenting the work improves both technical knowledge and communication
-- Each phase of the project made the lab feel less like a home setup and more like a real infrastructure environment
-- Adding alerting and remote access made the lab more operational, not just functional
+- Running the Omada Controller as an LXC avoids needing a hardware controller.
+- The controller should have a static IP and be documented clearly.
+- Preconfiguring the ER605 before live cutover reduces downtime.
+- Adopting and staging the managed switch before cutover makes the transition safer.
+- Keeping the network flat before VLANs makes troubleshooting easier.
+
+---
+
+## Storage and Backups
+
+- Active workloads and backup storage should be planned separately.
+- HDD-backed storage is useful for backups, ISOs, templates, and archives.
+- Proxmox backups provide a cleaner recovery path for infrastructure services.
+- A service is not truly stable until there is a recovery plan.
+
+---
+
+## Cutover Planning
+
+- Router cutovers should be treated like maintenance windows.
+- Only one device should own the gateway IP at a time.
+- Router, DHCP, DNS, and Wi-Fi role changes should be done in a controlled order.
+- Deco AP mode should come after routing duties move to the ER605.
+- VLANs should not be introduced until the flat router/switch cutover is stable.
+
+---
+
+## VLAN Planning
+
+- VLANs are a security and organization tool, not something to rush into.
+- Management, production, lab, and IoT/guest traffic should eventually be separated.
+- Firewall rules are just as important as VLAN creation.
+- DNS across VLANs needs to be planned carefully so filtering still works.
+- Segmentation should be validated with real client tests.
+
+---
+
+## Documentation
+
+- Screenshots prove the work was actually completed.
+- Diagrams make the project easier to understand quickly.
+- Step-by-step documentation is useful for troubleshooting and future rebuilding.
+- Phase-based documentation keeps the project organized.
+- A clean README, roadmap, changelog, and lessons learned file make the repo stronger for professional review.

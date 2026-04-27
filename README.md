@@ -174,6 +174,12 @@ ashpi-1 / ashpi-2
 - [Phase 8 — VLAN Segmentation](diagrams/10-phase-8-vlan-segmentation.png)
 ---
 
+## Current Status
+
+For the latest phase status, architecture direction, and upcoming work, see:
+
+- [Current Project Status](CURRENT-STATUS.md)
+
 ## 🖥️ Hardware and Lab Systems
 
 - AT&T Fiber connection
