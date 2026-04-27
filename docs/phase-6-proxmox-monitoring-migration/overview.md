@@ -73,6 +73,42 @@ This provides a cleaner separation between personal workstation use and always-o
 
 ---
 
+---
+
+## Phase 6 Infrastructure Evidence
+
+The following screenshots validate the major infrastructure changes completed in this phase.
+
+### Proxmox Host
+
+![Proxmox node summary](../../screenshots/phase-6/03-proxmox-node-summary.png)
+
+The Proxmox host became the dedicated virtualization layer for the lab.
+
+### Omada Controller
+
+![Omada Controller dashboard](../../screenshots/phase-6/04-omada-controller-dashboard.png)
+
+The Omada Software Controller was deployed as an LXC container on Proxmox.
+
+### ER605 Router Preconfiguration
+
+![ER605 LAN DHCP Pi-hole DNS](../../screenshots/phase-6/06-er605-lan-dhcp-pihole-dns.png)
+
+The ER605 was preconfigured to preserve the existing LAN subnet and continue using the Pi-hole VIP as DNS.
+
+### Monitoring Stack Migration
+
+![Docker Compose monitoring stack running](../../screenshots/phase-6/08-docker-compose-monitoring-running.png)
+
+The monitoring stack was migrated from Docker Desktop on the gaming PC to Docker Engine on the Ubuntu VM.
+
+### Grafana Validation
+
+![Grafana running from Docker VM](../../screenshots/phase-6/09-grafana-running-from-docker-vm.png)
+
+Grafana was validated from the new Docker VM IP.
+
 ## 🖥️ Proxmox Host Role
 
 The Proxmox host provides the virtualization layer for the lab.
