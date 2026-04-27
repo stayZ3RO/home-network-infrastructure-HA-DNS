@@ -14,6 +14,7 @@ Phase 6 included:
 - migrating the monitoring stack from the gaming PC to Proxmox
 - validating Grafana from the new VM IP
 - confirming the gaming PC is no longer required for monitoring
+- pre-staging the managed switch in Omada
 
 ---
 
@@ -63,10 +64,6 @@ The Proxmox storage layout was reviewed to separate active workloads from backup
 ## Step 3 — Create the Omada Controller LXC
 
 An LXC container was created for the Omada Software Controller.
-
-### Container Purpose
-
-The Omada Controller provides centralized management for Omada network devices without requiring a hardware controller.
 
 ### Controller Details
 
@@ -414,6 +411,42 @@ Recommended backup mode:
 
 ---
 
+## Step 19 — Pre-Stage the Managed Switch
+
+The managed switch was connected to the existing working LAN before the Phase 7 cutover.
+
+The goal was to adopt the switch into Omada and validate basic connectivity before making it the core switch.
+
+### Temporary State
+
+| Item | Value |
+|---|---|
+| Temporary Switch IP | `192.168.68.59` |
+| Planned Final Switch IP | `192.168.68.2` |
+| Omada Controller | `192.168.68.10` |
+| VLAN State | Default LAN / VLAN 1 only |
+
+### Steps Completed
+
+1. Connected the managed switch to the existing working LAN.
+2. Opened Omada Controller at `https://192.168.68.10:8043`.
+3. Confirmed the switch appeared as pending adoption.
+4. Adopted the switch into Omada.
+5. Kept all ports on the default flat LAN.
+6. Tested a client through the switch.
+
+### Validation
+
+![Switch pending adoption](../../screenshots/phase-6/switch-prep/01-switch-pending-adoption.png)
+
+![Switch adopted in Omada](../../screenshots/phase-6/switch-prep/02-switch-adopted-in-omada.png)
+
+![Client test through managed switch](../../screenshots/phase-6/switch-prep/05-client-test-through-managed-switch.png)
+
+The switch was validated successfully and is ready to become the core switch during Phase 7.
+
+---
+
 ## Final State
 
 ```text
@@ -426,19 +459,16 @@ Proxmox Host - 192.168.68.80
     ├── Prometheus
     ├── Alertmanager
     └── Blackbox Exporter
+
+Managed Switch
+├── Temporary staging IP: 192.168.68.59
+└── Planned final management IP: 192.168.68.2
 ```
 
 ## Next Steps
 
-The next phase will move the ER605 into the live routing path.
+The next phase sequence is:
 
-Planned tasks:
-
-- Connect ER605 between the ISP gateway and LAN
-- Move DHCP/routing from Deco to ER605
-- Switch Deco mesh into AP mode
-- Validate internet access
-- Validate DHCP leases
-- Validate Pi-hole DNS through the VIP
-- Add managed switch later
-- Build VLAN segmentation in a future phase
+1. Phase 6.5 — RustDesk Remote Access Hardening
+2. Phase 7 — Managed Routing & Switching Cutover
+3. Phase 8 — VLAN Segmentation & Network Isolation
