@@ -74,10 +74,10 @@ The Omada Controller provides centralized management for Omada network devices w
 |---|---|
 | Type | LXC |
 | Service | Omada Software Controller |
-| IP Address | `192.168.68.62` |
+| IP Address | `192.168.68.10` |
 | Gateway | `192.168.68.1` |
 | DNS | `192.168.68.20` |
-| URL | `https://192.168.68.62:8043` |
+| URL | `https://192.168.68.10:8043` |
 
 ### Validation
 
@@ -114,7 +114,7 @@ Static reservations were created for core infrastructure devices.
 
 | Device | IP Address |
 |---|---:|
-| Omada Controller | `192.168.68.62` |
+| Omada Controller | `192.168.68.10` |
 | ashPi-1 | `192.168.68.60` |
 | ashPi-2 | `192.168.68.61` |
 | Proxmox Host | `192.168.68.80` |
@@ -418,7 +418,7 @@ Recommended backup mode:
 
 ```text
 Proxmox Host - 192.168.68.80
-├── Omada Controller LXC - 192.168.68.62
+├── Omada Controller LXC - 192.168.68.10
 │   └── Omada Software Controller
 │
 └── Ubuntu Docker VM - 192.168.68.81

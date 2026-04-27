@@ -44,7 +44,7 @@ After this phase, the monitoring stack runs on an Ubuntu Docker VM hosted by Pro
 
 ```text
 OptiPlex / Proxmox Host - 192.168.68.80
-├── Omada Controller LXC - 192.168.68.62
+├── Omada Controller LXC - 192.168.68.10
 │   └── Omada Software Controller
 │
 └── Ubuntu Docker VM - 192.168.68.81
@@ -64,7 +64,7 @@ The gaming PC is no longer required for always-on monitoring.
 | Pi-hole VIP | `192.168.68.20` | HA DNS endpoint |
 | ashPi-1 | `192.168.68.60` | Pi-hole / Unbound node 1 |
 | ashPi-2 | `192.168.68.61` | Pi-hole / Unbound node 2 |
-| Omada Controller LXC | `192.168.68.62` | Omada software controller |
+| Omada Controller LXC | `192.168.68.10` | Omada software controller |
 | Proxmox Host | `192.168.68.80` | Virtualization host |
 | Docker Monitoring VM | `192.168.68.81` | Monitoring stack |
 | DHCP Range | `192.168.68.100-200` | Client devices |
@@ -77,7 +77,7 @@ Current workloads:
 
 | Workload | Type | IP Address |
 |---|---|---:|
-| Omada Controller | LXC | `192.168.68.62` |
+| Omada Controller | LXC | `192.168.68.10` |
 | Docker Monitoring Stack | Ubuntu VM | `192.168.68.81` |
 
 The Proxmox host itself is managed at:
@@ -121,7 +121,7 @@ Purpose:
 The controller is reachable at:
 
 ```text
-https://192.168.68.62:8043
+https://192.168.68.10:8043
 ```
 
 ## ER605 Router Preconfiguration

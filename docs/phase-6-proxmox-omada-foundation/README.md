@@ -11,7 +11,7 @@ This phase moves always-on services away from a gaming PC and onto a dedicated v
 - Installed and configured Proxmox on a Dell OptiPlex
 - Assigned the Proxmox host a static IP: `192.168.68.80`
 - Created an Omada Controller LXC
-- Hosted the Omada Controller at `192.168.68.62`
+- Hosted the Omada Controller at `192.168.68.10`
 - Preconfigured the ER605 router for the existing LAN
 - Preserved the existing `192.168.68.0/24` network
 - Configured DHCP to use the Pi-hole VIP as DNS
@@ -41,7 +41,7 @@ Moving these services to Proxmox improves the environment by:
 | Pi-hole VIP | `192.168.68.20` | HA DNS endpoint |
 | ashPi-1 | `192.168.68.60` | Pi-hole / Unbound node 1 |
 | ashPi-2 | `192.168.68.61` | Pi-hole / Unbound node 2 |
-| Omada Controller LXC | `192.168.68.62` | Omada software controller |
+| Omada Controller LXC | `192.168.68.10` | Omada software controller |
 | Proxmox Host | `192.168.68.80` | Virtualization host |
 | Docker Monitoring VM | `192.168.68.81` | Monitoring stack |
 | DHCP Range | `192.168.68.100-200` | Client devices |
@@ -50,7 +50,7 @@ Moving these services to Proxmox improves the environment by:
 
 ```text
 OptiPlex / Proxmox Host - 192.168.68.80
-├── Omada Controller LXC - 192.168.68.62
+├── Omada Controller LXC - 192.168.68.10
 │   └── Omada Software Controller
 │
 └── Ubuntu Docker VM - 192.168.68.81
