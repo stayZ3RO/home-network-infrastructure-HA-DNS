@@ -36,7 +36,7 @@ After this phase, monitoring and network management services run from the Proxmo
 
 ```text
 OptiPlex / Proxmox Host - 192.168.68.80
-├── Omada Controller LXC - 192.168.68.62
+├── Omada Controller LXC - 192.168.68.10
 │   └── Omada Software Controller
 │
 └── Ubuntu Docker VM - 192.168.68.81
@@ -63,7 +63,7 @@ Pi-hole HA DNS
 
 Proxmox Infrastructure
 └── Proxmox Host - 192.168.68.80
-    ├── Omada Controller LXC - 192.168.68.62
+    ├── Omada Controller LXC - 192.168.68.10
     └── Docker Monitoring VM - 192.168.68.81
         ├── Grafana
         ├── Prometheus
