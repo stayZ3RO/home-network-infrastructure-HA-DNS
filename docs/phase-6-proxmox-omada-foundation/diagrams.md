@@ -10,7 +10,7 @@ Phase 6 moved supporting services from the gaming PC to the Proxmox host, introd
 
 ## Phase 6 Architecture Diagram
 
-![Phase 6 Proxmox and Omada Foundation](../../diagrams/phase-6-proxmox-omada-foundation.png)
+![Phase 6 Proxmox and Omada Foundation](../../diagrams/07-phase-6-proxmox-service-migration.png)
 
 ---
 
