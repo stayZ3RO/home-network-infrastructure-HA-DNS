@@ -56,19 +56,29 @@ The following services were migrated to the Ubuntu VM:
 
 ---
 
-## 📸 Key Result
+## Key Result
 
-The monitoring stack now runs from an Ubuntu VM hosted on Proxmox.
+The monitoring stack now runs from an Ubuntu VM hosted on Proxmox instead of Docker Desktop on the gaming PC.
 
-![Monitoring containers running on VM](../../screenshots/phase-6/10-monitoring-containers-running-on-vm.png)
+This phase also introduced the Omada Software Controller as an LXC container and preconfigured the ER605 router for the next network cutover.
 
-![Grafana accessible from VM IP](../../screenshots/phase-6/11-grafana-accessible-from-vm-ip.png)
+### Supporting Screenshots
 
+![Proxmox node summary](../../screenshots/phase-6/03-proxmox-node-summary.png)
+
+![Omada Controller dashboard](../../screenshots/phase-6/04-omada-controller-dashboard.png)
+
+![ER605 LAN DHCP Pi-hole DNS configuration](../../screenshots/phase-6/06-er605-lan-dhcp-pihole-dns.png)
+
+![Docker Compose monitoring stack running](../../screenshots/phase-6/08-docker-compose-monitoring-running.png)
+
+![Grafana running from Docker VM](../../screenshots/phase-6/09-grafana-running-from-docker-vm.png)
 ---
 
-## 📚 Documentation
+## Documentation
 
 - [Overview](./overview.md)
 - [Step-by-Step Guide](./step-by-step.md)
 - [Validation](./validation.md)
 - [Diagrams](./diagrams.md)
+- [Screenshots](./screenshots.md)
