@@ -160,10 +160,18 @@ ashpi-1 / ashpi-2
 
 ---
 
-## 🗺️ Network Diagram
+## Architecture Diagrams
 
-![Network Architecture](diagrams/network-architecture-phase-3.png)
-
+- [Phase 1 — Previous Network / Xfinity](diagrams/01-phase-1-previous-network-xfinity.png)
+- [Phase 1.5 — ISP Migration / AT&T Fiber](diagrams/02-phase-1-5-isp-migration-att.png)
+- [Phase 2 — DNS Control](diagrams/03-phase-2-dns-control.png)
+- [Phase 3 — High Availability DNS](diagrams/04-phase-3-ha-dns.png)
+- [Phase 4 — Monitoring & Alerting](diagrams/05-phase-4-monitoring-alerting.png)
+- [Phase 5 — Tailscale Remote Access](diagrams/06-phase-5-remote-access-tailscale.png)
+- [Phase 6 — Proxmox & Service Migration](diagrams/07-phase-6-proxmox-service-migration.png)
+- [Phase 6.5 — RustDesk on Proxmox](diagrams/08-phase-6-5-rustdesk-proxmox.png)
+- [Phase 7 — Managed Routing & Switching](diagrams/09-phase-7-managed-routing-switching.png)
+- [Phase 8 — VLAN Segmentation](diagrams/10-phase-8-vlan-segmentation.png)
 ---
 
 ## 🖥️ Hardware and Lab Systems
