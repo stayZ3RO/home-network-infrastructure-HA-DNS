@@ -1,26 +1,25 @@
-# Phase 6 — Validation 🧪
+# Phase 6 — Validation
 
-## 📖 Purpose
+## Purpose
 
-This document captures the validation steps used to confirm the Proxmox migration was successful.
+This document captures the validation steps used to confirm Phase 6 was successful.
 
-The validation focused on:
+Validation focused on:
 
 - Proxmox host readiness
-- Ubuntu VM readiness
-- Docker functionality
-- monitoring stack startup
-- Grafana access
-- Prometheus target health
-- Blackbox DNS probe health
-- Alertmanager and Discord alert delivery
+- Omada Controller LXC deployment
+- ER605 router preconfiguration
+- Docker monitoring VM readiness
+- monitoring stack migration
+- Grafana access from the new VM IP
+- Proxmox backup coverage
 - removal of the gaming PC dependency
 
 ---
 
-## Validation 1 — Proxmox Host Online 🖥️
+## Validation 1 — Proxmox Host Online
 
-### Expected result
+### Expected Result
 
 The Proxmox host should be reachable through the web interface and show healthy node status.
 
@@ -28,59 +27,86 @@ The Proxmox host should be reachable through the web interface and show healthy 
 
 Passed ✅
 
-![Proxmox host dashboard](../../screenshots/phase-6/01-proxmox-host-dashboard.png)
-
-![Proxmox node summary](../../screenshots/phase-6/02-proxmox-node-summary.png)
+![Proxmox node summary](../../screenshots/phase-6/03-proxmox-node-summary.png)
 
 ---
 
-## Validation 2 — Ubuntu Monitoring VM Created 🐧
+## Validation 2 — Proxmox Storage Layout
 
-### Expected result
+### Expected Result
 
-The Ubuntu monitoring VM should exist, boot successfully, and have assigned resources.
+The Proxmox host should have storage available for active workloads and backup storage.
 
 ### Result
 
 Passed ✅
 
-![Ubuntu monitoring VM created](../../screenshots/phase-6/03-ubuntu-monitoring-vm-created.png)
-
-![Ubuntu VM hardware resources](../../screenshots/phase-6/04-ubuntu-vm-hardware-resources.png)
-
-![Ubuntu VM console login](../../screenshots/phase-6/05-ubuntu-vm-console-login.png)
+![Proxmox storage layout](../../screenshots/phase-6/02-proxmox-storage-layout.png)
 
 ---
 
-## Validation 3 — Docker Installed on Ubuntu VM 🐳
+## Validation 3 — Omada Controller LXC Running
 
-### Expected result
+### Expected Result
 
-Docker and Docker Compose should run successfully inside the Ubuntu VM.
-
-### Commands used
-
-```bash
-docker --version
-docker compose version
-docker ps
-```
+The Omada Controller should run from an LXC container on Proxmox.
 
 ### Result
 
 Passed ✅
 
-![Docker installed on Ubuntu VM](../../screenshots/phase-6/06-docker-installed-on-ubuntu-vm.png)
+![Omada LXC package installation](../../screenshots/phase-6/01-omada-lxc-package-install.jpeg)
+
+![Omada Controller dashboard](../../screenshots/phase-6/04-omada-controller-dashboard.png)
 
 ---
 
-## Validation 4 — Monitoring Stack Running 🚀
+## Validation 4 — ER605 Router Preconfigured
 
-### Expected result
+### Expected Result
 
-The migrated monitoring containers should run successfully on the Ubuntu VM.
+The ER605 router should be preconfigured with the existing LAN IP plan before the physical cutover.
 
-### Expected containers
+### Expected Configuration
+
+| Setting | Value |
+|---|---|
+| LAN IP | `192.168.xx.x` |
+| Subnet Mask | `255.255.255.0` |
+| DHCP Range | `192.xxx.xx.xxx-192.xxx.xxx.xxx` |
+| Primary DNS | `192.168.xx.xx` |
+
+### Result
+
+Passed ✅
+
+![ER605 address reservations](../../screenshots/phase-6/05-er605-address-reservations.png)
+
+![ER605 LAN DHCP Pi-hole DNS](../../screenshots/phase-6/06-er605-lan-dhcp-pihole-dns.png)
+
+---
+
+## Validation 5 — Docker Monitoring VM Online
+
+### Expected Result
+
+The Ubuntu Docker VM should run on Proxmox and host the migrated monitoring stack.
+
+### Result
+
+Passed ✅
+
+![Docker VM summary](../../screenshots/phase-6/07-docker-vm-summary.png)
+
+---
+
+## Validation 6 — Monitoring Stack Running
+
+### Expected Result
+
+The migrated monitoring containers should run successfully on the Ubuntu Docker VM.
+
+### Expected Containers
 
 - Grafana
 - Prometheus
@@ -91,145 +117,17 @@ The migrated monitoring containers should run successfully on the Ubuntu VM.
 
 Passed ✅
 
-![Monitoring containers running on VM](../../screenshots/phase-6/10-monitoring-containers-running-on-vm.png)
+![Docker Compose monitoring stack running](../../screenshots/phase-6/08-docker-compose-monitoring-running.png)
 
 ---
 
-## Validation 5 — Grafana Accessible from VM IP 📊
+## Validation 7 — Grafana Accessible from Docker VM
 
-### Expected result
+### Expected Result
 
-Grafana should be reachable from the LAN using the Ubuntu VM IP address.
+Grafana should be reachable from the LAN using the Docker VM IP address.
 
-### Example
+### URL
 
 ```text
-http://<monitoring-vm-ip>:3000
-```
-
-### Result
-
-Passed ✅
-
-![Grafana accessible from VM IP](../../screenshots/phase-6/11-grafana-accessible-from-vm-ip.png)
-
----
-
-## Validation 6 — Prometheus Target Health 📡
-
-### Expected result
-
-Prometheus should show healthy scrape targets after migration.
-
-### Query used
-
-```promql
-up
-```
-
-### Result
-
-Passed ✅
-
-![Prometheus targets up after migration](../../screenshots/phase-6/12-prometheus-targets-up-after-migration.png)
-
----
-
-## Validation 7 — Blackbox DNS Probe Health 🌐
-
-### Expected result
-
-Blackbox probes should confirm DNS availability for the VIP and direct Pi-hole nodes.
-
-### Query used
-
-```promql
-probe_success
-```
-
-### Result
-
-Passed ✅
-
-![Blackbox probes healthy after migration](../../screenshots/phase-6/13-blackbox-probes-healthy-after-migration.png)
-
----
-
-## Validation 8 — Alertmanager and Discord Delivery 🔔
-
-### Expected result
-
-Alertmanager should continue routing alerts to Discord after the migration.
-
-### Validation performed
-
-- confirmed Alertmanager container was running
-- confirmed secret file was mounted into the container
-- sent manual test alert
-- confirmed Discord received the alert
-
-### Result
-
-Passed ✅
-
-![Alertmanager running after migration](../../screenshots/phase-6/14-alertmanager-running-after-migration.png)
-
-![Discord alert test after migration](../../screenshots/phase-6/17-discord-alert-test-after-migration.png)
-
----
-
-## Validation 9 — Dashboards Restored ✅
-
-### Expected result
-
-The Grafana dashboards should continue showing live data after migration.
-
-### Dashboards validated
-
-- Node Health
-- DNS & Failover
-
-### Result
-
-Passed ✅
-
-![Node Health dashboard after migration](../../screenshots/phase-6/15-node-health-dashboard-after-migration.png)
-
-![DNS Failover dashboard after migration](../../screenshots/phase-6/16-dns-failover-dashboard-after-migration.png)
-
----
-
-## Validation 10 — Gaming PC Dependency Removed 🛑
-
-### Expected result
-
-The old Docker Desktop monitoring stack on the gaming PC should no longer be required.
-
-### Validation performed
-
-- stopped the old monitoring containers on the gaming PC
-- confirmed Grafana still worked from the Ubuntu VM
-- confirmed Prometheus and Blackbox remained healthy
-- confirmed monitoring continued without Docker Desktop
-
-### Result
-
-Passed ✅
-
-![Gaming PC Docker stack stopped](../../screenshots/phase-6/18-gaming-pc-docker-stack-stopped.png)
-
----
-
-## 🏁 Conclusion
-
-Phase 6 validation confirmed that the monitoring stack successfully moved from the gaming PC to a Proxmox-hosted Ubuntu VM.
-
-The new design provides:
-
-- dedicated virtualized infrastructure
-- improved monitoring reliability
-- separation from the gaming PC
-- continued Grafana dashboard visibility
-- continued Prometheus metrics collection
-- continued Alertmanager and Discord alerting
-- a better foundation for future self-hosted services
+http://192.xxx.xx.xx:3000
