@@ -147,16 +147,16 @@ ashpi-1 / ashpi-2
 
 ### Phase 5 — Remote Access
 
-- [Phase 5 – Remote Access Overview](docs/phase-5-remote-access/overview.md)
-- [Phase 5 – Step-by-Step Guide](docs/phase-5-remote-access/step-by-step.md)
-- [Phase 5 – Validation](docs/phase-5-remote-access/validation.md)
+- [Phase 5 – Remote Access Overview](docs/phase-5-tailscale-remote-access/overview.md)
+- [Phase 5 – Step-by-Step Guide](docs/phase-5-tailscale-remote-access/step-by-step.md)
+- [Phase 5 – Validation](docs/phase-5-tailscale-remote-access/validation.md)
 
 ### Phase 6 — Proxmox Host Environment & Monitoring Migration
 
-- [Phase 6 – Overview](docs/phase-6-proxmox-monitoring-migration/overview.md)
-- [Phase 6 – Step-by-Step Guide](docs/phase-6-proxmox-monitoring-migration/step-by-step.md)
-- [Phase 6 – Validation](docs/phase-6-proxmox-monitoring-migration/validation.md)
-- [Phase 6 – Diagrams](docs/phase-6-proxmox-monitoring-migration/diagrams.md)
+- [Phase 6 – Overview](docs/phase-6-proxmox-omada-foundation/overview.md)
+- [Phase 6 – Step-by-Step Guide](docs/phase-6-proxmox-omada-foundation/step-by-step.md)
+- [Phase 6 – Validation](docs/phase-6-proxmox-omada-foundation/validation.md)
+- [Phase 6 – Diagrams](docs/phase-6-proxmox-omada-foundation/diagrams.md)
 
 ---
 
@@ -167,7 +167,7 @@ ashpi-1 / ashpi-2
 - [Phase 2 — DNS Control](diagrams/03-phase-2-dns-control.png)
 - [Phase 3 — High Availability DNS](diagrams/04-phase-3-ha-dns.png)
 - [Phase 4 — Monitoring & Alerting](diagrams/05-phase-4-monitoring-alerting.png)
-- [Phase 5 — Tailscale Remote Access](diagrams/06-phase-5-remote-access-tailscale.png)
+- [Phase 5 — Tailscale Remote Access](diagrams/06-phase-5-tailscale-remote-access-tailscale.png)
 - [Phase 6 — Proxmox & Service Migration](diagrams/07-phase-6-proxmox-service-migration.png)
 - [Phase 6.5 — RustDesk on Proxmox](diagrams/08-phase-6-5-rustdesk-proxmox.png)
 - [Phase 7 — Managed Routing & Switching](diagrams/09-phase-7-managed-routing-switching.png)
