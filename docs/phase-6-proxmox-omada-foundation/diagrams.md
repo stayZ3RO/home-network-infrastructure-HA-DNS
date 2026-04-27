@@ -4,7 +4,13 @@
 
 This document shows the infrastructure changes completed during Phase 6.
 
-Phase 6 moved supporting services from the gaming PC to the Proxmox host and prepared the Omada router/controller foundation for the next network cutover.
+Phase 6 moved supporting services from the gaming PC to the Proxmox host, introduced the Omada Controller, prepared the ER605 router, and pre-staged the managed switch for the Phase 7 cutover.
+
+---
+
+## Phase 6 Architecture Diagram
+
+![Phase 6 Proxmox and Omada Foundation](../../diagrams/phase-6-proxmox-omada-foundation.png)
 
 ---
 
@@ -70,6 +76,10 @@ Proxmox Infrastructure
         ├── Alertmanager
         └── Blackbox Exporter
 
+Managed Switch
+├── Temporary staging IP - 192.168.68.59
+└── Planned final IP - 192.168.68.2
+
 DHCP Range
 └── 192.168.68.100-192.168.68.200
 ```
@@ -111,6 +121,26 @@ This keeps the Pi-hole VIP as the DNS target.
 
 ---
 
+## Managed Switch Pre-Staging
+
+The managed switch was adopted into Omada before the Phase 7 cutover.
+
+```text
+Managed Switch
+├── Temporary staging IP: 192.168.68.59
+├── Planned final management IP: 192.168.68.2
+├── Controller: 192.168.68.10
+└── VLAN State: Default LAN / VLAN 1 only
+```
+
+During Phase 6, the switch was validated on the existing flat LAN.
+
+During Phase 7, the switch will become the core switch.
+
+During Phase 8, VLAN segmentation will be configured.
+
+---
+
 ## Monitoring Migration Flow
 
 ```text
@@ -149,14 +179,14 @@ Prometheus, Alertmanager, and Blackbox Exporter continue to support the monitori
 
 ## Next Phase Target
 
-The next phase will place the ER605 into the live network path.
+The next major network cutover will place the ER605 and managed switch into the live network path.
 
 ```text
 AT&T Gateway / ONT
         ↓
 ER605 Omada Router
         ↓
-Switch
+Managed Switch
         ↓
 Main Deco in AP Mode
         ↓
@@ -170,15 +200,16 @@ Expected next-phase responsibilities:
 - ER605 handles routing
 - ER605 handles DHCP
 - ER605 hands out Pi-hole VIP as DNS
+- Managed switch becomes the core switch
 - Deco mesh provides Wi-Fi only in AP mode
 - Pi-hole HA DNS remains active
-- Managed switch and VLAN segmentation come later
+- VLAN segmentation comes later
 
 ---
 
 ## Future VLAN Segmentation Target
 
-Once the managed switch is added, the network can move toward VLAN segmentation.
+Once the ER605 and managed switch cutover is stable, the network can move toward VLAN segmentation.
 
 ```text
 ER605 Router
@@ -190,4 +221,4 @@ Managed Switch
 └── VLAN 40 - IoT / Guest
 ```
 
-This will be documented in a later phase.
+This will be documented in Phase 8.
