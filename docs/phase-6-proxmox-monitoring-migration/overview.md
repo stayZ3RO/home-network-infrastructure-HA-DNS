@@ -1,223 +1,221 @@
-# Phase 6 — Proxmox Host Environment & Monitoring Stack Migration 🖥️
+# Phase 6 Overview — Proxmox Infrastructure & Omada Network Foundation
 
-## 📖 Overview
+## Purpose
 
-Phase 6 introduces a dedicated virtualization layer into the home infrastructure lab.
+Phase 6 builds the dedicated infrastructure layer for the home network lab.
 
-Before this phase, the monitoring stack was running on the gaming PC through Docker Desktop. That worked for the first version of Phase 4, but it created an operational dependency on a personal workstation.
+The goal was to move critical always-on services away from a gaming PC and onto a dedicated Proxmox host. This phase also introduced the Omada Software Controller and prepared the ER605 router for the upcoming network cutover.
 
-If the gaming PC was shut down, rebooted, or used heavily for gaming, the monitoring stack could go offline.
+## Phase Goals
 
-To improve reliability, the monitoring stack was migrated to an Ubuntu VM running on a Proxmox host.
+- Deploy Proxmox on the Dell OptiPlex
+- Use the OptiPlex as the dedicated infrastructure host
+- Host the Omada Software Controller in an LXC container
+- Preconfigure the ER605 router for the current LAN
+- Preserve the existing HA DNS design
+- Migrate monitoring services from the gaming PC to a Proxmox VM
+- Reduce dependency on Docker Desktop running on a personal workstation
+- Prepare the network for future managed switch and VLAN segmentation work
 
----
+## Before Phase 6
 
-## 🎯 Objectives
-
-The objectives of this phase were to:
-
-- deploy a Proxmox host environment
-- create an Ubuntu VM for Docker-based infrastructure services
-- migrate the monitoring stack from Docker Desktop to Docker Engine
-- keep Grafana, Prometheus, Alertmanager, and Blackbox Exporter running independently from the gaming PC
-- validate that dashboards, probes, alerts, and Discord notifications continued working after migration
-- establish a cleaner foundation for future self-hosted services
-
----
-
-## 🧱 Before Migration
-
-The monitoring stack originally ran on the gaming PC.
+Before this phase, the monitoring stack was running on the gaming PC through Docker Desktop and WSL.
 
 ```text
 Gaming PC
-  ↓
-Docker Desktop
-  ↓
-Grafana
-Prometheus
-Alertmanager
-Blackbox Exporter
+└── Docker Desktop / WSL
+    ├── Grafana
+    ├── Prometheus
+    ├── Alertmanager
+    └── Blackbox Exporter
 ```
 
-This worked, but it had limitations:
+This worked for early lab testing, but it had several limitations:
 
-- the gaming PC had to stay powered on
-- Docker Desktop depended on the Windows workstation
-- gaming or rebooting the PC could interrupt monitoring
-- the setup was less production-like
-- infrastructure services were mixed with a personal workstation
+- The gaming PC had to remain powered on for monitoring
+- Docker Desktop became part of the infrastructure dependency chain
+- Backups were less centralized
+- Monitoring was tied to a non-dedicated endpoint
+- The lab lacked a dedicated virtualization/service layer
 
----
+## After Phase 6
 
-## 🧱 After Migration
-
-The monitoring stack now runs from an Ubuntu VM on Proxmox.
+After this phase, the monitoring stack runs on an Ubuntu Docker VM hosted by Proxmox.
 
 ```text
-Proxmox Host
-  ↓
-Ubuntu Monitoring VM
-  ↓
-Docker Engine
-  ↓
-Docker Compose
-  ↓
-Grafana
-Prometheus
-Alertmanager
-Blackbox Exporter
+OptiPlex / Proxmox Host - 192.168.68.80
+├── Omada Controller LXC - 192.168.68.62
+│   └── Omada Software Controller
+│
+└── Ubuntu Docker VM - 192.168.68.81
+    ├── Grafana
+    ├── Prometheus
+    ├── Alertmanager
+    └── Blackbox Exporter
 ```
 
-This provides a cleaner separation between personal workstation use and always-on infrastructure services.
+The gaming PC is no longer required for always-on monitoring.
 
----
+## Current IP Plan
 
----
+| Device / Service | IP Address | Purpose |
+|---|---:|---|
+| Gateway / Future ER605 LAN | `192.168.68.1` | Default gateway |
+| Pi-hole VIP | `192.168.68.20` | HA DNS endpoint |
+| ashPi-1 | `192.168.68.60` | Pi-hole / Unbound node 1 |
+| ashPi-2 | `192.168.68.61` | Pi-hole / Unbound node 2 |
+| Omada Controller LXC | `192.168.68.62` | Omada software controller |
+| Proxmox Host | `192.168.68.80` | Virtualization host |
+| Docker Monitoring VM | `192.168.68.81` | Monitoring stack |
+| DHCP Range | `192.168.68.100-200` | Client devices |
 
-## Phase 6 Infrastructure Evidence
+## Proxmox Host Role
 
-The following screenshots validate the major infrastructure changes completed in this phase.
+The Proxmox host now acts as the dedicated infrastructure node for the lab.
+
+Current workloads:
+
+| Workload | Type | IP Address |
+|---|---|---:|
+| Omada Controller | LXC | `192.168.68.62` |
+| Docker Monitoring Stack | Ubuntu VM | `192.168.68.81` |
+
+The Proxmox host itself is managed at:
+
+```text
+https://192.168.68.80:8006
+```
+
+## Storage Design
+
+The Proxmox host uses SSD-backed storage for active workloads and HDD-backed storage for backup and support files.
+
+```text
+Proxmox Storage
+├── local / local-lvm
+│   ├── active VMs
+│   ├── active LXCs
+│   └── running workloads
+│
+└── hdd-storage
+    ├── backups
+    ├── ISO images
+    ├── templates
+    └── archives
+```
+
+This separates active service storage from backup/recovery storage.
+
+## Omada Controller Role
+
+The Omada Software Controller was deployed as an LXC container.
+
+Purpose:
+
+- Avoid buying an Omada hardware controller
+- Manage the ER605 router
+- Prepare for future managed switch adoption
+- Centralize Omada configuration
+- Support future VLAN and network segmentation work
+
+The controller is reachable at:
+
+```text
+https://192.168.68.62:8043
+```
+
+## ER605 Router Preconfiguration
+
+The ER605 was preconfigured before being placed into the live network path.
+
+Configured values:
+
+| Setting | Value |
+|---|---|
+| LAN IP | `192.168.68.1` |
+| Subnet Mask | `255.255.255.0` |
+| DHCP Range | `192.168.68.100-192.168.68.200` |
+| Primary DNS | `192.168.68.20` |
+
+This keeps the existing Pi-hole HA DNS setup intact.
+
+The Pi-hole VIP remains the DNS target:
+
+```text
+192.168.68.20
+```
+
+## Monitoring Migration
+
+The Docker monitoring stack was migrated from the gaming PC to the Ubuntu Docker VM.
+
+Migrated services:
+
+| Service | Purpose |
+|---|---|
+| Grafana | Dashboards and visualization |
+| Prometheus | Metrics collection |
+| Alertmanager | Alert routing |
+| Blackbox Exporter | Endpoint and service probing |
+
+Migrated Docker volumes:
+
+```text
+monitoring_grafana_data
+monitoring_prometheus_data
+monitoring_alertmanager_data
+```
+
+## Screenshot Evidence
 
 ### Proxmox Host
 
-![Proxmox node summary](../../screenshots/phase-6/03-proxmox-node-summary.png)
-
-The Proxmox host became the dedicated virtualization layer for the lab.
+![Proxmox node summary](../../screenshots/phase-6/03-proxmox-node-summary.jpeg)
 
 ### Omada Controller
 
-![Omada Controller dashboard](../../screenshots/phase-6/04-omada-controller-dashboard.png)
-
-The Omada Software Controller was deployed as an LXC container on Proxmox.
+![Omada Controller dashboard](../../screenshots/phase-6/04-omada-controller-dashboard.jpeg)
 
 ### ER605 Router Preconfiguration
 
-![ER605 LAN DHCP Pi-hole DNS](../../screenshots/phase-6/06-er605-lan-dhcp-pihole-dns.png)
+![ER605 LAN DHCP Pi-hole DNS](../../screenshots/phase-6/06-er605-lan-dhcp-pihole-dns.jpeg)
 
-The ER605 was preconfigured to preserve the existing LAN subnet and continue using the Pi-hole VIP as DNS.
+### Docker Monitoring VM
 
-### Monitoring Stack Migration
+![Docker VM summary](../../screenshots/phase-6/07-docker-vm-summary.png)
+
+### Monitoring Stack Running
 
 ![Docker Compose monitoring stack running](../../screenshots/phase-6/08-docker-compose-monitoring-running.png)
-
-The monitoring stack was migrated from Docker Desktop on the gaming PC to Docker Engine on the Ubuntu VM.
 
 ### Grafana Validation
 
 ![Grafana running from Docker VM](../../screenshots/phase-6/09-grafana-running-from-docker-vm.png)
 
-Grafana was validated from the new Docker VM IP.
+## Final Result
 
-## 🖥️ Proxmox Host Role
+Phase 6 successfully created a dedicated infrastructure layer for the lab.
 
-The Proxmox host provides the virtualization layer for the lab.
+Final state:
 
-Its role is to:
+- Proxmox is running on the OptiPlex
+- Omada Controller is running as an LXC
+- Monitoring is running from an Ubuntu Docker VM
+- Grafana is accessible from `192.168.68.81:3000`
+- ER605 is preconfigured for the next cutover
+- Pi-hole HA DNS design remains intact
+- Gaming PC is no longer required for always-on monitoring
 
-- host infrastructure VMs
-- support future service expansion
-- separate workloads from the gaming PC
-- provide a better foundation for production-style service hosting
-- allow future test/dev and production-style environments
+## Next Steps
 
-![Proxmox host dashboard](../../screenshots/phase-6/01-proxmox-host-dashboard.png)
+The next phase will complete the physical router cutover.
 
-![Proxmox node summary](../../screenshots/phase-6/02-proxmox-node-summary.png)
+Planned next steps:
 
----
-
-## 🐧 Ubuntu Monitoring VM Role
-
-The Ubuntu VM became the new home for the Docker monitoring stack.
-
-It runs:
-
-- Docker Engine
-- Docker Compose
-- Grafana
-- Prometheus
-- Alertmanager
-- Blackbox Exporter
-
-![Ubuntu monitoring VM created](../../screenshots/phase-6/03-ubuntu-monitoring-vm-created.png)
-
-![Ubuntu VM hardware resources](../../screenshots/phase-6/04-ubuntu-vm-hardware-resources.png)
-
----
-
-## 📊 Monitoring Services Preserved
-
-The migration preserved the core Phase 4 monitoring services:
-
-- Grafana dashboards
-- Prometheus scrape jobs
-- Prometheus alert rules
-- Blackbox DNS probes
-- Alertmanager notification routing
-- Discord alert delivery
-
----
-
-## 🔐 Security Approach
-
-Security decisions for this phase included:
-
-- keeping monitoring services LAN-only
-- avoiding internet-facing port forwarding
-- keeping the Discord webhook out of Git
-- storing Alertmanager webhook secrets locally
-- mounting secrets into the container as read-only
-- validating access through internal network paths only
-
----
-
-## ✅ Validation Summary
-
-The migration was successful after confirming:
-
-- the Ubuntu VM was running under Proxmox
-- Docker was installed and working inside the VM
-- the monitoring stack started successfully with Docker Compose
-- Grafana was reachable from the VM IP
-- Prometheus targets were healthy
-- Blackbox DNS probes were healthy
-- Alertmanager was running
-- Discord alert delivery still worked
-- the gaming PC Docker stack could be stopped without losing monitoring
-
-![Monitoring containers running on VM](../../screenshots/phase-6/10-monitoring-containers-running-on-vm.png)
-
-![Prometheus targets up after migration](../../screenshots/phase-6/12-prometheus-targets-up-after-migration.png)
-
-![Blackbox probes healthy after migration](../../screenshots/phase-6/13-blackbox-probes-healthy-after-migration.png)
-
----
-
-## 🏁 Outcome
-
-Phase 6 moved the monitoring stack from a workstation-dependent setup into a dedicated virtualized infrastructure environment.
-
-At the end of this phase, the lab had:
-
-- a Proxmox host environment
-- an Ubuntu VM for monitoring services
-- Docker Compose running on Linux instead of Docker Desktop
-- monitoring independent from the gaming PC
-- Grafana dashboards restored
-- Prometheus and Blackbox monitoring restored
-- Alertmanager and Discord notifications restored
-- a stronger foundation for future infrastructure services
-
----
-
-## 🚀 Next Step
-
-The next infrastructure improvements can focus on:
-
-- managed switching
-- VLAN segmentation
-- separating production, lab, guest, and IoT networks
-- hosting additional services on Proxmox
-- separating production and test/dev workloads
-- improving backup and restore workflows
+- Insert the ER605 into the live network path
+- Move DHCP/routing duties from Deco to ER605
+- Switch Deco mesh into AP mode
+- Validate client DHCP and DNS
+- Confirm Pi-hole still receives client queries through the VIP
+- Add managed switch when available
+- Build VLAN segmentation in a later phase
