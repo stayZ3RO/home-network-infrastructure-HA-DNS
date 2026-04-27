@@ -11,6 +11,7 @@ Phase 6 focused on:
 - preparing the ER605 router for the next network cutover
 - migrating the monitoring stack from the gaming PC to an Ubuntu Docker VM
 - validating that the gaming PC is no longer required for always-on monitoring
+- pre-staging the managed switch in Omada
 
 ---
 
@@ -192,6 +193,35 @@ Passed ✅
 
 ---
 
+## Validation 12 — Managed Switch Pre-Staging
+
+### Expected Result
+
+The managed switch should be discovered by Omada, adopted successfully, and validated on the existing flat LAN before the Phase 7 cutover.
+
+### Expected State
+
+| Item | Value |
+|---|---|
+| Temporary Switch IP | `192.168.68.59` |
+| Planned Final Switch IP | `192.168.68.2` |
+| Omada Controller | `192.168.68.10` |
+| VLAN State | Default LAN / VLAN 1 only |
+
+### Result
+
+Passed ✅
+
+![Switch pending adoption](../../screenshots/phase-6/switch-prep/01-switch-pending-adoption.png)
+
+![Switch adopted in Omada](../../screenshots/phase-6/switch-prep/02-switch-adopted-in-omada.png)
+
+![Client test through managed switch](../../screenshots/phase-6/switch-prep/05-client-test-through-managed-switch.png)
+
+The switch was adopted into Omada and validated using a client connected through the managed switch.
+
+---
+
 ## Conclusion
 
 Phase 6 validation confirmed that the lab now has a dedicated Proxmox infrastructure layer.
@@ -199,11 +229,12 @@ Phase 6 validation confirmed that the lab now has a dedicated Proxmox infrastruc
 The final state includes:
 
 - Proxmox host online at `192.168.68.80`
-- Omada Controller running in an LXC
+- Omada Controller running in an LXC at `192.168.68.10`
 - ER605 router preconfigured for the next cutover
 - Docker monitoring stack running on an Ubuntu VM
 - Grafana accessible from `192.168.68.81:3000`
 - backups stored on `hdd-storage`
 - gaming PC no longer required for always-on monitoring
+- managed switch adopted into Omada and validated on the flat LAN
 
-This phase prepares the environment for the next step: moving the ER605 into the live routing path, switching Deco into AP mode, and later adding a managed switch for VLAN segmentation.
+This phase prepares the environment for the next step: hardening RustDesk remote access, moving the ER605 into the live routing path, switching Deco into AP mode, and later adding VLAN segmentation.
