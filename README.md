@@ -1,37 +1,47 @@
 # Home Network Infrastructure Lab 🚀
 
-### Building a Production-Style Home Network with HA DNS, Monitoring, Alerting, and Secure Access
+### HA DNS, Monitoring, Alerting, Secure Remote Access, and Proxmox-Based Core Services
 
 ---
 
-## 📖 About This Project
+## 📌 Project Status
 
-This project documents the process of building a **self-managed home network infrastructure lab** from the ground up.
+**Status: Complete / Closed Out**
 
-Instead of relying on ISP-managed networking, the goal is to design a system that mirrors **real-world infrastructure environments**, including:
+This repository documents Project 1 of my home infrastructure lab: building a resilient home network foundation with high availability DNS, recursive DNS, monitoring, alerting, secure remote access, and Proxmox-hosted core services.
 
-- custom routing and network control
-- centralized DNS management
-- high availability DNS architecture
-- recursive DNS resolution
-- observability and monitoring
-- alerting and notification routing
-- secure remote access
-
-Each phase builds toward a more resilient, observable, and production-like infrastructure environment.
+Future work involving the ER605 live cutover, managed switch production cutover, VLAN segmentation, firewall policy, and SSID-to-VLAN mapping will be handled in a separate network segmentation project/repository.
 
 ---
 
-## 🧭 Architecture Overview
+## 🧠 About This Project
 
-Core DNS path:
+This project started as a home DNS and network-control lab, then evolved into a production-style infrastructure foundation.
+
+Instead of relying only on ISP-managed networking, I built and documented a layered environment that includes:
+
+- network control and ISP migration
+- centralized DNS with Pi-hole
+- high availability DNS with Keepalived and Gravity Sync
+- local recursive DNS with Unbound
+- monitoring with Prometheus and Grafana
+- alert routing with Alertmanager and Discord
+- secure remote administration with Tailscale
+- self-hosted RustDesk remote access
+- Proxmox-hosted infrastructure services
+- Docker monitoring migration from workstation to VM
+- validation, screenshots, and GitHub-based documentation
+
+---
+
+## 🏗️ Final Architecture Overview
+
+### Core DNS Path
 
 ```text
 Internet
   ↓
-AT&T Fiber
-  ↓
-ONT
+AT&T Fiber / ONT
   ↓
 AT&T Gateway / IP Passthrough
   ↓
@@ -39,14 +49,14 @@ Deco Mesh Router
   ↓
 Clients
   ↓
-HA Pi-hole VIP
+Pi-hole HA VIP - 192.168.68.20
   ↓
 Active Pi-hole Node
   ↓
-Local Unbound Resolver
+Local Unbound Recursive Resolver
 ```
 
-Monitoring and alerting path:
+### Monitoring and Alerting Path
 
 ```text
 Node Exporter / Blackbox Exporter
@@ -60,54 +70,52 @@ Alertmanager
 Discord Alerts
 ```
 
-Remote administration path:
+### Remote Administration Path
 
 ```text
-Gaming PC / Laptop / Phone
+Laptop / Phone / Admin Endpoint
   ↓
 Tailscale Tailnet
   ↓
-ashpi-1 / ashpi-2
+Proxmox / Raspberry Pi Nodes / Core Services
+
+RustDesk Clients
+  ↓
+Self-hosted RustDesk Server
+  ↓
+Trusted LAN Remote Access
+```
+
+### Proxmox Service Layer
+
+```text
+Proxmox Host - 192.168.68.80
+├── Omada Controller LXC - 192.168.68.10
+├── Docker Monitoring VM - 192.168.68.81
+│   ├── Grafana
+│   ├── Prometheus
+│   ├── Alertmanager
+│   ├── Blackbox Exporter
+│   └── Portainer Agent
+└── RustDesk Server VM - 192.168.68.83
+    ├── rustdesk-hbbs
+    └── rustdesk-hbbr
 ```
 
 ---
 
-## 📡 Current State
+## ✅ Completed Phases
 
-- ISP routing removed through AT&T IP Passthrough
-- Deco mesh system acting as primary router
-- Centralized DNS via Pi-hole
-- Network-wide ad blocking active
-- DNS query visibility enabled
-- Fiber connection integrated through ONT
-- High availability DNS implemented with dual Pi-hole nodes
-- Gravity Sync configured for Pi-hole replication
-- keepalived configured for VIP-based failover
-- Unbound configured on both Pi-hole nodes
-- Prometheus, Grafana, Alertmanager, and Blackbox Exporter deployed for observability
-- Node Exporter configured on both Raspberry Pi nodes
-- DNS failover and monitoring validations completed successfully
-- Discord alert delivery configured through Alertmanager
-- Discord webhook stored locally as a secret and excluded from Git
-- Secure remote administrative access implemented with Tailscale
-- Remote SSH access to both Pi nodes validated from outside the home network
-- No public SSH port forwarding required- Proxmox host environment deployed for virtualization
-- Ubuntu monitoring VM created under Proxmox
-- Monitoring stack migrated from gaming PC / Docker Desktop to Ubuntu VM / Docker Engine
-- Grafana, Prometheus, Alertmanager, and Blackbox Exporter restored on the VM
-- Monitoring no longer depends on the gaming PC being powered on
-
----
-
-## 🧱 Current Progress
-
-- ✅ Phase 1 — Network Control
-- ✅ Phase 1.5 — ISP Migration / AT&T Fiber
-- ✅ Phase 2 — DNS Control / Pi-hole
-- ✅ Phase 3 — High Availability DNS
-- ✅ Phase 4 — Monitoring & Alerting
-- ✅ Phase 5 — Remote Access
-- ✅ Phase 6 — Proxmox Host Environment & Monitoring Migration
+| Phase | Status | Focus |
+|---|---|---|
+| Phase 1 | ✅ Complete | Network control and baseline topology |
+| Phase 1.5 | ✅ Complete | Xfinity to AT&T Fiber migration |
+| Phase 2 | ✅ Complete | Pi-hole DNS control |
+| Phase 3 | ✅ Complete | HA DNS with Keepalived, Gravity Sync, and Unbound |
+| Phase 4 | ✅ Complete | Monitoring and alerting |
+| Phase 5 | ✅ Complete | Tailscale secure remote access |
+| Phase 6 | ✅ Complete | Proxmox, Omada Controller, Docker monitoring migration |
+| Phase 6.5 | ✅ Complete | RustDesk remote access and VM hardening |
 
 ---
 
@@ -115,52 +123,70 @@ ashpi-1 / ashpi-2
 
 ### Phase 1 — Network Control
 
-- [Phase 1 – Network Control Overview](docs/phase-1-network-control/overview.md)
-- [Phase 1 – Step-by-Step Guide](docs/phase-1-network-control/step-by-step.md)
+- [Overview](docs/phase-1-network-control/overview.md)
+- [Step-by-Step Guide](docs/phase-1-network-control/step-by-step.md)
 
 ### Phase 1.5 — ISP Migration
 
-- [Phase 1.5 – ISP Migration Overview](docs/phase-1.5-isp-migration/overview.md)
-- [Phase 1.5 – Step-by-Step Guide](docs/phase-1.5-isp-migration/step-by-step.md)
+- [Overview](docs/phase-1.5-isp-migration/overview.md)
+- [Step-by-Step Guide](docs/phase-1.5-isp-migration/step-by-step.md)
 
 ### Phase 2 — DNS Control
 
-- [Phase 2 – DNS Control Overview](docs/phase-2-dns-control/overview.md)
-- [Phase 2 – Step-by-Step Guide](docs/phase-2-dns-control/step-by-step.md)
+- [Overview](docs/phase-2-dns-control/overview.md)
+- [Step-by-Step Guide](docs/phase-2-dns-control/step-by-step.md)
 
 ### Phase 3 — High Availability DNS
 
-- [Phase 3 – HA DNS Overview](docs/phase-3-ha-dns/overview.md)
-- [Phase 3 – Step-by-Step Guide](docs/phase-3-ha-dns/step-by-step.md)
-- [Phase 3 – Jump Box Access](docs/phase-3-ha-dns/jump-box-access.md)
-- [Phase 3 – Validation and Failover Tests](docs/phase-3-ha-dns/validation-and-failover-tests.md)
-- [Phase 3 – Diagrams](docs/phase-3-ha-dns/diagrams.md)
-- [Phase 3 – DNS Recursion with Unbound](docs/phase-3-ha-dns/DNS-recursion-unbound.md)
+- [Overview](docs/phase-3-ha-dns/overview.md)
+- [Step-by-Step Guide](docs/phase-3-ha-dns/step-by-step.md)
+- [Jump Box Access](docs/phase-3-ha-dns/jump-box-access.md)
+- [Validation and Failover Tests](docs/phase-3-ha-dns/validation-and-failover-tests.md)
+- [Diagrams](docs/phase-3-ha-dns/diagrams.md)
+- [DNS Recursion with Unbound](docs/phase-3-ha-dns/DNS-recursion-unbound.md)
 
 ### Phase 4 — Monitoring & Alerting
 
-- [Phase 4 – Monitoring & Alerting Overview](docs/phase-4-monitoring-alerting/overview.md)
-- [Phase 4 – Step-by-Step Guide](docs/phase-4-monitoring-alerting/step-by-step.md)
-- [Phase 4 – Dashboards](docs/phase-4-monitoring-alerting/dashboards.md)
-- [Phase 4 – Alerting](docs/phase-4-monitoring-alerting/alerting.md)
-- [Phase 4 – Validation](docs/phase-4-monitoring-alerting/validation.md)
+- [Overview](docs/phase-4-monitoring-alerting/overview.md)
+- [Step-by-Step Guide](docs/phase-4-monitoring-alerting/step-by-step.md)
+- [Dashboards](docs/phase-4-monitoring-alerting/dashboards.md)
+- [Alerting](docs/phase-4-monitoring-alerting/alerting.md)
+- [Validation](docs/phase-4-monitoring-alerting/validation.md)
 
-### Phase 5 — Remote Access
+### Phase 5 — Tailscale Remote Access
 
-- [Phase 5 – Remote Access Overview](docs/phase-5-tailscale-remote-access/overview.md)
-- [Phase 5 – Step-by-Step Guide](docs/phase-5-tailscale-remote-access/step-by-step.md)
-- [Phase 5 – Validation](docs/phase-5-tailscale-remote-access/validation.md)
+- [Overview](docs/phase-5-tailscale-remote-access/overview.md)
+- [Step-by-Step Guide](docs/phase-5-tailscale-remote-access/step-by-step.md)
+- [Validation](docs/phase-5-tailscale-remote-access/validation.md)
 
-### Phase 6 — Proxmox Host Environment & Monitoring Migration
+### Phase 6 — Proxmox, Omada & Docker Monitoring Foundation
 
-- [Phase 6 – Overview](docs/phase-6-proxmox-omada-foundation/overview.md)
-- [Phase 6 – Step-by-Step Guide](docs/phase-6-proxmox-omada-foundation/step-by-step.md)
-- [Phase 6 – Validation](docs/phase-6-proxmox-omada-foundation/validation.md)
-- [Phase 6 – Diagrams](docs/phase-6-proxmox-omada-foundation/diagrams.md)
+- [README](docs/phase-6-proxmox-omada-foundation/README.md)
+- [Overview](docs/phase-6-proxmox-omada-foundation/overview.md)
+- [Step-by-Step Guide](docs/phase-6-proxmox-omada-foundation/step-by-step.md)
+- [Validation](docs/phase-6-proxmox-omada-foundation/validation.md)
+- [Diagrams](docs/phase-6-proxmox-omada-foundation/diagrams.md)
+- [Managed Switch Pre-Staging](docs/phase-6-proxmox-omada-foundation/managed-switch-prep.md)
+
+### Phase 6.5 — RustDesk Remote Access & VM Hardening
+
+- [README](docs/phase-6.5-rustdesk-remote-access/README.md)
+- [Overview](docs/phase-6.5-rustdesk-remote-access/overview.md)
+- [Step-by-Step Guide](docs/phase-6.5-rustdesk-remote-access/step-by-step.md)
+- [Validation](docs/phase-6.5-rustdesk-remote-access/validation.md)
+- [Diagrams](docs/phase-6.5-rustdesk-remote-access/diagrams.md)
+
+### Project Closeout
+
+- [Current Status](CURRENT-STATUS.md)
+- [Roadmap](ROADMAP.md)
+- [Changelog](CHANGELOG.md)
+- [Lessons Learned](LESSONS-LEARNED.md)
+- [Project Closeout](docs/project-closeout.md)
 
 ---
 
-## Architecture Diagrams
+## 🖼️ Architecture Diagrams
 
 - [Phase 1 — Previous Network / Xfinity](diagrams/01-phase-1-previous-network-xfinity.png)
 - [Phase 1.5 — ISP Migration / AT&T Fiber](diagrams/02-phase-1-5-isp-migration-att.png)
@@ -170,148 +196,100 @@ ashpi-1 / ashpi-2
 - [Phase 5 — Tailscale Remote Access](diagrams/06-phase-5-tailscale-remote-access-tailscale.png)
 - [Phase 6 — Proxmox & Service Migration](diagrams/07-phase-6-proxmox-service-migration.png)
 - [Phase 6.5 — RustDesk on Proxmox](diagrams/08-phase-6-5-rustdesk-proxmox.png)
-- [Phase 7 — Managed Routing & Switching](diagrams/09-phase-7-managed-routing-switching.png)
-- [Phase 8 — VLAN Segmentation](diagrams/10-phase-8-vlan-segmentation.png)
+
+> The ER605 cutover, production managed switching, VLAN segmentation, and SSID-to-VLAN work are intentionally excluded from this repository and will be tracked in a separate network segmentation project.
+
 ---
 
-## Current Status
-
-For the latest phase status, architecture direction, and upcoming work, see:
-
-- [Current Project Status](CURRENT-STATUS.md)
-
-## 🖥️ Hardware and Lab Systems
+## 🧰 Hardware and Lab Systems
 
 - AT&T Fiber connection
 - ONT / Optical Network Terminal
 - AT&T Gateway with IP Passthrough
 - TP-Link Deco X25 Mesh System
-- D-Link 16-Port Switch
-- Gaming PC / monitoring and admin endpoint
-- Docker monitoring host / VM
+- Raspberry Pi 3B+ — `ashpi-1`
+- Raspberry Pi 3B — `ashpi-2`
+- Dell OptiPlex Proxmox host
+- Docker monitoring VM
+- RustDesk Server VM
+- Gaming PC / admin endpoint
 - Laptop / remote admin and test endpoint
-- Raspberry Pi 1 — `ashpi-1`
-- Raspberry Pi 2 — `ashpi-2`
 
 ---
 
-## 🧰 Core Tools and Services
+## 🧪 Core Tools and Services
 
-- Pi-hole
-- Gravity Sync
-- keepalived
-- Unbound
-- Prometheus
-- Grafana
-- Alertmanager
-- Blackbox Exporter
-- Node Exporter
-- Discord webhooks
-- Tailscale
-- Docker Compose
-
----
-
-## 🧠 What This Project Demonstrates
-
-- Network architecture design
-- Infrastructure ownership
-- DNS control and filtering
-- High availability concepts
-- DNS redundancy and failover
-- Recursive DNS with Unbound
-- Host and service monitoring
-- Alerting with reduced noise
-- Alertmanager notification routing
-- Secret handling for webhook-based alerts
-- Secure remote administration
-- Real-world troubleshooting and validation
-- GitHub-based technical documentation
-- virtualization with Proxmox
-- service migration from workstation Docker Desktop to Linux VM Docker Engine
-- infrastructure service separation
-
----
-
-## 🧭 How to Navigate This Project
-
-- Start with this README for a full project overview
-- Review each phase overview for design decisions and architecture updates
-- Use the step-by-step guides to follow implementation order
-- Use screenshots and validation documents as proof of successful deployment
-- Review the changelog and lessons learned to understand how the environment evolved
-- Use the roadmap to see the next planned infrastructure layers
-
----
-
-## 📐 Documentation Structure
-
-Each phase generally includes:
-
-### Overview
-
-- what changed
-- why it matters
-- architecture updates
-- lessons learned
-
-### Step-by-Step
-
-- setup process
-- order of operations
-- validation checkpoints
-
-### Validation
-
-- proof of successful implementation
-- failure and recovery testing
-- screenshots showing expected behavior
-
-### Screenshots
-
-- proof of implementation
-- UI validation
-- before/after states
-- failover, monitoring, alerting, and remote access evidence
+| Tool / Service | Purpose |
+|---|---|
+| Pi-hole | DNS filtering and visibility |
+| Gravity Sync | Pi-hole configuration replication |
+| Keepalived | VIP failover for HA DNS |
+| Unbound | Local recursive DNS resolution |
+| Prometheus | Metrics collection |
+| Grafana | Dashboard visualization |
+| Alertmanager | Alert routing |
+| Blackbox Exporter | Service probing |
+| Node Exporter | Host metrics |
+| Discord Webhooks | Alert notification delivery |
+| Tailscale | Secure remote administration |
+| Proxmox | Virtualization platform |
+| Docker Compose | Container orchestration |
+| RustDesk | Self-hosted remote access |
+| Portainer Agent | Future centralized Docker management |
 
 ---
 
 ## 🔐 Security Notes
 
-- No SSH services are exposed to the public internet
-- Remote administration is handled through Tailscale
-- Monitoring services are kept LAN-only
-- Discord webhook secrets are stored locally and excluded from Git
-- No router port forwarding is required for remote administration
+- No public SSH port forwarding is used.
+- Tailscale provides private administrative access.
+- RustDesk is kept LAN-only for this project.
+- Portainer Agent is kept LAN-only.
+- Monitoring services are kept LAN-only.
+- Discord webhook secrets are stored locally and excluded from Git.
+- Screenshots are redacted where needed.
+- This repository avoids committing secrets, tokens, passwords, and private keys.
+
+---
+
+## 💼 What This Project Demonstrates
+
+- Network architecture planning
+- ISP migration troubleshooting
+- DNS control and filtering
+- High availability service design
+- Failover validation
+- Recursive DNS implementation
+- Observability and alerting
+- Secret handling
+- Secure remote administration
+- Proxmox virtualization
+- Docker service migration
+- Infrastructure backup validation
+- Documentation and screenshot-based proof of work
+
+---
+
+## ➡️ Future Work
+
+The next major project is a separate repository focused on:
+
+- ER605 live router cutover
+- Managed switch as core switch
+- Deco AP mode migration
+- VLAN segmentation
+- Inter-VLAN firewall policy
+- Trusted, lab, IoT, and guest network isolation
+- Future Omada EAP SSID-to-VLAN mapping
+
+Suggested next repo title:
+
+```text
+Home Network Segmentation Lab — ER605, Managed Switching & VLAN Isolation
+```
 
 ---
 
 ## 🎯 Goal
 
-To build a home lab that simulates **real-world infrastructure engineering**, covering networking, DNS, high availability, monitoring, alerting, secure access, and documentation.
-
----
-
-## 🚀 Next Step
-
-With the first five phases complete, the next major evolution is:
-
-- managed switching
-- VLAN segmentation
-- trusted / guest / IoT network separation
-- tighter policy control between networks
-- migration of monitoring to a dedicated always-on host
-- deeper infrastructure services on future mini workstation / Proxmox nodes
-
----
-
-## 🛣️ Long-Term Roadmap
-
-After completing remote access, the next infrastructure layer will focus on:
-
-- managed switching
-- VLAN segmentation
-- admin / trusted / guest / IoT separation
-- inter-network access policy design
-- more dedicated management infrastructure
-- future virtualization and service expansion
+To build and document a realistic infrastructure foundation that demonstrates networking, DNS, high availability, monitoring, alerting, virtualization, secure access, and operational validation.

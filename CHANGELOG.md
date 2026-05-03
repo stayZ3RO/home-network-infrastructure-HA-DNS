@@ -1,123 +1,133 @@
 # Changelog
 
-This changelog tracks major changes made to the Home Network Infrastructure Lab.
+All notable changes to this project are documented here.
 
 ---
 
-## Phase 6 — Proxmox Infrastructure & Omada Network Foundation
+## Project Closeout
 
-### Added
-
-- Installed Proxmox on a Dell OptiPlex as the dedicated infrastructure host.
-- Created an Omada Controller LXC.
-- Assigned Omada Controller to the management IP plan.
-- Created an Ubuntu Docker VM for monitoring services.
-- Migrated Grafana, Prometheus, Alertmanager, and Blackbox Exporter from the gaming PC to Proxmox.
-- Restored Docker volumes for Grafana, Prometheus, and Alertmanager.
-- Added HDD-backed storage for backups, ISO images, templates, and archives.
-- Preconfigured the ER605 router for the future network cutover.
-- Defined managed switch IP plan and initial port plan.
-- Added Phase 6 documentation and validation screenshots.
-- Added architecture diagrams for current and future phases.
-
-### Changed
-
-- Monitoring no longer depends on Docker Desktop running on the gaming PC.
-- Phase 5 folder renamed to clarify Tailscale-based remote access.
-- Phase 6 renamed to better reflect Proxmox, Omada, and infrastructure foundation work.
-- Project roadmap updated to include Phase 6.5, Phase 7, and Phase 8.
-
-### Validated
-
-- Proxmox host reachable at `192.168.68.80`.
-- Omada Controller reachable from the LAN.
-- Grafana reachable from the Docker VM at `192.168.68.81:3000`.
-- Monitoring containers run from the Proxmox-hosted Ubuntu Docker VM.
-- Proxmox backups use dedicated storage.
+- Marked Project 1 as complete
+- Clarified that future ER605 cutover and VLAN segmentation will move to a separate project
+- Updated README, current status, roadmap, changelog, lessons learned, and project closeout documentation
+- Removed Phase 7 and Phase 8 from this repository's active scope
 
 ---
 
-## Phase 5 — Tailscale Remote Access
+## Phase 6.5 — RustDesk Remote Access & VM Hardening
 
-### Added
+- Deployed RustDesk Server OSS on a Debian VM
+- Assigned RustDesk VM static IP `192.168.68.83`
+- Configured SSH key-based access
+- Hardened SSH by disabling root login and password authentication
+- Deployed RustDesk `hbbs` and `hbbr` containers with Docker Compose
+- Configured UFW LAN-only rules for RustDesk and SSH
+- Validated RustDesk clients between laptop, gaming PC, and phone
+- Created Proxmox backup for RustDesk VM
+- Renamed `docker-services` VM to `docker-monitoring`
+- Renamed Ubuntu hostname to `docker-monitoring`
+- Configured Docker log rotation
+- Configured Prometheus retention to `30d` / `10GB`
+- Installed Portainer Agent on the monitoring VM
+- Expanded the monitoring VM disk to `50GB`
+- Expanded Ubuntu filesystem inside the VM
+- Completed final Docker validation after resize
+- Created final Proxmox backup after monitoring VM maintenance
 
-- Tailscale secure remote access.
-- Remote SSH/admin access to lab devices.
-- Remote access validation from non-local devices.
+---
 
-### Changed
+## Phase 6 — Proxmox, Omada & Docker Monitoring Foundation
 
-- Reduced need for direct local-only administration.
-- Avoided exposing internal admin services directly to the public internet.
+- Deployed Proxmox host environment
+- Created Omada Controller LXC
+- Created Ubuntu Docker monitoring VM
+- Installed Docker Engine and Docker Compose on the monitoring VM
+- Migrated Grafana, Prometheus, Alertmanager, and Blackbox Exporter from Docker Desktop to the VM
+- Restored Grafana dashboards and Prometheus data
+- Recreated Alertmanager Discord webhook secret handling
+- Validated Prometheus targets, Blackbox probes, dashboards, and Discord alert delivery
+- Stopped the old gaming PC Docker monitoring stack
+- Confirmed monitoring no longer depends on the gaming PC
+- Preconfigured ER605 router for future cutover
+- Pre-staged managed switch in Omada
+- Validated client connectivity through the managed switch
+- Created Proxmox backup evidence
+
+---
+
+## Phase 5 — Remote Access
+
+- Deployed Tailscale for secure remote administration
+- Added admin endpoints to the tailnet
+- Added `ashpi-1` and `ashpi-2` to the tailnet
+- Confirmed MagicDNS-based device naming
+- Validated `tailscale ping` connectivity
+- Validated SSH access over Tailscale
+- Confirmed off-site access without public SSH exposure
+- Avoided router port forwarding for administrative SSH
 
 ---
 
 ## Phase 4 — Monitoring & Alerting
 
-### Added
-
-- Grafana dashboards.
-- Prometheus metrics collection.
-- Alertmanager alert routing.
-- Blackbox Exporter endpoint checks.
-- DNS and service health visibility.
-
-### Validated
-
-- DNS health checks.
-- Pi-hole node visibility.
-- Monitoring dashboards.
-- Alert behavior.
+- Deployed Prometheus
+- Deployed Grafana
+- Deployed Alertmanager
+- Deployed Blackbox Exporter
+- Installed Node Exporter on `ashpi-1` and `ashpi-2`
+- Configured Prometheus target scraping
+- Configured Blackbox DNS probes
+- Built Node Health and DNS & Failover dashboards
+- Added Prometheus alert rules
+- Validated alert lifecycle from pending to firing to cleared
+- Configured Discord alert delivery
+- Stored Discord webhook locally as a secret
+- Excluded alerting secrets from Git
+- Validated manual Alertmanager test alerts to Discord
+- Validated keepalived failover while confirming VIP DNS stayed healthy
 
 ---
 
 ## Phase 3 — High Availability DNS
 
-### Added
-
-- Second Pi-hole node.
-- Keepalived virtual IP.
-- Gravity Sync replication.
-- Unbound recursive DNS on both Pi-hole nodes.
-- Failover validation.
-
-### Changed
-
-- DNS moved from single-node dependency to HA design.
-- Pi-hole VIP became the primary DNS target.
+- Added second Raspberry Pi DNS node
+- Installed Pi-hole on both nodes
+- Implemented Gravity Sync
+- Configured Keepalived VIP failover
+- Added Unbound recursive resolver on both Pi-hole nodes
+- Verified DNS resolution through the VIP
+- Verified DNS continuity during simulated failover
+- Confirmed ad blocking remained active after failover
 
 ---
 
 ## Phase 2 — DNS Control
 
-### Added
-
-- Pi-hole DNS filtering.
-- Centralized DNS visibility.
-- DNS configuration documentation.
+- Installed Pi-hole
+- Configured router DHCP to use Pi-hole as DNS
+- Enabled network-wide ad blocking
+- Implemented DNS query logging and visibility
+- Added blocklist management
+- Resolved Pi-hole gravity database issue
+- Validated DNS traffic across client devices
 
 ---
 
 ## Phase 1.5 — ISP Migration
 
-### Added
-
-- AT&T Fiber topology.
-- ONT and AT&T Gateway documentation.
-- IP Passthrough documentation.
-
-### Changed
-
-- Migrated away from Xfinity bridge-mode topology.
-- Updated network diagrams to reflect AT&T Fiber.
+- Migrated from Xfinity to AT&T Fiber
+- Integrated ONT for fiber connection
+- Configured IP Passthrough on AT&T gateway
+- Connected Deco router through Ethernet WAN
+- Preserved internal subnet `192.168.68.x`
+- Maintained Pi-hole DNS functionality
+- Updated topology and diagrams
 
 ---
 
 ## Phase 1 — Network Control
 
-### Added
-
-- Initial network documentation.
-- Baseline topology.
-- Network control plan.
-- Initial lessons learned.
+- Established initial baseline network control
+- Deployed Deco mesh system as primary router
+- Eliminated double NAT
+- Disabled ISP Wi-Fi broadcasting where applicable
+- Documented the starting network topology
