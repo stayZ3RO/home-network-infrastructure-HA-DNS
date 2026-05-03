@@ -100,3 +100,64 @@ ping 192.168.68.59
 ping 192.168.68.80
 ping 192.168.68.81
 nslookup google.com 192.168.68.20
+```
+
+Browser validation:
+
+```text
+Omada:    https://192.168.68.10:8043
+Proxmox:  https://192.168.68.80:8006
+Grafana:  http://192.168.68.81:3000
+```
+
+---
+
+## Screenshot Evidence
+
+### Switch Pending Adoption
+
+![Switch pending adoption](../../screenshots/phase-6/switch-prep/01-switch-pending-adoption.png)
+
+This screenshot shows the managed switch discovered by the Omada Controller before adoption.
+
+---
+
+### Switch Adopted in Omada
+
+![Switch adopted in Omada](../../screenshots/phase-6/switch-prep/02-switch-adopted-in-omada.png)
+
+This screenshot shows the managed switch successfully adopted into Omada.
+
+---
+
+### Omada Controller Dashboard
+
+![Omada Controller dashboard](../../screenshots/phase-6/switch-prep/04-omada-controller-dashboard.jpeg)
+
+This screenshot confirms the Omada Controller was reachable and managing the network environment during switch staging.
+
+---
+
+### Client Test Through Managed Switch
+
+![Client test through managed switch](../../screenshots/phase-6/switch-prep/05-client-test-through-managed-switch.png)
+
+This screenshot validates that a client connected through the managed switch could reach core services and DNS.
+
+---
+
+## Result
+
+The managed switch was successfully pre-staged.
+
+The switch was adopted into Omada, validated on the existing flat LAN, and confirmed ready for the Phase 7 cutover.
+
+The final switch management IP of `192.168.68.2` will be assigned after the ER605 becomes the active router/DHCP server.
+
+---
+
+## Next Step
+
+Phase 7 will move the ER605 into the live network path, make the managed switch the core switch, and place the Deco mesh into AP mode.
+
+VLAN segmentation will be completed later in Phase 8.
