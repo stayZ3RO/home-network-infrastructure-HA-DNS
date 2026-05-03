@@ -1,83 +1,104 @@
-# Phase 6.5 — RustDesk Remote Access Hardening
+# Phase 6.5 — RustDesk Remote Access & VM Hardening
 
 ## Overview
 
-Phase 6.5 documents the self-hosted RustDesk remote access layer running on the Proxmox infrastructure host.
+Phase 6.5 closes out the pre-cutover hardening work before moving into the managed router and switch cutover.
 
-This phase deploys a lightweight Debian VM to run RustDesk Server OSS using Docker Compose. The goal was to validate remote access between trusted devices while keeping the server restricted to the local LAN during initial testing.
+This phase includes two related workstreams:
 
-## What This Phase Includes
+- Self-hosted RustDesk remote access on a dedicated Debian VM
+- Docker monitoring VM hardening and maintenance before the final network cutover
+
+The goal was to make sure remote access, monitoring, backups, and VM operations were stable before changing the physical network path.
+
+## Scope
+
+### RustDesk Remote Access
 
 - Created a lightweight Debian VM for RustDesk
 - Assigned the VM a static IP: `192.168.68.83`
-- Verified network connectivity to the gateway and Pi-hole DNS
 - Configured SSH key-based access
-- Hardened SSH by disabling password authentication and root login
-- Installed Docker on Debian
-- Deployed RustDesk Server OSS using Docker Compose
-- Ran the RustDesk `hbbs` and `hbbr` services
-- Configured UFW with LAN-only rules
+- Hardened SSH by disabling root login and password authentication
+- Installed Docker and Docker Compose
+- Deployed RustDesk Server OSS with `hbbs` and `hbbr`
+- Configured UFW LAN-only firewall rules
 - Configured RustDesk clients to use the self-hosted server
 - Validated remote access between laptop, gaming PC, and phone
-- Created Proxmox backup evidence for the RustDesk VM
+- Created a Proxmox backup for the RustDesk VM
 
-## Current IP Plan
+### Docker Monitoring VM Hardening
 
-| Device / Service | IP Address | Purpose |
-|---|---:|---|
-| Proxmox Host | `192.168.68.80` | Virtualization host |
-| RustDesk VM | `192.168.68.83` | Self-hosted RustDesk server |
-| Gateway | `192.168.68.1` | Default gateway |
-| Pi-hole VIP | `192.168.68.20` | DNS resolver |
-| Omada Controller | `192.168.68.10` | Network controller |
+- Renamed Proxmox VM `docker-services` to `docker-monitoring`
+- Renamed the Ubuntu hostname to `docker-monitoring`
+- Confirmed the monitoring stack still worked after rename
+- Configured Docker log rotation
+- Set Prometheus retention to `30d` / `10GB`
+- Installed Portainer Agent on the monitoring VM
+- Resized the monitoring VM disk to `50GB`
+- Expanded the Ubuntu filesystem inside the VM
+- Validated Docker containers after resize
+- Created a final Proxmox backup after maintenance
 
-## Architecture
+## Final VM Layout
 
-Proxmox Host - `192.168.68.80`
+| VM / CT | Name | IP Address | Role |
+|---:|---|---:|---|
+| CT 180 | `omada-controller` | `192.168.68.10` | Omada Controller |
+| VM 183 | `rustdesk-server` | `192.168.68.83` | Self-hosted RustDesk server |
+| VM 281 | `docker-monitoring` | `192.168.68.81` | Monitoring stack and Portainer Agent |
 
-- Debian RustDesk VM - `192.168.68.83`
-  - Docker
-  - `rustdesk-hbbs`
-  - `rustdesk-hbbr`
-  - UFW LAN-only firewall rules
+Future app hosting will be handled on a separate VM:
 
-## Security Approach
+| Future VM | Name | Planned IP | Role |
+|---|---|---:|---|
+| Future | `docker-apps` | `192.168.68.82` | Self-hosted apps and Portainer Server |
 
-RustDesk was configured for internal validation only.
+## Final Services
 
-At this stage:
+| Service | Host | Access |
+|---|---|---|
+| Grafana | `docker-monitoring` | `http://192.168.68.81:3000` |
+| Prometheus | `docker-monitoring` | Internal Docker service |
+| Alertmanager | `docker-monitoring` | Internal Docker service |
+| Blackbox Exporter | `docker-monitoring` | Internal Docker service |
+| Portainer Agent | `docker-monitoring` | `192.168.68.81:9001` |
+| RustDesk Server | `rustdesk-server` | `192.168.68.83` |
+| Omada Controller | `omada-controller` | `https://192.168.68.10:8043` |
 
-- No public port forwarding was configured
-- RustDesk access is limited to `192.168.68.0/24`
-- SSH root login is disabled
-- SSH password authentication is disabled
-- RustDesk client IDs and keys are blurred in public screenshots
+## Security Notes
 
-Public access, if added later, will be handled after the ER605 cutover and additional firewall review.
+- RustDesk is LAN-only.
+- Portainer Agent is LAN-only.
+- No RustDesk or Portainer ports are publicly forwarded.
+- SSH password authentication is disabled on the RustDesk VM.
+- SSH root login is disabled on the RustDesk VM.
+- Docker log rotation is configured to reduce disk growth.
+- Prometheus retention is limited to `30d` / `10GB`.
+- Proxmox backups were created after validation.
 
 ## Screenshot Evidence
 
-### Debian VM Summary
+### RustDesk VM Summary
 
 ![RustDesk Debian VM summary](../../screenshots/phase-6.5/01-rustdesk-debian-vm-summary.png)
 
-### Debian Network Configuration
+### RustDesk Network Configuration
 
 ![RustDesk Debian network configuration](../../screenshots/phase-6.5/02-rustdesk-debian-network-config.png)
 
-### SSH Hardening Configuration
+### RustDesk SSH Hardening
 
 ![SSH hardening configuration](../../screenshots/phase-6.5/03-ssh-hardening-config.png)
 
-### SSH Key Login Validation
+### RustDesk SSH Key Login
 
 ![SSH key login validation](../../screenshots/phase-6.5/04-ssh-key-login-validation.png)
 
-### RustDesk Docker Compose Running
+### RustDesk Docker Compose
 
 ![RustDesk Docker Compose running](../../screenshots/phase-6.5/05-rustdesk-docker-compose-running.png)
 
-### UFW LAN-Only Firewall Rules
+### RustDesk UFW LAN-Only Firewall
 
 ![RustDesk UFW LAN-only firewall rules](../../screenshots/phase-6.5/06-rustdesk-ufw-status-lan-only.png)
 
@@ -93,15 +114,39 @@ Public access, if added later, will be handled after the ER605 cutover and addit
 
 ![RustDesk Proxmox backup](../../screenshots/phase-6.5/09-rustdesk-proxmox-backup.png)
 
+### Docker Monitoring VM Rename
+
+![Proxmox VM renamed docker-monitoring](../../screenshots/phase-6.5/01-proxmox-vm-renamed-docker-monitoring.png)
+
+![Ubuntu hostname renamed docker-monitoring](../../screenshots/phase-6.5/02-ubuntu-hostname-renamed-docker-monitoring.png)
+
+### Docker Monitoring Maintenance
+
+![Monitoring stack before maintenance](../../screenshots/phase-6.5/03-monitoring-stack-before-maintenance.png)
+
+![Docker log rotation config](../../screenshots/phase-6.5/04-docker-log-rotation-config.png)
+
+![Prometheus retention config](../../screenshots/phase-6.5/05-prometheus-retention-config.png)
+
+![Portainer Agent running](../../screenshots/phase-6.5/01-monitoring-vm-portainer-agent-running.png)
+
+![Proxmox disk resized to 50GB](../../screenshots/phase-6.5/08-proxmox-disk-resized-to-50gb.png)
+
+![Ubuntu disk expanded inside VM](../../screenshots/phase-6.5/09-ubuntu-disk-expanded-inside-vm.png)
+
+![Final Docker validation after resize](../../screenshots/phase-6.5/10-final-docker-validation-after-resize.png)
+
+![Final backup after monitoring maintenance](../../screenshots/phase-6.5/11-final-backup-after-monitoring-maintenance.png)
+
 ## Documentation
 
 - [Overview](./overview.md)
-- [Step-by-Step Guide](./step-by-step.md)
+- [Step-by-Step](./step-by-step.md)
 - [Validation](./validation.md)
 - [Diagrams](./diagrams.md)
 
 ## Result
 
-RustDesk remote access was successfully validated between the laptop, gaming PC, and phone using the self-hosted RustDesk server.
+Phase 6.5 confirmed that remote access, monitoring, Docker operations, VM naming, disk capacity, retention settings, and backups are ready before the managed router and switch cutover.
 
-The server is running on Debian, managed by Docker Compose, protected by UFW LAN-only firewall rules, and backed up through Proxmox.
+This marks the final pre-cutover hardening step before closing out Project 1 and moving future segmentation work into a separate project.
