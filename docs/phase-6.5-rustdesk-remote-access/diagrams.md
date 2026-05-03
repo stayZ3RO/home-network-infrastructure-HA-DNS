@@ -1,68 +1,46 @@
-# Phase 6.5 Diagrams — RustDesk Remote Access Hardening
+# Phase 6.5 Diagrams — RustDesk Remote Access & VM Hardening
 
-## Purpose
+## Final Pre-Cutover Service Layout
 
-This document shows the RustDesk remote access architecture used in Phase 6.5.
+```text
+Proxmox Host - 192.168.68.80
+├── CT 180: omada-controller - 192.168.68.10
+├── VM 183: rustdesk-server - 192.168.68.83
+│   ├── rustdesk-hbbs
+│   ├── rustdesk-hbbr
+│   └── UFW LAN-only firewall
+└── VM 281: docker-monitoring - 192.168.68.81
+    ├── Grafana
+    ├── Prometheus
+    ├── Alertmanager
+    ├── Blackbox Exporter
+    └── Portainer Agent
+```
 
-## Phase 6.5 RustDesk Architecture
+## RustDesk Access Flow
 
-Trusted LAN - `192.168.68.0/24`
+```text
+Laptop / Gaming PC / Phone
+        ↓
+RustDesk Client
+        ↓
+rustdesk-server - 192.168.68.83
+        ├── hbbs
+        └── hbbr
+```
 
-- Laptop
-- Gaming PC
-- Phone
+## Docker Management Plan
 
-These clients connect to:
+```text
+Future docker-apps VM - 192.168.68.82
+└── Portainer Server
+    ↓
+docker-monitoring VM - 192.168.68.81
+└── Portainer Agent - 9001
+```
 
-Proxmox Host - `192.168.68.80`
+## Project Boundary
 
-- Debian RustDesk VM - `192.168.68.83`
-  - Docker
-  - `rustdesk-hbbs`
-  - `rustdesk-hbbr`
-  - UFW LAN-only firewall
+This phase closes the remote access and VM hardening work for Project 1.
 
-## Service Roles
-
-| Service | Role |
-|---|---|
-| `rustdesk-hbbs` | ID / rendezvous server |
-| `rustdesk-hbbr` | Relay server |
-
-## Security Boundary
-
-Allowed:
-
-- `192.168.68.0/24` to RustDesk VM
-
-Blocked:
-
-- Internet to RustDesk VM
-- Unknown external clients to RustDesk VM
-
-No public ER605 port forwarding was configured during this phase.
-
-## Firewall Scope
-
-| Port | Protocol | Source |
-|---:|---|---|
-| `22` | TCP | `192.168.68.0/24` |
-| `21115` | TCP | `192.168.68.0/24` |
-| `21116` | TCP | `192.168.68.0/24` |
-| `21116` | UDP | `192.168.68.0/24` |
-| `21117` | TCP | `192.168.68.0/24` |
-
-## Future Remote Access Option
-
-If public RustDesk access is needed later, it should be documented separately after the ER605 cutover.
-
-Future public exposure would require:
-
-- ER605 firewall and NAT review
-- Explicit port forwarding rules
-- Risk review
-- Backup validation
-- Additional monitoring
-- Documentation update
-
-For Phase 6.5, RustDesk remains LAN-only.
+Network segmentation, VLANs, and the managed router/switch production cutover will be handled in a separate project.

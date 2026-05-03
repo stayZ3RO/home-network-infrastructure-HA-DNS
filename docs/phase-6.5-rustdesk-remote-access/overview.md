@@ -1,101 +1,83 @@
-# Phase 6.5 Overview — RustDesk Remote Access Hardening
+# Phase 6.5 Overview — RustDesk Remote Access & VM Hardening
 
 ## Purpose
 
-Phase 6.5 adds a self-hosted RustDesk remote access layer to the home infrastructure lab.
+Phase 6.5 prepares the lab for project closeout and the future network cutover by validating remote access, VM hardening, Docker monitoring maintenance, and backup readiness.
 
-The purpose of this phase was to deploy RustDesk in a controlled and secure way before relying on it for remote access. The initial design keeps the RustDesk server LAN-only and avoids public exposure.
+This phase is intentionally scoped as a pre-cutover hardening phase.
 
-## Why Debian Was Used
+## Why This Phase Matters
 
-Debian was selected because the RustDesk server has a narrow purpose and does not need a full desktop operating system.
+Before changing the physical network path, the lab needed reliable access and recovery options.
 
-Debian provides:
+This phase confirmed:
 
-- Lightweight resource usage
-- Stable package management
-- Low overhead for a small VM
-- A good base for Docker workloads
-- Simpler backup and recovery
+- RustDesk remote access works across trusted devices.
+- SSH access is hardened.
+- Docker monitoring has controlled log and metrics retention.
+- The monitoring VM has enough disk capacity.
+- Portainer Agent is ready for future centralized Docker management.
+- Final Proxmox backups exist.
 
-## VM Design
+## Final Architecture
 
-| Setting | Value |
+| Component | Host | IP |
+|---|---|---:|
+| Proxmox Host | `pve` | `192.168.68.80` |
+| Omada Controller | CT 180 | `192.168.68.10` |
+| Docker Monitoring | VM 281 | `192.168.68.81` |
+| RustDesk Server | VM 183 | `192.168.68.83` |
+
+## RustDesk Server
+
+RustDesk runs on a Debian VM.
+
+| Item | Value |
 |---|---|
 | VM Name | `rustdesk-server` |
 | VM ID | `183` |
-| OS | Debian |
-| CPU | `1 vCPU` |
-| RAM | `1 GB` |
-| Disk | `12 GB` |
 | IP Address | `192.168.68.83` |
-| Gateway | `192.168.68.1` |
-| DNS | `192.168.68.20` |
+| OS | Debian |
+| Runtime | Docker Compose |
+| Containers | `rustdesk-hbbs`, `rustdesk-hbbr` |
+| Firewall | UFW LAN-only |
 
-## RustDesk Server Components
+## Docker Monitoring VM
 
-| Component | Container | Purpose |
-|---|---|---|
-| `hbbs` | `rustdesk-hbbs` | ID / rendezvous server |
-| `hbbr` | `rustdesk-hbbr` | Relay server |
+The Docker monitoring VM was renamed and hardened.
 
-Docker Compose is used to keep the deployment reproducible.
+| Item | Value |
+|---|---|
+| Old VM Name | `docker-services` |
+| New VM Name | `docker-monitoring` |
+| VM ID | `281` |
+| IP Address | `192.168.68.81` |
+| Disk | `50GB` |
+| Docker logs | `10MB x 3 files` |
+| Prometheus retention | `30d` / `10GB` |
+| Portainer component | Agent only |
 
-## Security Model
+## Portainer Design
 
-Phase 6.5 uses a security-first approach.
+Portainer is being split cleanly:
 
-Implemented controls:
+| Host | Component |
+|---|---|
+| `docker-monitoring` | Portainer Agent |
+| Future `docker-apps` VM | Portainer Server |
 
-- SSH key-based login
-- Root SSH login disabled
-- SSH password login disabled
-- UFW enabled
-- Default deny incoming policy
-- RustDesk ports limited to `192.168.68.0/24`
-- No public ER605 port forwarding yet
+This keeps the monitoring VM focused on observability and allows the future app-hosting VM to provide the Portainer UI.
 
-## Firewall Rules
+## Security Approach
 
-Allowed only from the LAN:
+- RustDesk remains LAN-only.
+- Portainer Agent remains LAN-only.
+- No public forwarding is configured for RustDesk or Portainer.
+- SSH hardening is documented.
+- Backups exist before moving to the next project.
 
-| Port | Protocol | Purpose |
-|---:|---|---|
-| `22` | TCP | SSH |
-| `21115` | TCP | RustDesk NAT test |
-| `21116` | TCP | RustDesk ID / rendezvous |
-| `21116` | UDP | RustDesk ID / rendezvous |
-| `21117` | TCP | RustDesk relay |
+## Result
 
-## Client Validation
+The lab has validated remote access, monitoring, hardening, and backup readiness.
 
-RustDesk client access was confirmed between:
-
-- Laptop
-- Gaming PC
-- Phone
-
-The client screenshots were sanitized by blurring RustDesk IDs and personal device details.
-
-## Final State
-
-Proxmox Host - `192.168.68.80`
-
-- Debian RustDesk VM - `192.168.68.83`
-  - Docker Engine
-  - `rustdesk-hbbs`
-  - `rustdesk-hbbr`
-  - UFW LAN-only firewall
-  - RustDesk client validation completed
-
-## Screenshot Evidence
-
-![RustDesk Debian VM summary](../../screenshots/phase-6.5/01-rustdesk-debian-vm-summary.png)
-
-![RustDesk Docker Compose running](../../screenshots/phase-6.5/05-rustdesk-docker-compose-running.png)
-
-![RustDesk UFW LAN-only firewall rules](../../screenshots/phase-6.5/06-rustdesk-ufw-status-lan-only.png)
-
-![RustDesk client connection test](../../screenshots/phase-6.5/08-rustdesk-client-connection-test.png)
-
-![RustDesk Proxmox backup](../../screenshots/phase-6.5/09-rustdesk-proxmox-backup.png)
+This phase supports closing out the HA DNS / core infrastructure foundation project.

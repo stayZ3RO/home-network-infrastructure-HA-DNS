@@ -1,67 +1,32 @@
-# Phase 6.5 Step-by-Step — RustDesk Remote Access Hardening
+# Phase 6.5 Step-by-Step — RustDesk Remote Access & VM Hardening
 
-## Overview
+## Step 1 — Validate RustDesk Debian VM
 
-This guide documents the steps used to deploy and secure a self-hosted RustDesk server on a Debian VM running inside Proxmox.
-
-## Step 1 — Create the Debian VM
-
-A lightweight Debian VM was created in Proxmox.
+The RustDesk server was deployed as a Debian VM.
 
 | Setting | Value |
 |---|---|
 | VM Name | `rustdesk-server` |
 | VM ID | `183` |
-| OS | Debian |
-| CPU | `1 vCPU` |
-| RAM | `1 GB` |
-| Disk | `12 GB` |
 | IP Address | `192.168.68.83` |
+
+Evidence:
 
 ![RustDesk Debian VM summary](../../screenshots/phase-6.5/01-rustdesk-debian-vm-summary.png)
 
-## Step 2 — Configure Static IP
+## Step 2 — Validate RustDesk Network
 
-The Debian VM was configured with a static IP.
+The RustDesk VM was configured with static network settings and validated against the gateway and Pi-hole DNS.
 
-| Setting | Value |
-|---|---|
-| IP Address | `192.168.68.83` |
-| Gateway | `192.168.68.1` |
-| DNS | `192.168.68.20` |
-
-Validation commands used:
-
-- `ip a`
-- `ip route`
-- `ping -c 4 192.168.68.1`
-- `ping -c 4 192.168.68.20`
+Evidence:
 
 ![RustDesk Debian network configuration](../../screenshots/phase-6.5/02-rustdesk-debian-network-config.png)
 
-## Step 3 — Configure SSH Key Access
+## Step 3 — Harden RustDesk SSH
 
-An existing Ed25519 SSH key was reused and copied to the RustDesk VM.
+SSH was configured for key-based access.
 
-Command used:
-
-- `ssh-copy-id -i ~/.ssh/id_ed25519.pub ash@192.168.68.83`
-
-SSH key login was then tested:
-
-- `ssh ash@192.168.68.83`
-
-![SSH key login validation](../../screenshots/phase-6.5/04-ssh-key-login-validation.png)
-
-## Step 4 — Harden SSH
-
-SSH was hardened by disabling root login and password authentication.
-
-File updated:
-
-- `/etc/ssh/sshd_config`
-
-Expected values:
+Expected SSH hardening values:
 
 | Setting | Value |
 |---|---|
@@ -69,112 +34,167 @@ Expected values:
 | `PasswordAuthentication` | `no` |
 | `PubkeyAuthentication` | `yes` |
 
-SSH was restarted after changes.
+Evidence:
 
 ![SSH hardening configuration](../../screenshots/phase-6.5/03-ssh-hardening-config.png)
 
-## Step 5 — Install Docker
+![SSH key login validation](../../screenshots/phase-6.5/04-ssh-key-login-validation.png)
 
-Docker was installed on the Debian VM.
+## Step 4 — Validate RustDesk Docker Compose
 
-Commands used:
+RustDesk Server OSS was deployed using Docker Compose.
 
-- `apt update`
-- `apt install -y curl ca-certificates gnupg git sudo ufw`
-- `curl -fsSL https://get.docker.com | sh`
-- `usermod -aG docker ash`
+Expected containers:
 
-Docker was validated with:
+- `rustdesk-hbbs`
+- `rustdesk-hbbr`
 
-- `docker --version`
-- `docker compose version`
-- `docker run hello-world`
-
-## Step 6 — Create RustDesk Docker Compose Stack
-
-A RustDesk project folder was created under:
-
-- `/root/rustdesk`
-
-The Docker Compose stack includes:
-
-| Container | Purpose |
-|---|---|
-| `rustdesk-hbbs` | ID / rendezvous server |
-| `rustdesk-hbbr` | Relay server |
-
-The stack was started with:
-
-- `docker compose up -d`
-- `docker compose ps`
+Evidence:
 
 ![RustDesk Docker Compose running](../../screenshots/phase-6.5/05-rustdesk-docker-compose-running.png)
 
-## Step 7 — Configure LAN-Only Firewall
+## Step 5 — Validate RustDesk UFW LAN-Only Firewall
 
-UFW was configured to deny incoming traffic by default and allow only the LAN subnet.
+UFW was configured to allow RustDesk only from the LAN.
 
-Allowed rules:
+Allowed source:
 
-| Port | Protocol | Source |
-|---:|---|---|
-| `22` | TCP | `192.168.68.0/24` |
-| `21115` | TCP | `192.168.68.0/24` |
-| `21116` | TCP | `192.168.68.0/24` |
-| `21116` | UDP | `192.168.68.0/24` |
-| `21117` | TCP | `192.168.68.0/24` |
+- `192.168.68.0/24`
+
+Evidence:
 
 ![RustDesk UFW LAN-only firewall rules](../../screenshots/phase-6.5/06-rustdesk-ufw-status-lan-only.png)
 
-## Step 8 — Configure RustDesk Clients
+## Step 6 — Validate RustDesk Clients
 
 RustDesk clients were configured to use the self-hosted server.
+
+Expected client settings:
 
 | Setting | Value |
 |---|---|
 | ID Server | `192.168.68.83` |
 | Relay Server | `192.168.68.83` |
-| Key | RustDesk server key from `rustdesk-hbbs` logs |
+| Key | RustDesk server key |
 
-The actual key value was blurred in screenshots before publishing.
+Evidence:
 
 ![RustDesk client network settings](../../screenshots/phase-6.5/07-rustdesk-client-network-settings.png)
 
-## Step 9 — Validate Remote Access
-
-Remote access was tested between:
-
-- Laptop
-- Gaming PC
-- Phone
-
-The test confirmed that clients could connect using the self-hosted RustDesk server.
-
 ![RustDesk client connection test](../../screenshots/phase-6.5/08-rustdesk-client-connection-test.png)
 
-## Step 10 — Back Up the RustDesk VM
+## Step 7 — Back Up RustDesk VM
 
-A Proxmox backup was created for the RustDesk VM and stored on `hdd-storage`.
+A Proxmox backup was created for the RustDesk VM.
 
-Recommended backup settings:
-
-| Setting | Value |
-|---|---|
-| Storage | `hdd-storage` |
-| Mode | `Stop` |
-| Compression | `ZSTD` |
+Evidence:
 
 ![RustDesk Proxmox backup](../../screenshots/phase-6.5/09-rustdesk-proxmox-backup.png)
 
+## Step 8 — Rename Docker Monitoring VM
+
+The Proxmox VM was renamed from `docker-services` to `docker-monitoring`.
+
+Evidence:
+
+![Proxmox VM renamed docker-monitoring](../../screenshots/phase-6.5/01-proxmox-vm-renamed-docker-monitoring.png)
+
+The Ubuntu hostname was also renamed.
+
+Evidence:
+
+![Ubuntu hostname renamed docker-monitoring](../../screenshots/phase-6.5/02-ubuntu-hostname-renamed-docker-monitoring.png)
+
+## Step 9 — Validate Monitoring Stack Before Maintenance
+
+The monitoring stack was confirmed before applying maintenance changes.
+
+Expected containers:
+
+- Grafana
+- Prometheus
+- Alertmanager
+- Blackbox Exporter
+
+Evidence:
+
+![Monitoring stack before maintenance](../../screenshots/phase-6.5/03-monitoring-stack-before-maintenance.png)
+
+## Step 10 — Configure Docker Log Rotation
+
+Docker log rotation was configured to prevent container logs from growing indefinitely.
+
+Configured values:
+
+| Setting | Value |
+|---|---|
+| Log driver | `json-file` |
+| Max size | `10m` |
+| Max files | `3` |
+
+Evidence:
+
+![Docker log rotation config](../../screenshots/phase-6.5/04-docker-log-rotation-config.png)
+
+## Step 11 — Configure Prometheus Retention
+
+Prometheus retention was limited.
+
+Configured values:
+
+| Setting | Value |
+|---|---|
+| Retention time | `30d` |
+| Retention size | `10GB` |
+
+Evidence:
+
+![Prometheus retention config](../../screenshots/phase-6.5/05-prometheus-retention-config.png)
+
+## Step 12 — Install Portainer Agent
+
+Portainer Agent was installed on the monitoring VM.
+
+Expected port:
+
+| Port | Purpose |
+|---:|---|
+| `9001` | Portainer Agent endpoint |
+
+Evidence:
+
+![Portainer Agent running](../../screenshots/phase-6.5/01-monitoring-vm-portainer-agent-running.png)
+
+## Step 13 — Resize Monitoring VM Disk
+
+The monitoring VM disk was resized to `50GB`.
+
+Evidence:
+
+![Proxmox disk resized to 50GB](../../screenshots/phase-6.5/08-proxmox-disk-resized-to-50gb.png)
+
+The Ubuntu filesystem was expanded inside the VM.
+
+Evidence:
+
+![Ubuntu disk expanded inside VM](../../screenshots/phase-6.5/09-ubuntu-disk-expanded-inside-vm.png)
+
+## Step 14 — Final Docker Validation
+
+Docker was validated after the rename, retention changes, agent install, and disk resize.
+
+Evidence:
+
+![Final Docker validation after resize](../../screenshots/phase-6.5/10-final-docker-validation-after-resize.png)
+
+## Step 15 — Final Backup
+
+A final Proxmox backup was completed after monitoring maintenance.
+
+Evidence:
+
+![Final backup after monitoring maintenance](../../screenshots/phase-6.5/11-final-backup-after-monitoring-maintenance.png)
+
 ## Final State
 
-Debian RustDesk VM - `192.168.68.83`
-
-- SSH hardened
-- Docker installed
-- `rustdesk-hbbs` running
-- `rustdesk-hbbr` running
-- UFW active
-- LAN-only access enforced
-- Remote access validated between trusted devices
-- Proxmox backup completed
+Phase 6.5 completed the final hardening and validation work before project closeout.
