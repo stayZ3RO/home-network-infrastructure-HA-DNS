@@ -1,49 +1,51 @@
-# Phase 6 — Proxmox Infrastructure & Omada Network Foundation
+# Phase 6 — Proxmox, Omada & Docker Monitoring Foundation 🧱
 
-## Overview
+## 📌 Overview
 
-Phase 6 adds a dedicated infrastructure layer to the home network lab using a Dell OptiPlex running Proxmox.
+Phase 6 introduced the dedicated infrastructure layer for the lab.
 
-This phase moves always-on services away from a gaming PC and onto a dedicated virtualization host. It also introduces the Omada Software Controller, prepares the ER605 router, and pre-stages the managed switch for the Phase 7 cutover.
+The goal was to move always-on services away from the gaming PC and onto a dedicated Proxmox host. This gave the environment a cleaner foundation for monitoring, network management, backups, and future router/switch cutover work.
 
----
+By the end of this phase, the lab had:
 
-## What This Phase Includes
-
-- Installed and configured Proxmox on a Dell OptiPlex
-- Assigned the Proxmox host a static IP: `192.168.68.80`
-- Created an Omada Controller LXC
-- Hosted the Omada Controller at `192.168.68.10`
-- Preconfigured the ER605 router for the existing LAN
-- Preserved the existing `192.168.68.0/24` network
-- Configured DHCP to use the Pi-hole VIP as DNS
-- Created an Ubuntu Docker VM for monitoring services
-- Migrated the monitoring stack from Docker Desktop on the gaming PC to the Proxmox Docker VM
-- Validated Grafana access from the new VM IP
-- Confirmed the gaming PC is no longer required for always-on monitoring
-- Added backup coverage using Proxmox and `hdd-storage`
-- Pre-staged the managed switch in Omada
-- Adopted the managed switch into the Omada Controller
-- Validated client connectivity through the managed switch
-- Documented the temporary switch staging IP and planned final management IP
+- A dedicated Proxmox host
+- An Omada Controller LXC
+- A Docker monitoring VM
+- ER605 router preconfiguration
+- Managed switch pre-staging
+- Proxmox backup coverage
 
 ---
 
-## Why This Phase Matters
+## 🎯 Objectives
 
-Before this phase, the monitoring stack depended on Docker Desktop running on a gaming PC. That worked for early testing, but it was not ideal for an always-on infrastructure lab.
+The goals for this phase were to:
 
-Moving these services to Proxmox improves the environment by:
-
-- Removing the gaming PC as an infrastructure dependency
-- Creating a dedicated always-on services host
-- Improving backup and recovery options
-- Preparing for managed routing and VLAN segmentation
-- Building a cleaner network management foundation
+- deploy Proxmox on the Dell OptiPlex
+- create a dedicated infrastructure host
+- host the Omada Controller in an LXC container
+- migrate monitoring from the gaming PC to a Docker VM
+- preconfigure the ER605 router before live cutover
+- adopt and validate the managed switch before VLAN work
+- preserve the existing Pi-hole HA DNS design
+- create backup coverage for core lab services
 
 ---
 
-## Current IP Plan
+## 🧩 What Was Built
+
+| Component | Role | Status |
+|---|---|---|
+| Proxmox Host | Virtualization platform for core services | Complete |
+| Omada Controller LXC | Network controller for TP-Link Omada devices | Complete |
+| Docker Monitoring VM | Grafana, Prometheus, Alertmanager, Blackbox Exporter | Complete |
+| ER605 Router | Preconfigured for future gateway cutover | Complete |
+| Managed Switch | Adopted and tested before cutover | Complete |
+| Proxmox Backups | Backup target on `hdd-storage` | Complete |
+
+---
+
+## 🌐 Current IP Plan
 
 | Device / Service | IP Address | Purpose |
 |---|---:|---|
@@ -55,19 +57,19 @@ Moving these services to Proxmox improves the environment by:
 | ashPi-2 | `192.168.68.61` | Pi-hole / Unbound node 2 |
 | Proxmox Host | `192.168.68.80` | Virtualization host |
 | Docker Monitoring VM | `192.168.68.81` | Monitoring stack |
-| RustDesk VM | `192.168.68.83` | Planned remote access service |
+| RustDesk VM | `192.168.68.83` | Remote access VM introduced in Phase 6.5 |
 | DHCP Range | `192.168.68.100-200` | Client devices |
 
 ---
 
-## Current Architecture
+## 🏗️ Final Phase 6 Architecture
 
 ```text
 OptiPlex / Proxmox Host - 192.168.68.80
 ├── Omada Controller LXC - 192.168.68.10
 │   └── Omada Software Controller
 │
-└── Ubuntu Docker VM - 192.168.68.81
+└── Docker Monitoring VM - 192.168.68.81
     ├── Grafana
     ├── Prometheus
     ├── Alertmanager
@@ -80,39 +82,65 @@ Managed Switch
 
 ---
 
-## Router Preconfiguration
+## 🔁 Before vs After
 
-The ER605 was preconfigured to match the existing home network before the physical cutover.
+### Before Phase 6
 
-| Setting | Value |
-|---|---|
-| LAN IP | `192.168.68.1` |
-| Subnet Mask | `255.255.255.0` |
-| DHCP Start | `192.168.68.100` |
-| DHCP End | `192.168.68.200` |
-| Primary DNS | `192.168.68.20` |
+```text
+Gaming PC
+└── Docker Desktop / WSL
+    ├── Grafana
+    ├── Prometheus
+    ├── Alertmanager
+    └── Blackbox Exporter
+```
 
-This preserves the existing Pi-hole HA DNS design and avoids changing the current LAN subnet during the router migration.
+### After Phase 6
+
+```text
+Proxmox Host
+├── Omada Controller LXC
+└── Docker Monitoring VM
+    └── Monitoring stack
+```
+
+This removed the gaming PC as an infrastructure dependency.
 
 ---
 
-## Managed Switch Pre-Staging
+## 🧪 Validation Evidence
 
-The managed switch was adopted into Omada before the live router/switch cutover.
+### Proxmox Host
 
-During Phase 6, the switch used a temporary DHCP address of:
+![Proxmox node summary](../../screenshots/phase-6/03-proxmox-node-summary.jpeg)
 
-```text
-192.168.68.59
-```
+### Omada Controller
 
-The planned final management IP is:
+![Omada Controller dashboard](../../screenshots/phase-6/04-omada-controller-dashboard.jpeg)
 
-```text
-192.168.68.2
-```
+### ER605 Router Preconfiguration
 
-The final IP will be assigned after the ER605 becomes the active router/DHCP server during Phase 7.
+![ER605 address reservations](../../screenshots/phase-6/05-er605-address-reservations.jpeg)
+
+![ER605 LAN DHCP Pi-hole DNS](../../screenshots/phase-6/06-er605-lan-dhcp-pihole-dns.jpeg)
+
+### Docker Monitoring VM
+
+![Docker VM summary](../../screenshots/phase-6/07-docker-vm-summary.png)
+
+![Docker Compose monitoring stack running](../../screenshots/phase-6/08-docker-compose-monitoring-running.png)
+
+![Grafana running from Docker VM](../../screenshots/phase-6/09-grafana-running-from-docker-vm.png)
+
+### Proxmox Backup
+
+![Proxmox backup to hdd-storage](../../screenshots/phase-6/10-proxmox-backup-to-hdd-storage.png)
+
+### Gaming PC No Longer Hosting Monitoring
+
+![Gaming PC Docker stopped](../../screenshots/phase-6/11-gaming-pc-docker-stopped.png)
+
+### Managed Switch Pre-Staging
 
 ![Switch adopted in Omada](../../screenshots/phase-6/switch-prep/02-switch-adopted-in-omada.png)
 
@@ -120,23 +148,7 @@ The final IP will be assigned after the ER605 becomes the active router/DHCP ser
 
 ---
 
-## Key Result
-
-The monitoring stack now runs from an Ubuntu VM hosted on Proxmox instead of Docker Desktop on the gaming PC.
-
-The Omada Controller is also running from a Proxmox LXC, the ER605 router is staged for the next cutover, and the managed switch has been adopted into Omada.
-
-![Proxmox node summary](../../screenshots/phase-6/03-proxmox-node-summary.jpeg)
-
-![Omada Controller dashboard](../../screenshots/phase-6/04-omada-controller-dashboard.jpeg)
-
-![Docker Compose monitoring stack running](../../screenshots/phase-6/08-docker-compose-monitoring-running.png)
-
-![Grafana running from Docker VM](../../screenshots/phase-6/09-grafana-running-from-docker-vm.png)
-
----
-
-## Documentation
+## 📚 Documentation
 
 - [Overview](./overview.md)
 - [Step-by-Step Guide](./step-by-step.md)
@@ -146,17 +158,16 @@ The Omada Controller is also running from a Proxmox LXC, the ER605 router is sta
 
 ---
 
-## Next Phase
+## ✅ Phase Result
 
-The next phase will move the ER605 into the live network path.
+Phase 6 successfully created the virtualization and management foundation for the lab.
 
-Planned next steps:
+The environment now has dedicated infrastructure for Omada, monitoring, backups, and future network cutover work.
 
-- Harden RustDesk remote access in Phase 6.5
-- Plug the ER605 into the active network path
-- Move routing and DHCP from Deco to ER605
-- Make the managed switch the core switch
-- Switch Deco mesh into AP mode
-- Validate client DHCP, DNS, and internet access
-- Confirm Pi-hole HA DNS still works through the VIP
-- Build VLAN segmentation later in Phase 8
+---
+
+## ➡️ Next Phase
+
+Phase 6.5 adds final remote access and VM hardening before the project closeout.
+
+Future router cutover, VLANs, and segmentation will move into a separate network segmentation project.

@@ -1,4 +1,4 @@
-# Phase 6.5 Diagrams — RustDesk Remote Access & VM Hardening
+# Phase 6.5 Diagrams — RustDesk Remote Access & VM Hardening 🗺️
 
 ## Final Pre-Cutover Service Layout
 
@@ -17,6 +17,8 @@ Proxmox Host - 192.168.68.80
     └── Portainer Agent
 ```
 
+---
+
 ## RustDesk Access Flow
 
 ```text
@@ -29,6 +31,8 @@ rustdesk-server - 192.168.68.83
         └── hbbr
 ```
 
+---
+
 ## Docker Management Plan
 
 ```text
@@ -38,6 +42,8 @@ Future docker-apps VM - 192.168.68.82
 docker-monitoring VM - 192.168.68.81
 └── Portainer Agent - 9001
 ```
+
+---
 
 ## Project Boundary
 

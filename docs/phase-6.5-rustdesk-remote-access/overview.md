@@ -1,25 +1,28 @@
-# Phase 6.5 Overview — RustDesk Remote Access & VM Hardening
+# Phase 6.5 Overview — RustDesk Remote Access & VM Hardening 🔐
 
-## Purpose
+## 📌 Purpose
 
-Phase 6.5 prepares the lab for project closeout and the future network cutover by validating remote access, VM hardening, Docker monitoring maintenance, and backup readiness.
+Phase 6.5 prepares the lab for project closeout by validating remote access, VM hardening, monitoring maintenance, and backup readiness.
 
-This phase is intentionally scoped as a pre-cutover hardening phase.
+This is the final technical hardening phase before closing Project 1 and moving future routing/switching/VLAN work into a separate project.
 
-## Why This Phase Matters
+---
 
-Before changing the physical network path, the lab needed reliable access and recovery options.
+## 🧠 Why This Phase Matters
 
-This phase confirmed:
+Before changing the network path in a future project, the lab needed:
 
-- RustDesk remote access works across trusted devices.
-- SSH access is hardened.
-- Docker monitoring has controlled log and metrics retention.
-- The monitoring VM has enough disk capacity.
-- Portainer Agent is ready for future centralized Docker management.
-- Final Proxmox backups exist.
+- reliable remote access
+- hardened SSH access
+- LAN-only remote desktop
+- controlled monitoring storage growth
+- clean VM naming
+- enough disk headroom
+- verified backups
 
-## Final Architecture
+---
+
+## 🧩 Final Architecture
 
 | Component | Host | IP |
 |---|---|---:|
@@ -28,9 +31,9 @@ This phase confirmed:
 | Docker Monitoring | VM 281 | `192.168.68.81` |
 | RustDesk Server | VM 183 | `192.168.68.83` |
 
-## RustDesk Server
+---
 
-RustDesk runs on a Debian VM.
+## 🔐 RustDesk Server
 
 | Item | Value |
 |---|---|
@@ -42,9 +45,9 @@ RustDesk runs on a Debian VM.
 | Containers | `rustdesk-hbbs`, `rustdesk-hbbr` |
 | Firewall | UFW LAN-only |
 
-## Docker Monitoring VM
+---
 
-The Docker monitoring VM was renamed and hardened.
+## 📊 Docker Monitoring VM
 
 | Item | Value |
 |---|---|
@@ -57,27 +60,21 @@ The Docker monitoring VM was renamed and hardened.
 | Prometheus retention | `30d` / `10GB` |
 | Portainer component | Agent only |
 
-## Portainer Design
+---
 
-Portainer is being split cleanly:
+## 🧭 Portainer Design
 
 | Host | Component |
 |---|---|
 | `docker-monitoring` | Portainer Agent |
 | Future `docker-apps` VM | Portainer Server |
 
-This keeps the monitoring VM focused on observability and allows the future app-hosting VM to provide the Portainer UI.
+This keeps monitoring focused and reserves application hosting for a separate VM.
 
-## Security Approach
+---
 
-- RustDesk remains LAN-only.
-- Portainer Agent remains LAN-only.
-- No public forwarding is configured for RustDesk or Portainer.
-- SSH hardening is documented.
-- Backups exist before moving to the next project.
+## ✅ Result
 
-## Result
-
-The lab has validated remote access, monitoring, hardening, and backup readiness.
+The lab has validated remote access, monitoring hardening, Docker retention, disk expansion, and backup readiness.
 
 This phase supports closing out the HA DNS / core infrastructure foundation project.

@@ -1,4 +1,4 @@
-# Phase 6.5 Validation — RustDesk Remote Access & VM Hardening
+# Phase 6.5 Validation — RustDesk Remote Access & VM Hardening ✅
 
 ## Validation Summary
 
@@ -24,6 +24,8 @@
 | Final Docker validation completed | Passed |
 | Final Proxmox backup completed | Passed |
 
+---
+
 ## RustDesk Validation
 
 ![RustDesk Debian VM summary](../../screenshots/phase-6.5/01-rustdesk-debian-vm-summary.png)
@@ -43,6 +45,8 @@
 ![RustDesk client connection test](../../screenshots/phase-6.5/08-rustdesk-client-connection-test.png)
 
 ![RustDesk Proxmox backup](../../screenshots/phase-6.5/09-rustdesk-proxmox-backup.png)
+
+---
 
 ## Docker Monitoring Maintenance Validation
 
@@ -65,6 +69,8 @@
 ![Final Docker validation after resize](../../screenshots/phase-6.5/10-final-docker-validation-after-resize.png)
 
 ![Final backup after monitoring maintenance](../../screenshots/phase-6.5/11-final-backup-after-monitoring-maintenance.png)
+
+---
 
 ## Conclusion
 
