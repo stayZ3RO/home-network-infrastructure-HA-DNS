@@ -1,128 +1,153 @@
-# Lessons Learned
+# Lessons Learned 🧠
 
-This document captures the technical lessons learned while building the Home Network Infrastructure Lab.
+## Network Foundation
 
----
-
-## Network Control
-
-- Understanding the role of each device matters before making changes.
-- ISP gateways, routers, switches, DNS servers, and clients all have separate responsibilities.
-- A stable IP plan makes future expansion easier.
-- Documenting the baseline network helps reduce confusion during later changes.
+- Bridge mode and IP Passthrough solve similar problems differently depending on the ISP.
+- Router, gateway, and access point roles should be clearly separated.
+- Planning the IP structure early makes later infrastructure work easier.
+- A clean baseline network reduces confusion during later changes.
 
 ---
 
-## ISP Migration
+## ISP and Edge Design
 
-- Xfinity bridge mode and AT&T IP Passthrough solve similar problems differently.
+- Xfinity bridge mode and AT&T IP Passthrough behave differently.
+- Fiber introduces the ONT as an additional infrastructure layer.
 - ISP equipment behavior affects topology, NAT, routing, and troubleshooting.
-- Migrating ISPs is not just a speed change; it can change how the entire edge network is designed.
-- Updating diagrams after ISP changes helps prevent outdated assumptions.
+- Updating diagrams after ISP changes prevents outdated assumptions.
 
 ---
 
-## DNS Control
+## DNS and Pi-hole
 
-- Centralized DNS gives better visibility into client behavior.
-- Pi-hole works best when DHCP consistently hands out the Pi-hole DNS address.
-- DNS changes can appear broken if clients keep old leases or cached DNS settings.
-- DNS should be treated as a core infrastructure service, not just an ad-blocking tool.
+- DNS must be distributed through DHCP to affect most clients consistently.
+- Pi-hole provides visibility and control, not just ad blocking.
+- DNS issues can look like general internet issues to end users.
+- Client lease renewals and cached DNS settings can delay visible results.
 
 ---
 
 ## High Availability DNS
 
-- A single Pi-hole creates a single point of failure.
-- Keepalived allows multiple nodes to share a virtual IP.
-- Gravity Sync keeps Pi-hole configuration consistent between nodes.
-- Unbound adds local recursive DNS capability.
-- Failover should be tested intentionally, not assumed.
+- A single Pi-hole instance is still a single point of failure.
+- HA DNS requires both redundancy and validation.
+- A VIP simplifies client configuration by keeping one consistent DNS target.
+- Failover must be tested from the client perspective.
+
+---
+
+## Gravity Sync
+
+- Multiple Pi-hole nodes need synchronized records, blocklists, and settings.
+- Replication reduces drift and manual effort.
+- HA is weaker when nodes behave differently.
+
+---
+
+## Keepalived and VIP Failover
+
+- VIP movement alone is not enough; real DNS queries must still succeed.
+- The standby node must be fully functional before testing failover.
+- Failover should be validated with normal client behavior, not just service status.
+
+---
+
+## Recursive DNS with Unbound
+
+- Running Unbound locally removes dependency on public upstream resolvers.
+- Each Pi-hole node should use its own local Unbound instance.
+- Recursive DNS should be tested directly and through the VIP path.
 
 ---
 
 ## Monitoring and Alerting
 
-- Monitoring makes infrastructure issues easier to see and explain.
-- Grafana provides useful visibility for both technical validation and documentation.
-- Prometheus is useful for collecting metrics over time.
-- Blackbox Exporter helps validate endpoint and DNS availability.
-- Alertmanager adds operational awareness instead of relying on manual checks.
+- Metrics collection and service probing solve different problems.
+- Node Exporter monitors host health; Blackbox Exporter validates service behavior.
+- Monitoring should observe the service path, not just the host.
+- Healthy failover should not be treated as an outage.
+- Alert severity and `for:` windows reduce noise.
+- Alertmanager routes should be tested directly before relying on real alerts.
 
 ---
 
-## Remote Access
+## Discord Alerting
 
-- Remote access should be secure by design.
-- Tailscale provides a safer remote access model without exposing internal services directly.
-- Remote SSH access should be tested from multiple devices.
-- Remote access becomes more valuable as the lab grows beyond a single device.
+- Discord webhooks are controlled by the webhook URL, not the Alertmanager receiver name.
+- Webhook URLs should never be committed to GitHub.
+- Local secret files and read-only container mounts keep alerting safer.
+- Recreating a container may be required after changing volume mounts.
+
+---
+
+## Secure Remote Access
+
+- Secure remote administration does not require public SSH exposure.
+- Tailscale provides a clean private admin path.
+- Remote access should be validated from outside the home network.
+- RustDesk adds a practical remote support layer when kept LAN-only or VPN-only.
 
 ---
 
 ## Proxmox and Virtualization
 
-- A dedicated virtualization host is better for always-on services than a gaming PC.
-- Proxmox makes the lab feel more like a real infrastructure environment.
-- Separating services into VMs and LXCs improves organization and recovery options.
-- The gaming PC should not be required for core infrastructure services.
-- VM/LXC backups are easier to manage when storage is planned early.
+- Moving infrastructure services off a gaming PC improves reliability.
+- Docker Desktop is useful for testing, but Linux VM hosting is cleaner for always-on services.
+- Proxmox makes service separation, backups, and future expansion easier.
+- VM naming should match the actual role of the workload.
+- Backups should be validated as part of the implementation, not treated as an afterthought.
 
 ---
 
-## Docker Migration
+## Docker Operations
 
-- Docker images are replaceable; persistent data is not.
-- Compose files, `.env` files, bind mounts, and named volumes are the critical backup items.
-- Stopping a stack before backing up volumes reduces risk of inconsistent data.
-- Restoring Grafana and Prometheus data requires restoring named Docker volumes correctly.
-- Moving monitoring to the Proxmox Docker VM removed the gaming PC dependency.
-
----
-
-## Omada Controller and Network Management
-
-- Running the Omada Controller as an LXC avoids needing a hardware controller.
-- The controller should have a static IP and be documented clearly.
-- Preconfiguring the ER605 before live cutover reduces downtime.
-- Adopting and staging the managed switch before cutover makes the transition safer.
-- Keeping the network flat before VLANs makes troubleshooting easier.
+- Docker container logs should have rotation configured.
+- Prometheus retention should be limited to avoid uncontrolled disk growth.
+- Monitoring services should not share a VM with experimental app workloads.
+- Portainer Agent belongs on managed Docker hosts; Portainer Server can live on a separate app/admin VM later.
+- Disk expansion should be followed by guest filesystem expansion and validation.
 
 ---
 
-## Storage and Backups
+## RustDesk Remote Access
 
-- Active workloads and backup storage should be planned separately.
-- HDD-backed storage is useful for backups, ISOs, templates, and archives.
-- Proxmox backups provide a cleaner recovery path for infrastructure services.
-- A service is not truly stable until there is a recovery plan.
-
----
-
-## Cutover Planning
-
-- Router cutovers should be treated like maintenance windows.
-- Only one device should own the gateway IP at a time.
-- Router, DHCP, DNS, and Wi-Fi role changes should be done in a controlled order.
-- Deco AP mode should come after routing duties move to the ER605.
-- VLANs should not be introduced until the flat router/switch cutover is stable.
+- RustDesk Server OSS can be self-hosted with lightweight resources.
+- Key mismatch issues usually point to client/server key configuration problems.
+- LAN-only firewalling is a safer first step than public exposure.
+- Remote access tooling should be documented with screenshots and redacted IDs.
 
 ---
 
-## VLAN Planning
+## Troubleshooting and Validation
 
-- VLANs are a security and organization tool, not something to rush into.
-- Management, production, lab, and IoT/guest traffic should eventually be separated.
-- Firewall rules are just as important as VLAN creation.
-- DNS across VLANs needs to be planned carefully so filtering still works.
-- Segmentation should be validated with real client tests.
+- Small misconfigurations can affect the entire network.
+- Layered troubleshooting works best: network → host → service → client path.
+- Logs should be checked before assuming a tool or service is broken.
+- Validation should prove normal operation, failure handling, monitoring, alerting, and remote access.
 
 ---
 
-## Documentation
+## Documentation Lessons
 
-- Screenshots prove the work was actually completed.
-- Diagrams make the project easier to understand quickly.
-- Step-by-step documentation is useful for troubleshooting and future rebuilding.
-- Phase-based documentation keeps the project organized.
-- A clean README, roadmap, changelog, and lessons learned file make the repo stronger for professional review.
+- Screenshots should prove configuration, status, and successful validation.
+- Step-by-step docs should group commands with expected outcomes.
+- Overview docs should focus on design intent and high-level proof.
+- Consistent formatting makes a repo easier to review and present.
+- Redacting secrets, tokens, passwords, and identifiers is part of the documentation process.
+
+---
+
+## Scope Control
+
+- The project became broad enough that segmentation deserves its own repository.
+- Closing this repo at the infrastructure foundation point keeps the project focused.
+- The next project can build on this foundation without making this repository too large or unfocused.
+
+---
+
+## Personal Takeaways
+
+- Building is one of the fastest ways to learn infrastructure.
+- Real troubleshooting creates deeper understanding than theory alone.
+- Documentation turns lab work into repeatable proof of skill.
+- Each phase made the environment less like a basic home setup and more like a real infrastructure environment.
