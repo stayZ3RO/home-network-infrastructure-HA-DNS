@@ -1,5 +1,23 @@
 # Phase 3 — Step-by-Step Guide 🛠️
 
+---
+
+## Quick Navigation
+
+| Page | Link |
+|---|---|
+| Phase Home | [README](README.md) |
+| Overview | [overview.md](overview.md) |
+| Step-by-Step Guide | [step-by-step.md](step-by-step.md) |
+| Jump Box Access | [jump-box-access.md](jump-box-access.md) |
+| Validation and Failover Tests | [validation-failover-tests.md](validation-failover-tests.md) |
+| Diagrams | [diagrams.md](diagrams.md) |
+| DNS Recursion with Unbound | [DNS-recursion-unbound.md](DNS-recursion-unbound.md) |
+| Documentation Hub | [docs/](../README.md) |
+
+---
+
+
 ## 📖 Purpose
 
 This guide documents the implementation of the **high-availability DNS layer** for the home network lab.

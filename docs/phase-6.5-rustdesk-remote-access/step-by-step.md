@@ -1,5 +1,21 @@
 # Phase 6.5 Step-by-Step — RustDesk Remote Access & VM Hardening 🔐
 
+---
+
+## Quick Navigation
+
+| Page | Link |
+|---|---|
+| Phase Home | [README](README.md) |
+| Overview | [overview.md](overview.md) |
+| Step-by-Step Guide | [step-by-step.md](step-by-step.md) |
+| Validation | [validation.md](validation.md) |
+| Diagrams | [diagrams.md](diagrams.md) |
+| Documentation Hub | [docs/](../README.md) |
+
+---
+
+
 ## Step 1 — Validate RustDesk Debian VM
 
 ![RustDesk Debian VM summary](../../screenshots/phase-6.5/01-rustdesk-debian-vm-summary.png)

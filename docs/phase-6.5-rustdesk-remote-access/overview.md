@@ -1,5 +1,21 @@
 # Phase 6.5 Overview — RustDesk Remote Access & VM Hardening 🔐
 
+---
+
+## Quick Navigation
+
+| Page | Link |
+|---|---|
+| Phase Home | [README](README.md) |
+| Overview | [overview.md](overview.md) |
+| Step-by-Step Guide | [step-by-step.md](step-by-step.md) |
+| Validation | [validation.md](validation.md) |
+| Diagrams | [diagrams.md](diagrams.md) |
+| Documentation Hub | [docs/](../README.md) |
+
+---
+
+
 ## 📌 Purpose
 
 Phase 6.5 prepares the lab for project closeout by validating remote access, VM hardening, monitoring maintenance, and backup readiness.
