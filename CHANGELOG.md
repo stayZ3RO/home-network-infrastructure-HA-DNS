@@ -1,133 +1,212 @@
-# Changelog
+# Changelog 📝
 
-All notable changes to this project are documented here.
+![Status](https://img.shields.io/badge/status-complete-brightgreen)
+![Project](https://img.shields.io/badge/project-home%20infrastructure-blue)
 
----
+## Overview
 
-## Project Closeout
+This changelog summarizes the major infrastructure and documentation milestones for the Home Network Infrastructure Lab.
 
-- Marked Project 1 as complete
-- Clarified that future ER605 cutover and VLAN segmentation will move to a separate project
-- Updated README, current status, roadmap, changelog, lessons learned, and project closeout documentation
-- Removed Phase 7 and Phase 8 from this repository's active scope
+The project is complete and closed out.
 
 ---
 
-## Phase 6.5 — RustDesk Remote Access & VM Hardening
+## Phase 1 - Network Control
 
-- Deployed RustDesk Server OSS on a Debian VM
-- Assigned RustDesk VM static IP `192.168.68.83`
-- Configured SSH key-based access
-- Hardened SSH by disabling root login and password authentication
-- Deployed RustDesk `hbbs` and `hbbr` containers with Docker Compose
-- Configured UFW LAN-only rules for RustDesk and SSH
-- Validated RustDesk clients between laptop, gaming PC, and phone
-- Created Proxmox backup for RustDesk VM
-- Renamed `docker-services` VM to `docker-monitoring`
-- Renamed Ubuntu hostname to `docker-monitoring`
-- Configured Docker log rotation
-- Configured Prometheus retention to `30d` / `10GB`
-- Installed Portainer Agent on the monitoring VM
-- Expanded the monitoring VM disk to `50GB`
-- Expanded Ubuntu filesystem inside the VM
-- Completed final Docker validation after resize
-- Created final Proxmox backup after monitoring VM maintenance
+Status: ✅ Complete
+
+Added:
+
+- Initial network topology documentation
+- Network control overview
+- Step-by-step network baseline documentation
+- Early architecture references
+
+Completed:
+
+- Documented existing network layout
+- Identified gateway/router responsibilities
+- Established baseline network understanding
 
 ---
 
-## Phase 6 — Proxmox, Omada & Docker Monitoring Foundation
+## Phase 1.5 - ISP Migration
 
-- Deployed Proxmox host environment
-- Created Omada Controller LXC
-- Created Ubuntu Docker monitoring VM
-- Installed Docker Engine and Docker Compose on the monitoring VM
-- Migrated Grafana, Prometheus, Alertmanager, and Blackbox Exporter from Docker Desktop to the VM
-- Restored Grafana dashboards and Prometheus data
-- Recreated Alertmanager Discord webhook secret handling
-- Validated Prometheus targets, Blackbox probes, dashboards, and Discord alert delivery
-- Stopped the old gaming PC Docker monitoring stack
-- Confirmed monitoring no longer depends on the gaming PC
-- Preconfigured ER605 router for future cutover
-- Pre-staged managed switch in Omada
-- Validated client connectivity through the managed switch
-- Created Proxmox backup evidence
+Status: ✅ Complete
 
----
+Added:
 
-## Phase 5 — Remote Access
+- ISP migration documentation
+- Xfinity to AT&T Fiber comparison
+- AT&T IP Passthrough notes
+- Updated topology documentation
 
-- Deployed Tailscale for secure remote administration
-- Added admin endpoints to the tailnet
-- Added `ashpi-1` and `ashpi-2` to the tailnet
-- Confirmed MagicDNS-based device naming
-- Validated `tailscale ping` connectivity
-- Validated SSH access over Tailscale
-- Confirmed off-site access without public SSH exposure
-- Avoided router port forwarding for administrative SSH
+Completed:
+
+- Migrated network documentation from Xfinity model to AT&T Fiber model
+- Captured ONT and AT&T Gateway role
+- Documented IP Passthrough behavior
 
 ---
 
-## Phase 4 — Monitoring & Alerting
+## Phase 2 - DNS Control
 
-- Deployed Prometheus
-- Deployed Grafana
-- Deployed Alertmanager
-- Deployed Blackbox Exporter
-- Installed Node Exporter on `ashpi-1` and `ashpi-2`
-- Configured Prometheus target scraping
-- Configured Blackbox DNS probes
-- Built Node Health and DNS & Failover dashboards
-- Added Prometheus alert rules
-- Validated alert lifecycle from pending to firing to cleared
-- Configured Discord alert delivery
-- Stored Discord webhook locally as a secret
-- Excluded alerting secrets from Git
-- Validated manual Alertmanager test alerts to Discord
-- Validated keepalived failover while confirming VIP DNS stayed healthy
+Status: ✅ Complete
 
----
+Added:
 
-## Phase 3 — High Availability DNS
+- Pi-hole DNS control documentation
+- DNS validation notes
+- Centralized DNS visibility documentation
 
-- Added second Raspberry Pi DNS node
-- Installed Pi-hole on both nodes
-- Implemented Gravity Sync
-- Configured Keepalived VIP failover
-- Added Unbound recursive resolver on both Pi-hole nodes
-- Verified DNS resolution through the VIP
-- Verified DNS continuity during simulated failover
-- Confirmed ad blocking remained active after failover
+Completed:
+
+- Deployed Pi-hole DNS control
+- Validated DNS filtering
+- Confirmed query visibility
+- Documented DNS path
 
 ---
 
-## Phase 2 — DNS Control
+## Phase 3 - High Availability DNS
 
-- Installed Pi-hole
-- Configured router DHCP to use Pi-hole as DNS
-- Enabled network-wide ad blocking
-- Implemented DNS query logging and visibility
-- Added blocklist management
-- Resolved Pi-hole gravity database issue
-- Validated DNS traffic across client devices
+Status: ✅ Complete
+
+Added:
+
+- HA DNS overview
+- Keepalived documentation
+- Gravity Sync documentation
+- Jump box access notes
+- Unbound recursive DNS documentation
+- Failover validation tests
+- HA DNS diagrams
+
+Completed:
+
+- Added secondary Pi-hole node
+- Configured Keepalived VIP
+- Configured Gravity Sync replication
+- Added Unbound recursive DNS
+- Validated failover and recovery
 
 ---
 
-## Phase 1.5 — ISP Migration
+## Phase 4 - Monitoring and Alerting
 
-- Migrated from Xfinity to AT&T Fiber
-- Integrated ONT for fiber connection
-- Configured IP Passthrough on AT&T gateway
-- Connected Deco router through Ethernet WAN
-- Preserved internal subnet `192.168.68.x`
-- Maintained Pi-hole DNS functionality
-- Updated topology and diagrams
+Status: ✅ Complete
+
+Added:
+
+- Prometheus documentation
+- Grafana dashboard documentation
+- Alertmanager documentation
+- Discord alerting notes
+- Blackbox Exporter validation
+- Monitoring validation screenshots
+
+Completed:
+
+- Built monitoring stack
+- Added DNS/service availability checks
+- Built dashboards
+- Configured alert routing
+- Validated alert firing and recovery behavior
 
 ---
 
-## Phase 1 — Network Control
+## Phase 5 - Tailscale Remote Access
 
-- Established initial baseline network control
-- Deployed Deco mesh system as primary router
-- Eliminated double NAT
-- Disabled ISP Wi-Fi broadcasting where applicable
-- Documented the starting network topology
+Status: ✅ Complete
+
+Added:
+
+- Tailscale overview
+- Remote access step-by-step guide
+- Remote access validation documentation
+
+Completed:
+
+- Installed and configured Tailscale
+- Validated remote SSH access
+- Tested access from mobile/admin endpoint
+- Documented private remote administration model
+
+---
+
+## Phase 6 - Proxmox, Omada, Docker Monitoring Foundation
+
+Status: ✅ Complete
+
+Added:
+
+- Proxmox service foundation documentation
+- Omada Controller LXC documentation
+- Docker monitoring VM documentation
+- Managed switch pre-staging notes
+- Service migration diagrams
+- Validation evidence
+
+Completed:
+
+- Built Proxmox service layer
+- Added Omada Controller LXC
+- Migrated monitoring stack to Docker VM
+- Added Portainer Agent
+- Documented managed switch pre-staging
+
+---
+
+## Phase 6.5 - RustDesk Remote Access and VM Hardening
+
+Status: ✅ Complete
+
+Added:
+
+- RustDesk overview
+- RustDesk step-by-step guide
+- RustDesk validation documentation
+- RustDesk architecture diagram
+- VM hardening notes
+
+Completed:
+
+- Deployed self-hosted RustDesk server
+- Configured hbbs and hbbr
+- Kept RustDesk LAN-only
+- Hardened VM baseline
+- Documented validation evidence
+
+---
+
+## Repository Polish
+
+Status: ✅ Complete
+
+Added:
+
+- Polished main README
+- Documentation hub
+- Config examples landing page
+- Screenshot evidence landing page
+- Updated current status
+- Updated roadmap
+- Updated lessons learned
+- Updated changelog
+- Improved repo metadata and topics
+
+---
+
+## Closed Scope
+
+The following items are intentionally excluded from this completed repository:
+
+- ER605 live router cutover
+- Managed switch production cutover
+- Deco AP mode migration
+- VLAN segmentation
+- Inter-VLAN firewall policies
+- SSID-to-VLAN mapping
+- IoT and guest network isolation
+
+These will be tracked in a separate network segmentation project.
