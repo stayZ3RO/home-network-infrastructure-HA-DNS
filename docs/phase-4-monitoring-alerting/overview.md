@@ -1,5 +1,22 @@
 # Phase 4 — Monitoring & Alerting Overview 📈
 
+---
+
+## Quick Navigation
+
+| Page | Link |
+|---|---|
+| Phase Home | [README](README.md) |
+| Overview | [overview.md](overview.md) |
+| Step-by-Step Guide | [step-by-step.md](step-by-step.md) |
+| Dashboards | [dashboards.md](dashboards.md) |
+| Alerting | [alerting.md](alerting.md) |
+| Validation | [validation.md](validation.md) |
+| Documentation Hub | [docs/](../README.md) |
+
+---
+
+
 ## 📖 Overview
 
 Phase 4 adds the **observability layer** to the HA DNS platform completed in Phase 3.

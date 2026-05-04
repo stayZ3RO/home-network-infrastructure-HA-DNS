@@ -1,5 +1,20 @@
 # Phase 5 — Remote Access Overview 🔐
 
+---
+
+## Quick Navigation
+
+| Page | Link |
+|---|---|
+| Phase Home | [README](README.md) |
+| Overview | [overview.md](overview.md) |
+| Step-by-Step Guide | [step-by-step.md](step-by-step.md) |
+| Validation | [validation.md](validation.md) |
+| Documentation Hub | [docs/](../README.md) |
+
+---
+
+
 ## 📖 Overview
 
 Phase 5 adds the **secure remote administration layer** to the homelab.

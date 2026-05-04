@@ -1,5 +1,21 @@
 # Phase 6.5 Validation — RustDesk Remote Access & VM Hardening ✅
 
+---
+
+## Quick Navigation
+
+| Page | Link |
+|---|---|
+| Phase Home | [README](README.md) |
+| Overview | [overview.md](overview.md) |
+| Step-by-Step Guide | [step-by-step.md](step-by-step.md) |
+| Validation | [validation.md](validation.md) |
+| Diagrams | [diagrams.md](diagrams.md) |
+| Documentation Hub | [docs/](../README.md) |
+
+---
+
+
 ## Validation Summary
 
 | Check | Result |

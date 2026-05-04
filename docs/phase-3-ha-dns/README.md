@@ -1,58 +1,73 @@
-# Phase 3 — High Availability DNS 🛡️
+# Phase 3 - High Availability DNS 🔁
 
-## 📖 Summary
+![Status](https://img.shields.io/badge/status-complete-brightgreen)
+![DNS](https://img.shields.io/badge/dns-Pi--hole%20HA-success)
+![Failover](https://img.shields.io/badge/failover-Keepalived-blue)
+![Sync](https://img.shields.io/badge/sync-Gravity%20Sync-purple)
+![Resolver](https://img.shields.io/badge/resolver-Unbound-orange)
 
-This phase expands the lab from a single-node Pi-hole deployment into a high-availability DNS platform.
+## Phase Summary
 
-Phase 3 introduced:
+Phase 3 removed DNS as a single point of failure by building a high availability Pi-hole DNS setup.
 
-- Dual Pi-hole DNS nodes
-- Gravity Sync for Pi-hole configuration replication
-- keepalived for Virtual IP failover
-- Unbound for local recursive DNS resolution
-- Failover validation to confirm DNS continuity
-
----
-
-## 🧱 Architecture
-
-| Component | Role | IP Address |
-|---|---|---|
-| ashpi-1 | Primary Pi-hole / DNS node | 192.168.68.60 |
-| ashpi-2 | Secondary Pi-hole / DNS node | 192.168.68.61 |
-| VIP | Shared DNS Virtual IP | 192.168.68.20 |
-
-Clients use the VIP as their DNS resolver. keepalived controls which Pi-hole node owns the VIP.
+This phase added a second Pi-hole node, a shared virtual IP, configuration synchronization, local recursive DNS, and failover validation.
 
 ---
 
-## 📸 Key Result
+## What This Phase Demonstrates
 
-The screenshot below shows the secondary node active after failover.
-
-![After failover secondary active](../../screenshots/phase-3/16-after-failover-secondary-active.png)
-
----
-
-## ✅ What Was Completed
-
-- Added a second Raspberry Pi DNS node
-- Installed and validated Pi-hole on the secondary node
-- Configured SSH trust for node-to-node synchronization
-- Configured Gravity Sync between both Pi-hole nodes
-- Configured keepalived and a shared DNS VIP
-- Validated VIP failover from primary to secondary
-- Installed Unbound on both Pi-hole nodes
-- Updated both Pi-hole nodes to use local Unbound recursion
-- Validated DNS resolution before, during, and after failover
-- Confirmed ad blocking continued after failover
+| Area | Demonstrated Skill |
+|---|---|
+| High availability | Shared DNS VIP using Keepalived |
+| DNS redundancy | Primary and backup Pi-hole nodes |
+| Configuration sync | Gravity Sync replication |
+| Recursive DNS | Local Unbound resolver |
+| Failover testing | Manual failure and recovery validation |
+| Documentation | Diagrams, validation notes, and screenshots |
 
 ---
 
-## 📚 Documentation
+## Final HA DNS Design
 
-- [Overview](./overview.md)
-- [Step-by-Step Guide](./step-by-step.md)
-- [Jump Box Access](./jump-box-access.md)
-- [Validation and Failover Tests](./validation-and-failover-tests.md)
-- [Diagrams](./diagrams.md)
+    Clients
+      ↓
+    Pi-hole HA VIP - 192.168.68.20
+      ↓
+    Active Pi-hole Node
+      ↓
+    Local Unbound Recursive Resolver
+
+    ashpi-1 - Primary Pi-hole Node
+    ashpi-2 - Backup Pi-hole Node
+
+---
+
+## Phase Documentation
+
+| Page | Description |
+|---|---|
+| [Overview](overview.md) | Case-study overview of the HA DNS design |
+| [Step-by-Step Guide](step-by-step.md) | Implementation flow |
+| [Jump Box Access](jump-box-access.md) | SSH and access notes |
+| [Validation and Failover Tests](validation-failover-tests.md) | Failover proof and testing |
+| [Diagrams](diagrams.md) | Phase-specific architecture |
+| [DNS Recursion with Unbound](DNS-recursion-unbound.md) | Recursive DNS configuration notes |
+
+---
+
+## Key Services
+
+| Service | Role |
+|---|---|
+| Pi-hole | DNS filtering and visibility |
+| Keepalived | Virtual IP failover |
+| Gravity Sync | Pi-hole configuration replication |
+| Unbound | Local recursive DNS resolver |
+
+---
+
+## Outcome
+
+At the end of this phase, DNS could continue functioning even if one Pi-hole node went offline.
+
+This made the home network DNS layer more resilient and operationally realistic.

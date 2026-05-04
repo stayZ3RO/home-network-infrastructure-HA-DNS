@@ -1,5 +1,20 @@
 # Phase 5 — Step-by-Step Guide 🛠️
 
+---
+
+## Quick Navigation
+
+| Page | Link |
+|---|---|
+| Phase Home | [README](README.md) |
+| Overview | [overview.md](overview.md) |
+| Step-by-Step Guide | [step-by-step.md](step-by-step.md) |
+| Validation | [validation.md](validation.md) |
+| Documentation Hub | [docs/](../README.md) |
+
+---
+
+
 ## 📖 Purpose
 
 This guide documents the implementation of secure remote access for the homelab using Tailscale.
