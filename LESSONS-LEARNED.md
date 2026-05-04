@@ -1,153 +1,242 @@
 # Lessons Learned 🧠
 
-## Network Foundation
+![Status](https://img.shields.io/badge/status-complete-brightgreen)
+![Focus](https://img.shields.io/badge/focus-network%20infrastructure-blue)
+![Validation](https://img.shields.io/badge/validation-tested-success)
 
-- Bridge mode and IP Passthrough solve similar problems differently depending on the ISP.
-- Router, gateway, and access point roles should be clearly separated.
-- Planning the IP structure early makes later infrastructure work easier.
-- A clean baseline network reduces confusion during later changes.
+## Overview
 
----
+This file captures the major lessons learned while building the Home Network Infrastructure Lab.
 
-## ISP and Edge Design
-
-- Xfinity bridge mode and AT&T IP Passthrough behave differently.
-- Fiber introduces the ONT as an additional infrastructure layer.
-- ISP equipment behavior affects topology, NAT, routing, and troubleshooting.
-- Updating diagrams after ISP changes prevents outdated assumptions.
+The project evolved from basic DNS control into a larger infrastructure foundation that included HA DNS, recursive DNS, monitoring, alerting, secure remote access, Proxmox services, and self-hosted remote access.
 
 ---
 
-## DNS and Pi-hole
+## 1. Build the Baseline Before Adding Complexity
 
-- DNS must be distributed through DHCP to affect most clients consistently.
-- Pi-hole provides visibility and control, not just ad blocking.
-- DNS issues can look like general internet issues to end users.
-- Client lease renewals and cached DNS settings can delay visible results.
+The early phases focused on understanding the network before adding more advanced services.
 
----
+Key lesson:
 
-## High Availability DNS
+A stable baseline makes every later phase easier to validate.
 
-- A single Pi-hole instance is still a single point of failure.
-- HA DNS requires both redundancy and validation.
-- A VIP simplifies client configuration by keeping one consistent DNS target.
-- Failover must be tested from the client perspective.
+Before adding HA DNS, monitoring, or remote access, it helped to understand:
 
----
-
-## Gravity Sync
-
-- Multiple Pi-hole nodes need synchronized records, blocklists, and settings.
-- Replication reduces drift and manual effort.
-- HA is weaker when nodes behave differently.
+- ISP gateway behavior
+- Router role
+- DHCP behavior
+- DNS path
+- Client behavior
+- Existing network limitations
 
 ---
 
-## Keepalived and VIP Failover
+## 2. ISP Equipment Changes the Network Design
 
-- VIP movement alone is not enough; real DNS queries must still succeed.
-- The standby node must be fully functional before testing failover.
-- Failover should be validated with normal client behavior, not just service status.
+The migration from Xfinity to AT&T Fiber introduced an important distinction:
 
----
+| ISP Setup | Behavior |
+|---|---|
+| Xfinity bridge mode | Gateway behaves more like a modem |
+| AT&T IP Passthrough | Gateway still exists in the path but passes public IP behavior downstream |
 
-## Recursive DNS with Unbound
+This affected how the topology was documented and how routing responsibilities were understood.
 
-- Running Unbound locally removes dependency on public upstream resolvers.
-- Each Pi-hole node should use its own local Unbound instance.
-- Recursive DNS should be tested directly and through the VIP path.
+Key lesson:
 
----
-
-## Monitoring and Alerting
-
-- Metrics collection and service probing solve different problems.
-- Node Exporter monitors host health; Blackbox Exporter validates service behavior.
-- Monitoring should observe the service path, not just the host.
-- Healthy failover should not be treated as an outage.
-- Alert severity and `for:` windows reduce noise.
-- Alertmanager routes should be tested directly before relying on real alerts.
+ISP gateway behavior matters. Bridge mode and IP Passthrough are not always identical operationally.
 
 ---
 
-## Discord Alerting
+## 3. DNS Control Is a Strong First Infrastructure Project
 
-- Discord webhooks are controlled by the webhook URL, not the Alertmanager receiver name.
-- Webhook URLs should never be committed to GitHub.
-- Local secret files and read-only container mounts keep alerting safer.
-- Recreating a container may be required after changing volume mounts.
+Pi-hole provided a practical entry point into network services.
 
----
+It made DNS visible and measurable.
 
-## Secure Remote Access
+Useful outcomes:
 
-- Secure remote administration does not require public SSH exposure.
-- Tailscale provides a clean private admin path.
-- Remote access should be validated from outside the home network.
-- RustDesk adds a practical remote support layer when kept LAN-only or VPN-only.
+- Centralized query visibility
+- DNS filtering
+- Client behavior visibility
+- Clear before-and-after validation
+- Foundation for HA DNS
 
----
+Key lesson:
 
-## Proxmox and Virtualization
-
-- Moving infrastructure services off a gaming PC improves reliability.
-- Docker Desktop is useful for testing, but Linux VM hosting is cleaner for always-on services.
-- Proxmox makes service separation, backups, and future expansion easier.
-- VM naming should match the actual role of the workload.
-- Backups should be validated as part of the implementation, not treated as an afterthought.
+DNS is a high-value service to understand because almost every networked device depends on it.
 
 ---
 
-## Docker Operations
+## 4. High Availability Requires Validation, Not Assumptions
 
-- Docker container logs should have rotation configured.
-- Prometheus retention should be limited to avoid uncontrolled disk growth.
-- Monitoring services should not share a VM with experimental app workloads.
-- Portainer Agent belongs on managed Docker hosts; Portainer Server can live on a separate app/admin VM later.
-- Disk expansion should be followed by guest filesystem expansion and validation.
+Adding a second Pi-hole node was not enough by itself.
 
----
+The HA DNS design needed:
 
-## RustDesk Remote Access
+- Keepalived for VIP failover
+- Gravity Sync for configuration consistency
+- Unbound on both nodes
+- Failover testing
+- Service restoration testing
 
-- RustDesk Server OSS can be self-hosted with lightweight resources.
-- Key mismatch issues usually point to client/server key configuration problems.
-- LAN-only firewalling is a safer first step than public exposure.
-- Remote access tooling should be documented with screenshots and redacted IDs.
+Key lesson:
 
----
-
-## Troubleshooting and Validation
-
-- Small misconfigurations can affect the entire network.
-- Layered troubleshooting works best: network → host → service → client path.
-- Logs should be checked before assuming a tool or service is broken.
-- Validation should prove normal operation, failure handling, monitoring, alerting, and remote access.
+HA is not complete until failover and recovery are tested.
 
 ---
 
-## Documentation Lessons
+## 5. Recursive DNS Improved the Lab Value
 
-- Screenshots should prove configuration, status, and successful validation.
-- Step-by-step docs should group commands with expected outcomes.
-- Overview docs should focus on design intent and high-level proof.
-- Consistent formatting makes a repo easier to review and present.
-- Redacting secrets, tokens, passwords, and identifiers is part of the documentation process.
+Adding Unbound made the project more than basic ad-blocking DNS.
 
----
+It introduced recursive DNS behavior and reduced dependency on public upstream resolvers.
 
-## Scope Control
+Key lesson:
 
-- The project became broad enough that segmentation deserves its own repository.
-- Closing this repo at the infrastructure foundation point keeps the project focused.
-- The next project can build on this foundation without making this repository too large or unfocused.
+Unbound turned the DNS setup into a better learning project because it added resolver behavior, caching, and local recursion.
 
 ---
 
-## Personal Takeaways
+## 6. Monitoring Changed the Project from Static to Operational
 
-- Building is one of the fastest ways to learn infrastructure.
-- Real troubleshooting creates deeper understanding than theory alone.
-- Documentation turns lab work into repeatable proof of skill.
-- Each phase made the environment less like a basic home setup and more like a real infrastructure environment.
+Prometheus, Grafana, Blackbox Exporter, Node Exporter, and Alertmanager added operational visibility.
+
+Instead of only checking services manually, the lab gained:
+
+- Service availability checks
+- Host metrics
+- DNS endpoint visibility
+- Dashboards
+- Alert notifications
+- Failure-state validation
+
+Key lesson:
+
+Monitoring turns infrastructure from “configured” into “operated.”
+
+---
+
+## 7. Alerts Need Real Testing
+
+Alerting is only useful if it is tested.
+
+During the project, alerts were validated by intentionally creating failure conditions and confirming:
+
+- Alert pending state
+- Alert firing state
+- Discord delivery
+- Recovery behavior
+
+Key lesson:
+
+A dashboard shows state. An alert proves response behavior.
+
+---
+
+## 8. Tailscale Reduced the Need for Public Exposure
+
+Tailscale provided remote administration without opening public inbound ports.
+
+This supported secure access to:
+
+- Raspberry Pi nodes
+- Proxmox
+- Internal services
+- Remote SSH workflows
+- Mobile admin testing
+
+Key lesson:
+
+Private overlay networking is safer than exposing management services publicly.
+
+---
+
+## 9. Proxmox Created a Better Infrastructure Foundation
+
+Moving services into Proxmox helped separate infrastructure workloads from a general-purpose workstation.
+
+Benefits:
+
+- Dedicated service hosting
+- Better VM/LXC organization
+- Clearer infrastructure boundaries
+- Easier future expansion
+- Better documentation structure
+
+Key lesson:
+
+Virtualization made the lab feel more like real infrastructure instead of a collection of one-off services.
+
+---
+
+## 10. RustDesk Was Useful When Kept LAN-Only
+
+Self-hosted RustDesk added practical remote access experience, but it was intentionally kept LAN-only for this project.
+
+Key lesson:
+
+Not every useful service needs to be public. Internal-only services can still provide real operational value.
+
+---
+
+## 11. Screenshots Are Proof, Not Decoration
+
+Screenshots helped prove that each phase was configured and validated.
+
+Strong screenshots include:
+
+- Before-and-after states
+- Service status
+- Dashboard views
+- Failover evidence
+- Alert evidence
+- Remote access validation
+- VM/service layout
+
+Key lesson:
+
+Good screenshots make a technical project more credible and easier to review.
+
+---
+
+## 12. Documentation Is Part of the Engineering Work
+
+The repo became stronger as the documentation became more structured.
+
+Useful documentation patterns:
+
+- Phase overview
+- Step-by-step guide
+- Validation page
+- Architecture diagram
+- Screenshot evidence
+- Lessons learned
+- Current status
+- Roadmap
+- Changelog
+
+Key lesson:
+
+The project is not only what was built. It is also how clearly the build is explained.
+
+---
+
+## Final Takeaway
+
+This project established a complete home infrastructure foundation.
+
+It demonstrated:
+
+- Network understanding
+- DNS control
+- High availability design
+- Recursive DNS
+- Monitoring
+- Alerting
+- Secure remote access
+- Virtualization
+- Self-hosted services
+- Documentation discipline
+
+The next logical step is a separate segmentation project focused on managed routing, switching, VLANs, and firewall policy.
