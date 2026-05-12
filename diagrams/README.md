@@ -2,7 +2,19 @@
 
 This folder contains the architecture diagrams for the completed Home Network Infrastructure Lab.
 
-The diagrams show how the environment evolved from a basic home network into an HA DNS, monitoring, secure remote access, and Proxmox-hosted infrastructure foundation.
+The diagrams show how the environment evolved from a basic home network into a high-availability DNS, monitoring, secure remote access, and Proxmox-hosted infrastructure foundation.
+
+---
+
+## Final Architecture
+
+![Home Network Infrastructure Lab Foundation](home-network-infra-lab-foundation.png)
+
+---
+
+## DNS Resolution and Failover Flow
+
+![DNS Resolution and Failover Flow](dns-resolution-and-failover-flow.png)
 
 ---
 
@@ -25,18 +37,17 @@ The diagrams show how the environment evolved from a basic home network into an 
 
 | Diagram | Why It Matters |
 |---|---|
-| [04-phase-3-ha-dns.png](04-phase-3-ha-dns.png) | Shows the HA DNS design and the floating VIP |
+| [04-phase-3-ha-dns.png](04-phase-3-ha-dns.png) | Shows the HA DNS design and floating VIP |
 | [05-phase-4-monitoring-alerting.png](05-phase-4-monitoring-alerting.png) | Shows observability and alerting architecture |
 | [06-phase-5-remote-access-tailscale.png](06-phase-5-remote-access-tailscale.png) | Shows secure remote administration without public SSH |
 | [07-phase-6-proxmox-service-migration.png](07-phase-6-proxmox-service-migration.png) | Shows service migration from workstation dependency to Proxmox |
-| [08-phase-6-5-rustdesk-proxmox.png](08-phase-6-5-rustdesk-proxmox.png) | Shows self-hosted remote access and VM hardening |
+| [home-network-infra-lab-foundation.png](home-network-infra-lab-foundation.png) | Shows the final completed infrastructure foundation |
+| [dns-resolution-and-failover-flow.png](dns-resolution-and-failover-flow.png) | Shows DNS resolution and failover behavior |
 
 ---
 
 ## Scope Boundary
 
-This repository stops at the HA DNS and core infrastructure foundation.
+This repository covers the HA DNS and core infrastructure foundation.
 
-Diagrams for managed router cutover, managed switching as the production core, VLAN segmentation, inter-VLAN firewall policy, and SSID-to-VLAN mapping belong in the separate network segmentation project.
-
-That separation keeps this repository focused and makes the next project easier to review independently.
+Managed router cutover, production VLAN segmentation, inter-VLAN firewall policy, and SSID-to-VLAN mapping belong in the separate network segmentation project.
