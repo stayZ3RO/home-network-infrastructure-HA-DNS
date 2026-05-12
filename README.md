@@ -130,7 +130,6 @@ Self-hosted RustDesk Server
 
 | Phase | Documentation |
 |---|---|
-<<<<<<< HEAD
 | Phase 1 — Network Control | [docs/phase-1-network-control](docs/phase-1-network-control) |
 | Phase 1.5 — ISP Migration | [docs/phase-1.5-isp-migration](docs/phase-1.5-isp-migration) |
 | Phase 2 — DNS Control | [docs/phase-2-dns-control](docs/phase-2-dns-control) |
@@ -148,7 +147,6 @@ Self-hosted RustDesk Server
 | Phase 5 — Tailscale Remote Access | [docs/phase-5-tailscale-remote-access/](docs/phase-5-tailscale-remote-access/) |
 | Phase 6 — Proxmox, Omada & Docker Monitoring Foundation | [docs/phase-6-proxmox-omada-foundation/](docs/phase-6-proxmox-omada-foundation/) |
 | Phase 6.5 — RustDesk Remote Access & VM Hardening | [docs/phase-6.5-rustdesk-remote-access/](docs/phase-6.5-rustdesk-remote-access/) |
->>>>>>> origin/main
 
 ---
 
