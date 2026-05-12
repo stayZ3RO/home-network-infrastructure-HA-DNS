@@ -1,64 +1,27 @@
-# Phase 6 Diagrams — Proxmox, Omada & Docker Monitoring Foundation 🗺️
+# Phase 6 Diagrams — Proxmox, Omada & Monitoring Foundation
 
-## Purpose
+## Phase 6 Proxmox Service Migration
 
-This document captures the architecture change introduced in Phase 6.
-
----
-
-## Phase 6 Logical Architecture
-
-```text
-Home Network - 192.168.68.0/24
-
-Gateway / Router
-└── 192.168.68.1
-
-Pi-hole HA DNS
-├── Pi-hole VIP - 192.168.68.20
-├── ashPi-1 - 192.168.68.60
-└── ashPi-2 - 192.168.68.61
-
-Proxmox Infrastructure
-└── Proxmox Host - 192.168.68.80
-    ├── Omada Controller LXC - 192.168.68.10
-    └── Docker Monitoring VM - 192.168.68.81
-        ├── Grafana
-        ├── Prometheus
-        ├── Alertmanager
-        └── Blackbox Exporter
-
-Managed Switch
-├── Temporary staging IP - 192.168.68.59
-└── Planned final IP - 192.168.68.2
-```
+![Phase 6 Proxmox Service Migration](../../diagrams/07-phase-6-proxmox-service-migration.png)
 
 ---
 
-## Monitoring Migration Flow
+## Final Infrastructure Foundation
 
-```text
-Before:
-Gaming PC
-└── Docker Desktop
-    └── Monitoring Stack
-
-Migration:
-Export compose files and Docker volumes
-Copy backups to Docker VM
-Restore volumes
-Start stack on Docker VM
-
-After:
-Proxmox Host
-└── Docker Monitoring VM
-    └── Monitoring Stack
-```
+![Home Network Infrastructure Lab Foundation](../../diagrams/home-network-infra-lab-foundation.png)
 
 ---
 
-## Cutover Preparation Boundary
+## What This Shows
 
-Phase 6 prepared the infrastructure foundation.
+- Proxmox hosts the infrastructure service layer.
+- Omada Controller runs in an LXC container.
+- Monitoring services run in a dedicated Docker VM.
+- Grafana, Prometheus, Alertmanager, and exporters are isolated from the desktop workstation.
+- Core infrastructure services now operate independently from daily-use systems.
 
-It did not perform the live router/switch cutover or VLAN segmentation. Those items are intentionally moved to the separate network segmentation project.
+---
+
+## Result
+
+Phase 6 migrates core infrastructure services into Proxmox, improving operational stability, service separation, and long-term maintainability.
