@@ -128,17 +128,6 @@ Self-hosted RustDesk Server
 
 ## Phase Documentation 📚
 
-| Phase | Documentation |
-|---|---|
-| Phase 1 — Network Control | [docs/phase-1-network-control](docs/phase-1-network-control) |
-| Phase 1.5 — ISP Migration | [docs/phase-1.5-isp-migration](docs/phase-1.5-isp-migration) |
-| Phase 2 — DNS Control | [docs/phase-2-dns-control](docs/phase-2-dns-control) |
-| Phase 3 — High Availability DNS | [docs/phase-3-ha-dns](docs/phase-3-ha-dns) |
-| Phase 4 — Monitoring & Alerting | [docs/phase-4-monitoring-alerting](docs/phase-4-monitoring-alerting) |
-| Phase 5 — Tailscale Remote Access | [docs/phase-5-remote-access](docs/phase-5-remote-access) |
-| Phase 6 — Proxmox, Omada & Docker Monitoring Foundation | [docs/phase-6-proxmox-monitoring-migration](docs/phase-6-proxmox-monitoring-migration) |
-| Phase 6.5 — RustDesk Remote Access & VM Hardening | [docs/phase-6.5-rustdesk-remote-access](docs/phase-6.5-rustdesk-remote-access) |
-=======
 | Phase 1 — Network Control | [docs/phase-1-network-control/](docs/phase-1-network-control/) |
 | Phase 1.5 — ISP Migration | [docs/phase-1.5-isp-migration/](docs/phase-1.5-isp-migration/) |
 | Phase 2 — DNS Control | [docs/phase-2-dns-control/](docs/phase-2-dns-control/) |
@@ -162,8 +151,6 @@ Self-hosted RustDesk Server
 | Phase 5 — Tailscale Remote Access | [06-phase-5-remote-access-tailscale.png](diagrams/06-phase-5-remote-access-tailscale.png) |
 | Phase 6 — Proxmox Service Migration | [07-phase-6-proxmox-service-migration.png](diagrams/07-phase-6-proxmox-service-migration.png) |
 | Phase 6.5 — RustDesk on Proxmox | [08-phase-6-5-rustdesk-proxmox.png](diagrams/08-phase-6-5-rustdesk-proxmox.png) |
-
-> Phase 7 and VLAN segmentation diagrams belong in the separate network segmentation project, not this infrastructure foundation repository.
 
 ---
 
