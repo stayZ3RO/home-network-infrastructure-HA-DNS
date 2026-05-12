@@ -55,59 +55,39 @@ The completed scope includes centralized DNS, Pi-hole high availability, Unbound
 
 ## Final Architecture 🏗️
 
+The completed lab provides a documented home infrastructure foundation with high-availability DNS, local recursive resolution, monitoring, alerting, secure remote access, and Proxmox-hosted core services.
+
+---
+
 ### Network and DNS Path
 
-```text
-Internet
-  ↓
-AT&T Fiber / ONT
-  ↓
-AT&T Gateway / IP Passthrough
-  ↓
-Deco Mesh Router
-  ↓
-Clients
-  ↓
-Pi-hole HA VIP - 192.168.68.20
-  ↓
-Active Pi-hole Node
-  ↓
-Local Unbound Recursive Resolver
-```
+![Network and DNS Path](diagrams/network-and-dns-path.png)
+
+---
 
 ### Proxmox Service Layer
 
-```text
-Proxmox Host - 192.168.68.80
-├── Omada Controller LXC - 192.168.68.10
-├── Docker Monitoring VM - 192.168.68.81
-│   ├── Grafana
-│   ├── Prometheus
-│   ├── Alertmanager
-│   ├── Blackbox Exporter
-│   └── Portainer Agent
-└── RustDesk Server VM - 192.168.68.83
-    ├── rustdesk-hbbs
-    └── rustdesk-hbbr
-```
+![Proxmox Service Layer](diagrams/proxmox-service-layer.png)
+
+---
 
 ### Remote Administration
 
-```text
-Admin Laptop / Phone
-  ↓
-Tailscale
-  ↓
-Proxmox / Pi-hole Nodes / Monitoring Services
+![Remote Administration](diagrams/remote-administration.png)
 
-Trusted Devices
-  ↓
-RustDesk Client
-  ↓
-Self-hosted RustDesk Server
-```
+---
 
-> Note: The `192.168.68.0/24` addresses shown in this repo are private RFC1918 lab addresses used for documentation and validation.
+### DNS Resolution and Failover Flow
+
+![DNS Resolution and Failover Flow](diagrams/dns-resolution-and-failover-flow.png)
+
+---
+
+### Final Infrastructure Foundation
+
+![Home Network Infrastructure Lab Foundation](diagrams/home-network-infra-lab-foundation.png)
+
+> Note: The `192.168.68.0/24` addresses shown in this repository are private RFC1918 lab addresses used for documentation and validation.
 
 ---
 
@@ -128,15 +108,18 @@ Self-hosted RustDesk Server
 
 ## Phase Documentation 📚
 
-| Phase 1 — Network Control | [docs/phase-1-network-control/](docs/phase-1-network-control/) |
-| Phase 1.5 — ISP Migration | [docs/phase-1.5-isp-migration/](docs/phase-1.5-isp-migration/) |
-| Phase 2 — DNS Control | [docs/phase-2-dns-control/](docs/phase-2-dns-control/) |
-| Phase 3 — High Availability DNS | [docs/phase-3-ha-dns/](docs/phase-3-ha-dns/) |
-| Phase 4 — Monitoring & Alerting | [docs/phase-4-monitoring-alerting/](docs/phase-4-monitoring-alerting/) |
-| Phase 5 — Tailscale Remote Access | [docs/phase-5-tailscale-remote-access/](docs/phase-5-tailscale-remote-access/) |
-| Phase 6 — Proxmox, Omada & Docker Monitoring Foundation | [docs/phase-6-proxmox-omada-foundation/](docs/phase-6-proxmox-omada-foundation/) |
-| Phase 6.5 — RustDesk Remote Access & VM Hardening | [docs/phase-6.5-rustdesk-remote-access/](docs/phase-6.5-rustdesk-remote-access/) |
+| Phase | Focus | Documentation |
+|---|---|---|
+| Phase 1 | Network Control | [docs/phase-1-network-control](docs/phase-1-network-control/) |
+| Phase 1.5 | ISP Migration | [docs/phase-1.5-isp-migration](docs/phase-1.5-isp-migration/) |
+| Phase 2 | DNS Control | [docs/phase-2-dns-control](docs/phase-2-dns-control/) |
+| Phase 3 | High Availability DNS | [docs/phase-3-ha-dns](docs/phase-3-ha-dns/) |
+| Phase 4 | Monitoring & Alerting | [docs/phase-4-monitoring-alerting](docs/phase-4-monitoring-alerting/) |
+| Phase 5 | Tailscale Remote Access | [docs/phase-5-tailscale-remote-access](docs/phase-5-tailscale-remote-access/) |
+| Phase 6 | Proxmox, Omada & Docker Monitoring Foundation | [docs/phase-6-proxmox-omada-foundation](docs/phase-6-proxmox-omada-foundation/) |
+| Phase 6.5 | RustDesk Remote Access & VM Hardening | [docs/phase-6.5-rustdesk-remote-access](docs/phase-6.5-rustdesk-remote-access/) |
 
+---
 ---
 
 ## Architecture Diagrams 🗺️
