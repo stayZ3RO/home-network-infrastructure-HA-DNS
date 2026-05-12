@@ -1,71 +1,66 @@
 # Documentation Hub 📚
 
-This folder contains the phase-based documentation for the Home Network Infrastructure Lab.
+This folder contains the phase-by-phase documentation for the completed Home Network Infrastructure Lab.
 
-Each phase is documented as a small infrastructure case study:
+The project is organized as a build progression. Each phase adds one infrastructure capability, validates it, and documents the result.
 
-- What was built
-- Why it mattered
-- How it was implemented
-- How it was validated
-- What screenshots or evidence support the work
-- What came next
+---
+
+## Project Scope
+
+This repository covers the completed HA DNS and core infrastructure foundation:
+
+- network baseline and ISP migration
+- Pi-hole DNS control
+- high availability DNS
+- recursive DNS with Unbound
+- monitoring and alerting
+- secure remote access
+- Proxmox-hosted core services
+- RustDesk remote access and VM hardening
+
+Managed routing cutover, managed switching production cutover, VLAN segmentation, and firewall policy are tracked in a separate network segmentation project.
 
 ---
 
 ## Phase Index
 
-| Phase | Status | Documentation |
-|---|---:|---|
-| Phase 1 - Network Control | ✅ Complete | [Overview](phase-1-network-control.md) |
-| Phase 1.5 - ISP Migration | ✅ Complete | [Overview](phase-1.5-isp-migration.md) |
-| Phase 2 - DNS Control | ✅ Complete | [Overview](phase-2-dns-control.md) |
-| Phase 3 - High Availability DNS | ✅ Complete | [View Phase Folder](phase-3-ha-dns/) |
-| Phase 4 - Monitoring and Alerting | ✅ Complete | [View Phase Folder](phase-4-monitoring-alerting/) |
-| Phase 5 - Tailscale Remote Access | ✅ Complete | [View Phase Folder](phase-5-tailscale-remote-access/) |
-| Phase 6 - Proxmox, Omada, Docker Monitoring | ✅ Complete | [View Phase Folder](phase-6-proxmox-omada/) |
-| Phase 6.5 - RustDesk Remote Access | ✅ Complete | [View Phase Folder](phase-6.5-rustdesk-remote-access/) |
-| Project Closeout | ✅ Complete | [View Closeout](project-closeout.md) |
+| Phase | Area | Documentation |
+|---|---|---|
+| Phase 1 | Network Control | [phase-1-network-control](./phase-1-network-control) |
+| Phase 1.5 | ISP Migration | [phase-1.5-isp-migration](./phase-1.5-isp-migration) |
+| Phase 2 | DNS Control | [phase-2-dns-control](./phase-2-dns-control) |
+| Phase 3 | High Availability DNS | [phase-3-ha-dns](./phase-3-ha-dns) |
+| Phase 4 | Monitoring & Alerting | [phase-4-monitoring-alerting](./phase-4-monitoring-alerting) |
+| Phase 5 | Tailscale Remote Access | [phase-5-tailscale-remote-access](./phase-5-tailscale-remote-access) |
+| Phase 6 | Proxmox & Service Migration | [phase-6-proxmox-omada-foundation](./phase-6-proxmox-omada-foundation) |
+| Phase 6.5 | RustDesk & VM Hardening | [phase-6.5-rustdesk-remote-access](./phase-6.5-rustdesk-remote-access) |
 
 ---
 
-## Current Project State
+## Standard Phase Structure
 
-This project is complete and closed out.
-
-The final state includes:
-
-- Centralized DNS control
-- HA Pi-hole DNS with VIP failover
-- Local recursive DNS with Unbound
-- Monitoring and alerting
-- Secure remote access
-- Proxmox-hosted infrastructure services
-- Self-hosted RustDesk remote access
-- Validation screenshots and documentation
-
----
-
-## Documentation Pattern
-
-Completed phase folders generally include:
+Each phase is intended to include:
 
 | File | Purpose |
 |---|---|
-| README.md | Phase landing page |
-| overview.md | Case-study style summary |
-| step-by-step.md | Implementation guide |
-| validation.md | Evidence and verification |
-| diagrams.md | Phase-specific architecture |
-| screenshots | Redacted proof of implementation |
+| `README.md` | Phase landing page and quick navigation |
+| `overview.md` | Design intent, architecture, and why the phase matters |
+| `step-by-step.md` | Implementation flow and validation checkpoints |
+| `validation.md` | Evidence that the phase worked |
+| `diagrams.md` | Architecture diagrams or text diagrams where applicable |
+| supporting docs | Phase-specific notes such as alerting, dashboards, or jump box access |
 
 ---
 
-## Related Project Files
+## Review Path
 
-| File | Purpose |
-|---|---|
-| [Current Status](../CURRENT-STATUS.md) | Final project state |
-| [Roadmap](../ROADMAP.md) | Completed project roadmap |
-| [Lessons Learned](../LESSONS-LEARNED.md) | Operational notes and takeaways |
-| [Changelog](../CHANGELOG.md) | Major documentation and infrastructure updates |
+For a portfolio/recruiter review, start here:
+
+1. [Phase 3 — High Availability DNS](./phase-3-ha-dns)
+2. [Phase 4 — Monitoring & Alerting](./phase-4-monitoring-alerting)
+3. [Phase 5 — Tailscale Remote Access](./phase-5-tailscale-remote-access)
+4. [Phase 6 — Proxmox & Service Migration](./phase-6-proxmox-omada-foundation)
+5. [Phase 6.5 — RustDesk & VM Hardening](./phase-6.5-rustdesk-remote-access)
+
+Those phases best demonstrate operational infrastructure work.
