@@ -141,8 +141,8 @@ Self-hosted RustDesk Server
 | Phase 2 — DNS Control | [docs/phase-2-dns-control](docs/phase-2-dns-control) |
 | Phase 3 — High Availability DNS | [docs/phase-3-ha-dns](docs/phase-3-ha-dns) |
 | Phase 4 — Monitoring & Alerting | [docs/phase-4-monitoring-alerting](docs/phase-4-monitoring-alerting) |
-| Phase 5 — Tailscale Remote Access | [docs/phase-5-tailscale-remote-access](docs/phase-5-tailscale-remote-access) |
-| Phase 6 — Proxmox, Omada & Docker Monitoring Foundation | [docs/phase-6-proxmox-omada-foundation](docs/phase-6-proxmox-omada-foundation) |
+| Phase 5 — Tailscale Remote Access | [docs/phase-5-remote-access](docs/phase-5-remote-access) |
+| Phase 6 — Proxmox, Omada & Docker Monitoring Foundation | [docs/phase-6-proxmox-monitoring-migration](docs/phase-6-proxmox-monitoring-migration) |
 | Phase 6.5 — RustDesk Remote Access & VM Hardening | [docs/phase-6.5-rustdesk-remote-access](docs/phase-6.5-rustdesk-remote-access) |
 
 ---
@@ -200,6 +200,21 @@ Self-hosted RustDesk Server
 | RustDesk | LAN-based RustDesk access worked between trusted devices |
 | Proxmox | Core services were moved from workstation dependency to Proxmox |
 | Backups | Proxmox backups were created for key VMs/LXCs |
+
+---
+
+## Project Highlights
+
+This lab demonstrates practical infrastructure engineering across:
+
+- High availability DNS with Pi-hole, Keepalived, and Gravity Sync
+- Local recursive DNS resolution with Unbound
+- Monitoring and observability with Prometheus, Grafana, Node Exporter, and Blackbox Exporter
+- Alert routing through Alertmanager and Discord notifications
+- Secure private administration with Tailscale
+- Proxmox-hosted infrastructure services
+- Self-hosted RustDesk remote access
+- Operational validation, failover testing, screenshots, and structured documentation
 
 ---
 
