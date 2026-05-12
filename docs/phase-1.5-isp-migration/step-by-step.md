@@ -1,96 +1,94 @@
-# Phase 1.5 – Step-by-Step Guide
+# Phase 1.5 Step-by-Step — ISP Migration 🌐
 
 ## Goal
 
-Migrate from Xfinity to AT&T Fiber while maintaining full network control and DNS functionality.
+Move from Xfinity to AT&T Fiber while keeping the internal lab network stable.
 
 ---
 
-## Step 1 – Connect ONT to Gateway
+## Step 1 — Document The Existing Network
 
-* Fiber line terminates at ONT
-* Connect Ethernet:
+Before changing the ISP path, document the working baseline:
 
-ONT → AT&T Gateway (WAN)
+```text
+Internet → Xfinity Gateway → Deco Router → Clients
+```
 
----
+Capture:
 
-## Step 2 – Connect Gateway to Deco
-
-* Use Ethernet:
-
-AT&T Gateway (LAN) → Deco Router (WAN)
-
----
-
-## Step 3 – Enable IP Passthrough
-
-1. Go to: http://192.168.1.254
-2. Navigate to Firewall → IP Passthrough
-3. Set:
-
-   * Allocation Mode: Passthrough
-   * Mode: DHCPS-fixed
-   * Device: Deco router
-  
-![IP Passthrough](../../screenshots/phase-1.5/1-ip-passthrough.png)
-
-Save settings
+- active router
+- current LAN subnet
+- DNS settings
+- key client connectivity
 
 ---
 
-## Step 4 – Reboot Devices
+## Step 2 — Install / Identify The Fiber Path
 
-* Restart gateway
-* Restart Deco router
+AT&T Fiber introduces an ONT.
 
----
+Final physical path:
 
-## Step 5 – Disable Gateway WiFi
+```text
+Fiber → ONT → AT&T Gateway → Deco Router
+```
 
-* Turn off 2.4 GHz and 5 GHz radios
+Validation:
 
-![WiFi Disabled](../../screenshots/phase-1.5/4-att-wifi-disabled.png)
-
----
-
-## Step 6 – Verify Public IP
-
-* Check Deco WAN IP
-* Confirm it is NOT private
-
-![WiFi Disabled](../../screenshots/phase-1.5/2-deco-wan-ip.png)
+- ONT powered on
+- AT&T gateway online
+- service active
 
 ---
 
-## Step 7 – Verify Pi-hole
+## Step 3 — Configure IP Passthrough
 
-* Open Pi-hole dashboard
-* Confirm queries are active
+In the AT&T gateway:
 
-![Public IP](../../screenshots/phase-1.5/3-pihole-dashboard.png)
+1. Open firewall / passthrough settings.
+2. Enable IP Passthrough.
+3. Assign passthrough to the Deco router.
+4. Save and reboot if required.
+
+Validation:
+
+- Deco receives the upstream address
+- clients keep internet access
+- no unnecessary extra routing is introduced inside the LAN
 
 ---
 
-## Step 8 – Test Connectivity
+## Step 4 — Preserve Internal Network Design
 
-* Browse internet
-* Run DNS test
-* Confirm stable network
+Do not redesign the LAN during the ISP migration.
+
+Keep:
+
+- Deco as internal router
+- existing LAN addressing
+- existing DNS plan
+- existing client Wi-Fi
 
 ---
 
-## Validation Checklist
+## Step 5 — Validate DNS and Internet
 
-* Deco receives public IP
-* No double NAT
-* Pi-hole receives queries
-* Devices connect normally
+From a client:
+
+```text
+ping 1.1.1.1
+ping google.com
+nslookup google.com
+```
+
+Also check Pi-hole:
+
+- dashboard reachable
+- client queries visible
+- DNS resolution working
 
 ---
 
 ## Result
 
-* ISP successfully migrated
-* Network control preserved
-* DNS functionality maintained
+The ISP migration completed without breaking the internal network foundation.

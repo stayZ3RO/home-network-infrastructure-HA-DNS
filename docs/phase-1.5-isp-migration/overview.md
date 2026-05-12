@@ -1,107 +1,75 @@
-# Phase 1.5 — ISP Migration & Edge Control
+# Phase 1.5 Overview — ISP Migration 🌐
 
-## Overview
+## Introduction
 
-The network environment was migrated from Xfinity (cable) to AT&T Fiber to improve performance and reliability.
+This phase migrated the upstream internet connection from Xfinity to AT&T Fiber.
 
-This required reconfiguring the network edge while maintaining internal routing, DNS control, and existing infrastructure design.
+The purpose was not only to improve the internet connection, but to document how the network edge changes when moving from cable internet with bridge mode to fiber internet with an ONT and IP Passthrough.
 
 ---
 
-## Objective
+## Objectives
 
-* Replace ISP without disrupting internal network
-* Maintain Deco as the primary router
-* Preserve Pi-hole DNS functionality
-* Avoid double NAT
-* Integrate fiber via ONT
+- Replace Xfinity with AT&T Fiber
+- Integrate the ONT into the topology
+- Configure AT&T IP Passthrough
+- Keep Deco as the active internal router
+- Preserve the existing LAN design
+- Validate DNS and client connectivity after migration
 
 ---
 
 ## Architecture Change
 
-### Before (Xfinity)
+### Before
 
-Internet → Xfinity Gateway (Bridge Mode) → Deco → Pi-hole → Clients
+```text
+Internet → Xfinity Gateway in Bridge Mode → Deco Router → Clients
+```
 
----
+### After
 
-### After (AT&T Fiber)
-
-Internet → ONT → AT&T Gateway (IP Passthrough) → Deco → Pi-hole → Clients
-
-...
-
-### Network Diagram
-
-![Architecture](../../diagrams/network-architecture-phase-2.png)
+```text
+Internet → ONT → AT&T Gateway with IP Passthrough → Deco Router → Clients
+```
 
 ---
 
 ## Key Changes
 
-### ISP Replacement
-
-* Migrated from cable to fiber
-* Introduced ONT for fiber termination
-
-### IP Passthrough Configuration
-
-![IP Passthrough](../../screenshots/phase-1.5/1-ip-passthrough.png)
-
----
-
-### Edge Reconfiguration
-
-* Enabled IP Passthrough on AT&T gateway
-* Assigned public IP to Deco router
-
----
-
-### Internal Network Preservation
-
-* Maintained subnet: 192.168.68.x
-* Preserved DHCP reservations
-* Kept Pi-hole as DNS
+| Change | Result |
+|---|---|
+| Fiber installed | ONT became part of the physical path |
+| AT&T gateway added | ISP edge behavior changed |
+| IP Passthrough configured | Deco remained the internal router |
+| Existing subnet preserved | Reduced client and service disruption |
+| Pi-hole DNS preserved | DNS control remained intact |
 
 ---
 
 ## Validation
 
-### Public IP Confirmed on Deco
+Validation focused on confirming that the ISP changed without breaking the internal network.
 
-![Deco WAN](../../screenshots/phase-1.5/2-deco-wan-ip.png)
+Checks performed:
 
----
-
-### Pi-hole DNS Still Active
-
-![Pi-hole](../../screenshots/phase-1.5/3-pihole-dashboard.png)
-
-* Deco WAN IP confirmed as public
-* Pi-hole receiving queries
-* DNS resolution functioning correctly
-* No connectivity issues
+- Deco received the upstream connection
+- Internet access worked from clients
+- Pi-hole dashboard remained reachable
+- DNS queries continued to flow
+- Internal addressing stayed consistent
 
 ---
 
 ## Lessons Learned
 
-* AT&T does not support true bridge mode
-* IP Passthrough is required for router control
-* Fiber introduces ONT as an additional layer
-* Maintaining internal IP structure simplifies migration
+- AT&T IP Passthrough is not the same as true bridge mode.
+- The ONT should be represented in physical diagrams.
+- Preserving the internal IP plan reduces migration risk.
+- ISP behavior affects troubleshooting, NAT, and routing assumptions.
 
 ---
 
 ## Result
 
-* Successfully migrated ISP without breaking architecture
-* Improved performance and stability
-* Maintained full network control
-
----
-
-## Next Step
-
-Proceed to Phase 3 to implement high availability DNS.
+The network successfully moved to AT&T Fiber while keeping the internal architecture stable.

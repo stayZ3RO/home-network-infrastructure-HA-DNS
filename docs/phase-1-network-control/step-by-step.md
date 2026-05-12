@@ -1,170 +1,96 @@
-# Phase 1 – Step-by-Step Guide
-
-## Quick Summary
-
-1. Set up Deco mesh in router mode
-2. Verify mesh stability
-3. Enable bridge mode on Xfinity
-4. Disable ISP WiFi if still active
-5. Connect switch and wired devices
-6. Reserve IPs for future infrastructure
+# Phase 1 Step-by-Step — Network Control 🧱
 
 ## Goal
 
-Take control of the home network by moving routing and WiFi responsibility away from ISP-managed hardware and onto the TP-Link mesh system.
+Move the home network from ISP-controlled routing to a cleaner Deco-controlled baseline.
 
 ---
 
-## Hardware Used
+## Step 1 — Deploy Deco Mesh First
 
-- Xfinity Gateway
-- TP-Link X25 Mesh System
-- D-Link 16-Port Switch
-- Desktop
-- Laptop
-- Phone with Deco app
-
----
-
-## Before You Start
-
-Make sure you have:
-
-- the Xfinity gateway powered on
-- the TP-Link Deco app installed on your phone
-- at least one Ethernet cable ready
-- your mesh nodes available
-- your desktop and laptop available for testing
-
----
-
-## Step 1 – Set Up the Mesh Network First
-
-Do not enable bridge mode yet.
-
-1. Connect the main Deco node to the Xfinity gateway with Ethernet.
+1. Connect the main Deco node to the Xfinity gateway.
 2. Power on the Deco node.
 3. Open the Deco app.
-4. Set up the mesh system in **Router Mode**.
-5. Create your main WiFi network.
-6. Add the remaining mesh nodes.
+4. Configure the Deco system in router mode.
+5. Add the remaining mesh nodes.
+6. Validate Wi-Fi and internet access.
 
-### Verify
-- Phone connects to Deco WiFi
-- Laptop connects to Deco WiFi
+Validation:
+
+- Phone connects to Deco Wi-Fi
+- Laptop connects to Deco Wi-Fi
 - Internet works normally
+- Deco app shows the network online
 
 ---
 
-## Step 2 – Confirm the Mesh Is Stable
+## Step 2 — Enable Bridge Mode
 
-Before changing the gateway, verify:
-
-- WiFi coverage is working
-- Devices can browse normally
-- The Deco app shows the network as online
-
----
-
-## Step 3 – Enable Bridge Mode on the Xfinity Gateway
-
-1. Open the gateway admin page.
+1. Log into the Xfinity gateway.
 2. Enable bridge mode.
-3. Allow the gateway to reboot if needed.
+3. Let the gateway reboot if required.
+4. Confirm the Deco receives the upstream connection.
 
-### Verify
-- Deco receives the WAN connection
-- The Deco becomes the active router
-- Internet access remains available
+Validation:
 
----
-
-## Step 4 – Disable ISP WiFi If Still Broadcasting
-
-In some cases, Xfinity WiFi can continue broadcasting even after bridge mode is enabled.
-
-### ⚠️ Issue: WiFi Still Broadcasting
-
-![WiFi Still On](../../screenshots/phase-1/1-ISP-wifi-active.png)
-
-
-If that happens:
-
-1. Go to the gateway WiFi settings
-2. Disable 2.4 GHz WiFi
-3. Disable 5 GHz WiFi
-
-### ✅ After Disabling WiFi
-
-![WiFi Disabled](../../screenshots/phase-1/4-bridge-mode-enabled.png)
-
-### Verify
-
-- The old Xfinity SSID is gone  
-- Only the Deco WiFi remains visible  
+- Deco acts as router
+- Internet access still works
+- Clients stay behind the Deco network
 
 ---
 
-## Step 5 – Confirm Routing Is Clean
+## Step 3 — Disable ISP Wi-Fi If Needed
 
-On your desktop, check that the Deco is now the router.
+Bridge mode may not always disable ISP Wi-Fi automatically.
 
-### Verify
-- Default gateway should be the Deco router IP
-- Internet traffic should now flow through Deco only
-- Double NAT should be eliminated
+If the old Xfinity SSID is still visible:
 
----
-
-## Step 6 – Connect the Switch
-
-1. Connect the D-Link switch to the main Deco node
-2. Connect the desktop to the switch
-3. Connect future wired devices to the switch as needed
-
-### Verify
-- Desktop gets network access over Ethernet
-- Internet works on wired connection
+1. Open the gateway Wi-Fi settings.
+2. Disable 2.4 GHz Wi-Fi.
+3. Disable 5 GHz Wi-Fi.
+4. Confirm only Deco Wi-Fi remains.
 
 ---
 
-## Step 7 – Prepare for Future Infrastructure
+## Step 4 — Connect Wired Expansion
 
-Reserve IP addresses for critical devices in the Deco app.
+1. Connect the switch to the main Deco node.
+2. Connect the desktop or other wired test client to the switch.
+3. Confirm wired connectivity.
 
-Suggested reservations:
+Validation:
 
-- Pi-hole primary: `192.168.1.10`
-- Pi-hole secondary: `192.168.1.11`
-- Future HA VIP: `192.168.1.20`
-- Desktop: `192.168.1.50`
+- Wired client receives an IP address
+- Wired client can reach the internet
+- Wi-Fi and wired clients remain on the same expected LAN
 
 ---
 
-## Step 8 – Final Validation Checklist
+## Step 5 — Prepare For DNS Control
 
-Before moving to Phase 2, confirm all of the following:
+Reserve or plan IP space for future infrastructure services.
 
-- Deco is in Router Mode
-- Xfinity gateway is in Bridge Mode
-- Xfinity WiFi is disabled
-- Only Deco WiFi is active
-- Desktop can connect by Ethernet
-- Internet is stable
-- IP reservation plan is ready
+Early planning targets:
+
+| Service | Purpose |
+|---|---|
+| Pi-hole primary | First DNS server |
+| Pi-hole secondary | Future redundancy |
+| HA DNS VIP | Future shared DNS address |
+| Admin endpoint | Troubleshooting and validation |
+
+---
+
+## Final Validation
+
+- Deco is the active router
+- Xfinity gateway is bridged
+- ISP Wi-Fi is disabled
+- Wi-Fi and wired clients work
+- Network is ready for Pi-hole DNS
 
 ---
 
 ## Result
 
-At the end of Phase 1:
-
-- ISP routing is removed from the internal network path
-- Deco is the primary router and WiFi system
-- The network is cleaner, more stable, and ready for DNS control
-
----
-
-## Next Step
-
-Proceed to Phase 2: Pi-hole deployment and DNS control.
+Phase 1 completed the network baseline and prepared the lab for DNS control.

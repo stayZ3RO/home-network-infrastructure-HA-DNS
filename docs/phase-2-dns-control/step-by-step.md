@@ -1,156 +1,75 @@
-# Phase 2 – Step-by-Step Guide
+# Phase 2 Step-by-Step — DNS Control with Pi-hole 🕳️
 
 ## Goal
 
-Deploy Pi-hole as the primary DNS server so all devices on the network use centralized DNS filtering and logging.
+Deploy Pi-hole and make clients use it for DNS resolution.
 
 ---
 
-## Step 1 – Boot and Connect Pi
+## Step 1 — Prepare The Raspberry Pi
 
-1. Insert SD card into Raspberry Pi  
-2. Connect Ethernet to switch  
-3. Power on Pi  
-4. Wait 1–2 minutes  
+1. Connect the Pi to the network.
+2. Update the OS.
+3. Confirm SSH access.
+4. Assign or reserve a stable IP address.
 
-### Verify
+Validation:
 
-- Pi appears in network
-
-![Pi Connected](../../screenshots/phase-2/1-pi-device-on-network.png)
-
----
-
-## Step 2 – SSH into Pi
-
-From your terminal:
-
-ssh pi@192.168.1.10
-
-### Verify
-
-- SSH login successful
-
-![SSH Session](../../screenshots/phase-2/3-ssh-connect.png)
+- Pi is reachable on the LAN
+- SSH works
+- Pi can reach the internet
 
 ---
 
-## Step 3 – Update System
+## Step 2 — Install Pi-hole
 
-Run:
+Install Pi-hole on the Raspberry Pi and complete the web setup.
 
-sudo apt update && sudo apt upgrade -y
+Validation:
 
-### Verify
-
-- System updates successfully
-
----
-
-## Step 4 – Install Pi-hole
-
-Run:
-
-curl -sSL https://install.pi-hole.net | bash
-
-### During setup choose:
-
-- Interface: eth0  
-- Static IP: 192.168.1.10  
-- Upstream DNS: Cloudflare  
-- Web UI: Yes  
-- Logging: Yes  
-
-### Verify
-
-- Installation completes successfully
-
-![Pi-hole Install](../../screenshots/phase-2/5-pihole-complete.png)
+- Pi-hole web UI loads
+- DNS service is running
+- dashboard shows status as active
 
 ---
 
-## Step 5 – Access Dashboard
+## Step 3 — Update Router DNS Settings
 
-Open:
+In the router DHCP settings, set the DNS server to the Pi-hole IP.
 
-http://192.168.1.10/admin
+Validation:
 
-### Verify
-
-- Dashboard loads
-
-![Pi-hole Dashboard](../../screenshots/phase-2/6-pihole-dashboard.png)
+- new DHCP clients receive Pi-hole as DNS
+- existing clients renew or reconnect
+- clients resolve domains successfully
 
 ---
 
-## Step 6 – Configure DNS in Router
+## Step 4 — Confirm DNS Query Visibility
 
-In Deco app:
+Open the Pi-hole dashboard.
 
-- Advanced → DHCP Server  
-- Set Primary DNS to:
+Check for:
 
-[EX: 192.168.1.10] 
-
-### Verify
-
-- DNS applied
+- live client queries
+- blocked queries
+- client names or IP addresses
+- increasing query counters
 
 ---
 
-## Step 7 – Verify DNS Traffic
+## Step 5 — Validate From A Client
 
-Refresh Pi-hole dashboard
+From a client machine:
 
-### Verify
+```text
+nslookup google.com
+```
 
-- Queries increasing  
-- Devices listed  
-
-![Live Queries](../../screenshots/phase-2/9-dns-queries-working.png)
-
----
-
-## Step 8 – Test Ad Blocking
-
-Open:
-
-http://doubleclick.net
-
-### Verify
-
-- Page blocked or fails to load
-
-![Ads Blocked](../../screenshots/phase-2/8-ads-blocked.png)
-
----
-
-## Final Validation Checklist
-
-- Pi reachable at reserved IP  
-- SSH works  
-- Pi-hole dashboard accessible  
-- DNS configured in router  
-- Queries visible in dashboard  
-- Devices browsing normally  
-- Ads blocked  
+Confirm the DNS server shown is the Pi-hole.
 
 ---
 
 ## Result
 
-- Pi-hole is now the network DNS server  
-- DNS traffic is centralized  
-- Ad/tracking domains are blocked  
-- Network visibility is improved  
-
----
-
-## Next Step
-
-Proceed to Phase 3:
-
-- Add second Pi-hole node  
-- Configure Gravity Sync  
-- Implement Keepalived  
-- Create virtual IP for failover  
+Clients now use Pi-hole for DNS, giving the lab centralized visibility and filtering.

@@ -1,16 +1,18 @@
-# Phase 3 - High Availability DNS 🔁
+# Phase 3 — High Availability DNS 🛡️
 
-![Status](https://img.shields.io/badge/status-complete-brightgreen)
-![DNS](https://img.shields.io/badge/dns-Pi--hole%20HA-success)
-![Failover](https://img.shields.io/badge/failover-Keepalived-blue)
-![Sync](https://img.shields.io/badge/sync-Gravity%20Sync-purple)
-![Resolver](https://img.shields.io/badge/resolver-Unbound-orange)
+![status](https://img.shields.io/badge/status-complete-brightgreen)
+![scope](https://img.shields.io/badge/scope-HA%20DNS-blue)
+![service](https://img.shields.io/badge/service-Pi--hole%20HA-5c2d91)
+![failover](https://img.shields.io/badge/failover-Keepalived-orange)
+![sync](https://img.shields.io/badge/sync-Gravity%20Sync-0ea5e9)
+
+---
 
 ## Phase Summary
 
-Phase 3 removed DNS as a single point of failure by building a high availability Pi-hole DNS setup.
+Phase 3 removed the single-DNS-server risk by adding a second Pi-hole node and a shared virtual IP.
 
-This phase added a second Pi-hole node, a shared virtual IP, configuration synchronization, local recursive DNS, and failover validation.
+The result was a more resilient DNS layer that allowed clients to continue using one DNS address while Keepalived handled node failover.
 
 ---
 
@@ -18,27 +20,27 @@ This phase added a second Pi-hole node, a shared virtual IP, configuration synch
 
 | Area | Demonstrated Skill |
 |---|---|
-| High availability | Shared DNS VIP using Keepalived |
-| DNS redundancy | Primary and backup Pi-hole nodes |
-| Configuration sync | Gravity Sync replication |
-| Recursive DNS | Local Unbound resolver |
-| Failover testing | Manual failure and recovery validation |
-| Documentation | Diagrams, validation notes, and screenshots |
+| High availability | Dual Pi-hole nodes with a shared VIP |
+| Failover | Keepalived moves DNS service between nodes |
+| Replication | Gravity Sync keeps Pi-hole configuration aligned |
+| Recursive DNS | Unbound runs locally on both DNS nodes |
+| Validation | DNS stayed available during failover testing |
 
 ---
 
-## Final HA DNS Design
+## Architecture
 
-    Clients
-      ↓
-    Pi-hole HA VIP - 192.168.68.20
-      ↓
-    Active Pi-hole Node
-      ↓
-    Local Unbound Recursive Resolver
+```text
+Clients
+  ↓
+HA DNS VIP - 192.168.68.20
+  ↓
+ashpi-1 / ashpi-2
+  ↓
+Pi-hole + Unbound
+```
 
-    ashpi-1 - Primary Pi-hole Node
-    ashpi-2 - Backup Pi-hole Node
+![Phase 3 HA DNS diagram](../../diagrams/04-phase-3-ha-dns.png)
 
 ---
 
@@ -46,28 +48,15 @@ This phase added a second Pi-hole node, a shared virtual IP, configuration synch
 
 | Page | Description |
 |---|---|
-| [Overview](overview.md) | Case-study overview of the HA DNS design |
-| [Step-by-Step Guide](step-by-step.md) | Implementation flow |
-| [Jump Box Access](jump-box-access.md) | SSH and access notes |
-| [Validation and Failover Tests](validation-failover-tests.md) | Failover proof and testing |
-| [Diagrams](diagrams.md) | Phase-specific architecture |
-| [DNS Recursion with Unbound](DNS-recursion-unbound.md) | Recursive DNS configuration notes |
-
----
-
-## Key Services
-
-| Service | Role |
-|---|---|
-| Pi-hole | DNS filtering and visibility |
-| Keepalived | Virtual IP failover |
-| Gravity Sync | Pi-hole configuration replication |
-| Unbound | Local recursive DNS resolver |
+| [Overview](./overview.md) | HA DNS architecture and design notes |
+| [Step-by-Step Guide](./step-by-step.md) | Implementation flow |
+| [Jump Box Access](./jump-box-access.md) | SSH access and admin workflow |
+| [Validation and Failover Tests](./validation-and-failover-tests.md) | Proof of failover behavior |
+| [Diagrams](./diagrams.md) | HA DNS diagrams |
+| [DNS Recursion with Unbound](./DNS-recursion-unbound.md) | Local recursive DNS notes |
 
 ---
 
 ## Outcome
 
-At the end of this phase, DNS could continue functioning even if one Pi-hole node went offline.
-
-This made the home network DNS layer more resilient and operationally realistic.
+The lab moved from single-node DNS to a redundant DNS architecture with a stable client-facing VIP.

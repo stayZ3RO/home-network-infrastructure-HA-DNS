@@ -1,121 +1,62 @@
-# Phase 2 — DNS Control with Pi-hole
+# Phase 2 Overview — DNS Control with Pi-hole 🕳️
 
-## 🚀 Introduction
+## Introduction
 
-After establishing full control of the network in Phase 1, the next step was to control how traffic flows through the network.
+After establishing a controlled network baseline, the next step was to control DNS.
 
-This phase introduces **Pi-hole** as a centralized DNS server to enable:
-
-* Network-wide ad blocking
-* DNS-level traffic control
-* Visibility into all DNS queries
+Pi-hole was introduced to provide DNS filtering, client query visibility, and a foundation for later high availability.
 
 ---
 
-## 🎯 Objective
+## Objectives
 
-* Deploy Pi-hole on a Raspberry Pi
-* Route all network DNS traffic through it
-* Validate blocking and visibility
-
----
-
-## 🧰 Hardware Used
-
-* Raspberry Pi (Primary DNS node)
-* TP-Link Deco Mesh System
-* Desktop + Laptop (test clients)
+- Deploy Pi-hole on a Raspberry Pi
+- Point DHCP-provided DNS to Pi-hole
+- Validate client DNS resolution
+- Confirm DNS queries appear in the Pi-hole dashboard
+- Establish DNS as a core infrastructure service
 
 ---
 
-## 🧭 Architecture
+## Hardware / Services
+
+| Component | Role |
+|---|---|
+| Raspberry Pi | Pi-hole host |
+| Deco Router | DHCP and network routing |
+| Laptop / Desktop / Phone | Test clients |
+| Pi-hole | DNS filtering and query visibility |
+
+---
+
+## Architecture
 
 ```text
-Internet → Deco Router → Pi-hole → Clients
+Clients → Deco DHCP → Pi-hole DNS → Upstream Resolver
 ```
 
 ---
 
-## 🔧 Key Changes Made
+## Key Changes
 
-### 1. Pi-hole Deployment
-
-* Installed Pi-hole on Raspberry Pi
-* Configured web interface and logging
-
----
-
-### 2. DHCP DNS Configuration
-
-* Set router DHCP DNS to Pi-hole IP
-* Forced all clients to use Pi-hole
+| Change | Result |
+|---|---|
+| Pi-hole installed | DNS became self-managed |
+| Router DNS updated | Clients received Pi-hole as DNS |
+| Query logging enabled | Client DNS activity became visible |
+| Blocking enabled | Ads and tracking domains could be filtered |
 
 ---
 
-### 3. Network Integration
+## Lessons Learned
 
-* Ensured all devices resolve DNS through Pi-hole
-* Removed reliance on external DNS from clients
-
----
-
-## 🔐 Impact
-
-* Ads blocked across entire network
-* Centralized DNS visibility
-* Improved control over outbound traffic
+- DNS must be distributed through DHCP to affect most clients.
+- Devices may need reconnects or DHCP lease renewals before picking up new DNS.
+- DNS visibility makes troubleshooting easier.
+- A single DNS server creates a future single point of failure, which is addressed in Phase 3.
 
 ---
 
-## 📸 Screenshots
+## Result
 
-### Pi's on Deco Network
-
-![pis](../../screenshots/phase-2/1-pi-device-on-network.png)
-
-### Pi Update and Upgrade
-
-![piupdate](../../screenshots/phase-2/2-pi-update-upgrade.png)
-
-### SSH Connection to Pi
-
-![ssh](../../screenshots/phase-2/3-ssh-connected.png)
-
-### Pi-Hole Install
-
-![piholeinstall](../../screenshots/phase-2/4-pihole-install.png)
-
-### Pi-Hole Install (Complete)
-
-![piholedone](../../screenshots/phase-2/5-pihole-complete.png)
-
-### Pi-hole Dashboard
-
-![Dashboard](../../screenshots/phase-2/6-pihole-dashboard.png)
-
-### Live DNS Queries/ Ads Blocked
-
-![Queries](../../screenshots/phase-2/9-dns-queries-working.png)
-
-
----
-
-## 🧠 Lessons Learned
-
-* DNS must be enforced via DHCP to affect all devices
-* Devices require reconnect/restart to adopt new DNS
-* Centralized DNS dramatically improves visibility
-
----
-
-## ✅ Result
-
-* All devices now use Pi-hole for DNS
-* Queries are visible in real-time
-* Ads and tracking domains are blocked network-wide
-
----
-
-## 🔜 Next Step
-
-Phase 3 will introduce **high availability (HA)** to eliminate the DNS single point of failure.
+Pi-hole became the central DNS service for the home network.

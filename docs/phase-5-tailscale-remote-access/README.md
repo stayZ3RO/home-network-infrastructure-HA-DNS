@@ -1,9 +1,11 @@
-# Phase 5 - Tailscale Remote Access 🔐
+# Phase 5 — Tailscale Remote Access 🔐
 
-![Status](https://img.shields.io/badge/status-complete-brightgreen)
-![Remote Access](https://img.shields.io/badge/remote_access-Tailscale-purple)
-![Security](https://img.shields.io/badge/security-private%20access-success)
-![Admin](https://img.shields.io/badge/admin-SSH%20over%20Tailnet-blue)
+![status](https://img.shields.io/badge/status-complete-brightgreen)
+![remote access](https://img.shields.io/badge/remote%20access-Tailscale-0ea5e9)
+![security](https://img.shields.io/badge/security-no%20public%20SSH-success)
+![admin](https://img.shields.io/badge/admin-private%20tailnet-5c2d91)
+
+---
 
 ## Phase Summary
 
@@ -27,15 +29,19 @@ This phase allowed private access to internal infrastructure without exposing SS
 
 ## Remote Access Flow
 
-    Laptop / Phone / Admin Endpoint
-      ↓
-    Tailscale Tailnet
-      ↓
-    Internal Infrastructure
-      ├── Raspberry Pi Nodes
-      ├── Proxmox Host
-      ├── Monitoring Services
-      └── Core Lab Systems
+```text
+Laptop / Phone / Admin Endpoint
+  ↓
+Tailscale Tailnet
+  ↓
+Internal Infrastructure
+  ├── Raspberry Pi Nodes
+  ├── Proxmox Host
+  ├── Monitoring Services
+  └── Core Lab Systems
+```
+
+![Phase 5 Tailscale remote access diagram](../../diagrams/06-phase-5-remote-access-tailscale.png)
 
 ---
 
@@ -43,20 +49,12 @@ This phase allowed private access to internal infrastructure without exposing SS
 
 | Page | Description |
 |---|---|
-| [Overview](overview.md) | Tailscale remote access case study |
-| [Step-by-Step Guide](step-by-step.md) | Implementation flow |
-| [Validation](validation.md) | Remote access validation evidence |
-
----
-
-## Design Decision
-
-Remote administration should use private overlay networking instead of exposing management services publicly.
-
-Tailscale provided a safer path for SSH and internal service access while keeping the lab manageable from outside the home network.
+| [Overview](./overview.md) | Tailscale remote access case study |
+| [Step-by-Step Guide](./step-by-step.md) | Implementation flow |
+| [Validation](./validation.md) | Remote access validation evidence |
 
 ---
 
 ## Outcome
 
-At the end of this phase, the lab could be managed remotely without relying on public inbound port forwarding.
+The lab could be managed remotely without relying on public inbound port forwarding.
