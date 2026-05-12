@@ -1,17 +1,17 @@
-# Project Closeout — HA DNS & Core Infrastructure Foundation ✅
+# Project Closeout — HA DNS & Core Infrastructure Foundation
 
 ## Summary
 
 This repository is complete as the first major home infrastructure project.
 
-The project built a resilient foundation for home network services, including HA DNS, recursive DNS, observability, alerting, secure remote access, Proxmox-based service hosting, and backup validation.
+It documents a resilient foundation for DNS, monitoring, alerting, secure remote access, virtualization, and service hosting.
 
 ---
 
 ## Completed Capabilities
 
 - Network baseline and ISP migration documentation
-- Centralized DNS filtering with Pi-hole
+- Pi-hole DNS filtering and query visibility
 - Dual-node HA DNS with Keepalived VIP failover
 - Gravity Sync replication between Pi-hole nodes
 - Local recursive DNS with Unbound
@@ -24,13 +24,14 @@ The project built a resilient foundation for home network services, including HA
 - Docker monitoring VM
 - Monitoring migration from gaming PC to Linux VM
 - RustDesk self-hosted remote access
-- Docker log rotation and Prometheus retention controls
+- Docker log rotation
+- Prometheus retention controls
 - Portainer Agent preparation
 - Proxmox backup validation
 
 ---
 
-## Final Infrastructure State
+## Final Project 1 State
 
 ```text
 AT&T Fiber / ONT
@@ -53,18 +54,9 @@ Home LAN - 192.168.68.0/24
 
 ## Why The Project Ends Here
 
-The foundation layer is complete.
+The HA DNS and infrastructure foundation are complete.
 
-The next logical step is a managed routing, switching, and VLAN segmentation project. That work changes the network architecture enough that it should be documented as a separate project rather than appended onto this repository.
-
-This keeps this repository focused on:
-
-- HA DNS
-- observability
-- alerting
-- secure access
-- service hosting
-- validation and documentation
+The next logical step is a managed routing, switching, and VLAN segmentation project. That work changes the network architecture enough that it should be documented in a dedicated repository.
 
 ---
 
@@ -73,21 +65,15 @@ This keeps this repository focused on:
 The next project will cover:
 
 - ER605 live router cutover
-- Managed switch as the core switch
+- managed switch as the core switch
 - Deco AP mode migration
 - VLAN segmentation
-- Inter-VLAN firewall policy
-- Trusted, lab, IoT, and guest isolation
-- Optional Omada EAP SSID-to-VLAN mapping
-
-Suggested next project:
-
-```text
-Home Network Segmentation Lab — ER605, Managed Switching & VLAN Isolation
-```
+- inter-VLAN firewall policy
+- trusted, lab, IoT, and guest isolation
+- optional Omada EAP SSID-to-VLAN mapping
 
 ---
 
 ## Final Result
 
-This project demonstrates a complete, documented infrastructure foundation with practical networking, Linux, DNS, monitoring, alerting, virtualization, remote access, and operational validation experience.
+This project demonstrates practical infrastructure work across networking, Linux, DNS, monitoring, alerting, virtualization, secure access, documentation, and operational validation.
