@@ -1,14 +1,16 @@
 # Home Network Infrastructure Lab 🚀
 
 ![status](https://img.shields.io/badge/status-complete-brightgreen)
-![project](https://img.shields.io/badge/project-HA%20DNS%20Foundation-blue)
-![platform](https://img.shields.io/badge/platform-Proxmox-orange)
+![project](https://img.shields.io/badge/project-Project%201%20Foundation-blue)
 ![dns](https://img.shields.io/badge/DNS-Pi--hole%20%2B%20Unbound-5c2d91)
 ![monitoring](https://img.shields.io/badge/monitoring-Grafana%20%2B%20Prometheus-f46800)
 ![remote access](https://img.shields.io/badge/remote%20access-Tailscale%20%2B%20RustDesk-0ea5e9)
+![platform](https://img.shields.io/badge/platform-Proxmox-orange)
 ![security](https://img.shields.io/badge/security-no%20public%20SSH-success)
 
-> A complete home infrastructure lab documenting HA DNS, recursive DNS, monitoring, alerting, secure remote access, Proxmox-hosted core services, and operational validation.
+> Completed Project 1 of my home infrastructure lab: a pre-cutover foundation for HA DNS, recursive DNS, monitoring, alerting, secure remote access, Proxmox-hosted services, and operational validation.
+
+This repository intentionally stops at the **core infrastructure foundation** stage. Managed routing, managed switching, VLAN segmentation, firewall policy, and SSID-to-VLAN mapping are tracked separately in a follow-up network segmentation project.
 
 ---
 
@@ -32,32 +34,22 @@
 
 **Status:** Complete / Closed Out
 
-This repository documents **Project 1** of my home infrastructure lab: a resilient home network foundation with high availability DNS, recursive DNS, monitoring, alerting, secure remote access, and Proxmox-hosted core services.
+This repository documents **Project 1** of my home infrastructure lab: a resilient home network foundation built before the managed router/switch cutover and VLAN segmentation work.
 
-This project intentionally ends at the **core infrastructure foundation** stage.
-
-The managed router cutover, managed switching cutover, VLAN segmentation, firewall policy, and SSID-to-VLAN mapping are being documented separately in a dedicated network segmentation project.
+The completed scope includes centralized DNS, Pi-hole high availability, Unbound recursive DNS, monitoring and alerting, private remote access, Proxmox-hosted infrastructure services, Docker monitoring services, RustDesk remote access, and backup validation.
 
 ---
 
-## What This Lab Built 🧱
+## Project Highlights ⭐
 
-This lab started as a home DNS control project and evolved into a production-style infrastructure foundation.
-
-The project includes:
-
-- 🌐 Network baseline documentation
-- 🔁 ISP migration from Xfinity to AT&T Fiber
-- 🧩 Centralized DNS with Pi-hole
-- 🛡️ High availability DNS with Keepalived and Gravity Sync
-- 🌍 Recursive DNS with Unbound
-- 📊 Monitoring with Prometheus and Grafana
-- 🚨 Alert routing with Alertmanager and Discord
-- 🔐 Secure remote administration with Tailscale
-- 🖥️ Self-hosted RustDesk remote access
-- 🧱 Proxmox-hosted core services
-- 🐳 Docker monitoring migration from workstation to VM
-- 💾 Backup and validation evidence
+- Built a dual-node Pi-hole HA DNS design using **Keepalived** and a shared DNS VIP.
+- Used **Gravity Sync** to replicate Pi-hole configuration between Raspberry Pi nodes.
+- Added **Unbound** for local recursive DNS resolution.
+- Deployed **Prometheus**, **Grafana**, **Alertmanager**, **Blackbox Exporter**, and **Node Exporter** for monitoring and alerting.
+- Implemented secure administration with **Tailscale** without exposing SSH publicly.
+- Added LAN-only **RustDesk** remote access for trusted devices.
+- Moved monitoring from workstation dependency to a **Proxmox-hosted Docker VM**.
+- Documented validation evidence, backup coverage, diagrams, and operational lessons learned.
 
 ---
 
@@ -115,6 +107,8 @@ RustDesk Client
 Self-hosted RustDesk Server
 ```
 
+> Note: The `192.168.68.0/24` addresses shown in this repo are private RFC1918 lab addresses used for documentation and validation.
+
 ---
 
 ## Completed Phases 🧭
@@ -136,6 +130,7 @@ Self-hosted RustDesk Server
 
 | Phase | Documentation |
 |---|---|
+<<<<<<< HEAD
 | Phase 1 — Network Control | [docs/phase-1-network-control](docs/phase-1-network-control) |
 | Phase 1.5 — ISP Migration | [docs/phase-1.5-isp-migration](docs/phase-1.5-isp-migration) |
 | Phase 2 — DNS Control | [docs/phase-2-dns-control](docs/phase-2-dns-control) |
@@ -144,6 +139,16 @@ Self-hosted RustDesk Server
 | Phase 5 — Tailscale Remote Access | [docs/phase-5-remote-access](docs/phase-5-remote-access) |
 | Phase 6 — Proxmox, Omada & Docker Monitoring Foundation | [docs/phase-6-proxmox-monitoring-migration](docs/phase-6-proxmox-monitoring-migration) |
 | Phase 6.5 — RustDesk Remote Access & VM Hardening | [docs/phase-6.5-rustdesk-remote-access](docs/phase-6.5-rustdesk-remote-access) |
+=======
+| Phase 1 — Network Control | [docs/phase-1-network-control/](docs/phase-1-network-control/) |
+| Phase 1.5 — ISP Migration | [docs/phase-1.5-isp-migration/](docs/phase-1.5-isp-migration/) |
+| Phase 2 — DNS Control | [docs/phase-2-dns-control/](docs/phase-2-dns-control/) |
+| Phase 3 — High Availability DNS | [docs/phase-3-ha-dns/](docs/phase-3-ha-dns/) |
+| Phase 4 — Monitoring & Alerting | [docs/phase-4-monitoring-alerting/](docs/phase-4-monitoring-alerting/) |
+| Phase 5 — Tailscale Remote Access | [docs/phase-5-tailscale-remote-access/](docs/phase-5-tailscale-remote-access/) |
+| Phase 6 — Proxmox, Omada & Docker Monitoring Foundation | [docs/phase-6-proxmox-omada-foundation/](docs/phase-6-proxmox-omada-foundation/) |
+| Phase 6.5 — RustDesk Remote Access & VM Hardening | [docs/phase-6.5-rustdesk-remote-access/](docs/phase-6.5-rustdesk-remote-access/) |
+>>>>>>> origin/main
 
 ---
 
@@ -160,7 +165,7 @@ Self-hosted RustDesk Server
 | Phase 6 — Proxmox Service Migration | [07-phase-6-proxmox-service-migration.png](diagrams/07-phase-6-proxmox-service-migration.png) |
 | Phase 6.5 — RustDesk on Proxmox | [08-phase-6-5-rustdesk-proxmox.png](diagrams/08-phase-6-5-rustdesk-proxmox.png) |
 
-> Phase 7 and Phase 8 diagrams belong in the separate network segmentation project, not this HA DNS foundation repository.
+> Phase 7 and VLAN segmentation diagrams belong in the separate network segmentation project, not this infrastructure foundation repository.
 
 ---
 
@@ -182,7 +187,7 @@ Self-hosted RustDesk Server
 | Proxmox | Virtualization platform |
 | Docker Compose | Container deployment |
 | RustDesk | Self-hosted remote access |
-| Portainer Agent | Future centralized Docker management endpoint |
+| Portainer Agent | Centralized Docker management endpoint preparation |
 
 ---
 
@@ -226,7 +231,8 @@ This lab demonstrates practical infrastructure engineering across:
 - Portainer Agent is kept LAN-only.
 - Monitoring services are kept LAN-only.
 - Discord webhook secrets are stored locally and excluded from Git.
-- Screenshots are redacted where needed.
+- Config examples use placeholders where sensitive values would normally exist.
+- Screenshots should be reviewed for public IPs, MAC addresses, serial numbers, QR codes, tokens, webhook URLs, and personal identifiers before sharing externally.
 - Secrets, passwords, tokens, and private keys are not committed.
 
 ---
@@ -249,11 +255,11 @@ This lab demonstrates practical infrastructure engineering across:
 
 ---
 
-## Future Work ➡️
+## Separate Follow-Up Project ➡️
 
-Future routing, switching, and VLAN work is out of scope for this repository and will be documented in a separate network segmentation project.
+Routing, switching, VLAN, and firewall policy work is out of scope for this repository and is documented separately as a network segmentation project.
 
-That project will cover ER605 production routing, managed switching, Deco AP mode, VLAN segmentation, firewall policy, and network isolation.
+That follow-up project covers ER605 production routing, managed switching, Deco AP mode, VLAN segmentation, firewall policy, and network isolation.
 
 ---
 
