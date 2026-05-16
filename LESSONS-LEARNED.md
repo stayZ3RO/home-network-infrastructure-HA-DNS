@@ -36,7 +36,7 @@ Before adding HA DNS, monitoring, or remote access, it helped to understand:
 The migration from Xfinity to AT&T Fiber introduced an important distinction:
 
 | ISP Setup | Behavior |
-|---|---|
+| --- | --- |
 | Xfinity bridge mode | Gateway behaves more like a modem |
 | AT&T IP Passthrough | Gateway still exists in the path but passes public IP behavior downstream |
 

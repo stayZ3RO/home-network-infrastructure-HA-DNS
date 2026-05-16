@@ -2,7 +2,7 @@
 
 ## Status
 
-**Complete / Closed Out**
+### Complete / Closed Out
 
 This repository is complete as Project 1: a home network infrastructure foundation focused on HA DNS, recursive DNS, monitoring, alerting, secure remote access, and Proxmox-hosted core services.
 
