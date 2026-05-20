@@ -14,6 +14,21 @@ Phase 6.5 added self-hosted RustDesk remote access and VM hardening to the lab.
 
 RustDesk server components were deployed in a dedicated Debian VM and kept LAN-only for this project. The monitoring VM was also cleaned up with Docker log rotation, Prometheus retention limits, Portainer Agent, disk expansion, and final backup validation.
 
+
+## Final Phase 6.5 Scope
+
+Phase 6.5 originally focused on self-hosted RustDesk remote access and VM hardening.
+
+During final Project 1 cleanup, this phase was expanded to include Docker visibility using a dedicated `docker-mgmt` VM running Portainer Server and a Portainer Agent on the existing `docker-monitoring` VM.
+
+This keeps responsibilities separated:
+
+| VM | Responsibility |
+|---|---|
+| `rustdesk-server` | RustDesk only |
+| `docker-mgmt` | Portainer Server only |
+| `docker-monitoring` | Monitoring stack + Portainer Agent |
+
 ---
 
 ## What This Phase Demonstrates
@@ -57,7 +72,7 @@ Self-hosted RustDesk Server
 | [Step-by-Step Guide](./step-by-step.md) | Implementation flow |
 | [Validation](./validation.md) | Validation evidence |
 | [Diagrams](./diagrams.md) | RustDesk service architecture |
-
+| [docker-management-portainer.md](docker-management-portainer.md) | Portainer Server, Agent, Docker visibility, and validation |
 ---
 
 ## Outcome

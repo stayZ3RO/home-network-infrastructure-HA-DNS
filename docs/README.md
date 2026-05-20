@@ -33,8 +33,10 @@ Managed routing cutover, managed switching production cutover, VLAN segmentation
 | Phase 3 | High Availability DNS | [phase-3-ha-dns](./phase-3-ha-dns) |
 | Phase 4 | Monitoring & Alerting | [phase-4-monitoring-alerting](./phase-4-monitoring-alerting) |
 | Phase 5 | Tailscale Remote Access | [phase-5-tailscale-remote-access](./phase-5-tailscale-remote-access) |
+| [Phase 5.5 — Tailscale Subnet Router](phase-5.5-tailscale-subnet-router/) | Remote LAN access through Tailscale subnet routing |
 | Phase 6 | Proxmox & Service Migration | [phase-6-proxmox-omada-foundation](./phase-6-proxmox-omada-foundation) |
 | Phase 6.5 | RustDesk & VM Hardening | [phase-6.5-rustdesk-remote-access](./phase-6.5-rustdesk-remote-access) |
+| [Phase 6.5 — Remote Access, VM Hardening & Docker Visibility](phase-6.5-rustdesk-remote-access/) | RustDesk, VM hardening, Portainer, and Docker visibility |
 
 ---
 

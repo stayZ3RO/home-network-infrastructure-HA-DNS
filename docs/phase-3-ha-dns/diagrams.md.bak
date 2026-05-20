@@ -1,0 +1,21 @@
+# Phase 3 Diagrams — High Availability DNS
+
+## Phase 3 HA DNS Architecture
+
+![Phase 3 HA DNS Architecture](../../diagrams/04-phase-3-ha-dns.png)
+
+## DNS Resolution and Failover Flow
+
+![DNS Resolution and Failover Flow](../../diagrams/dns-resolution-and-failover-flow.png)
+
+## What This Shows
+
+- Clients use a shared DNS virtual IP.
+- Keepalived moves the VIP between Pi-hole nodes during failover.
+- Each Pi-hole node uses its own local Unbound recursive resolver.
+- Gravity Sync keeps Pi-hole configuration aligned between nodes.
+- DNS remains available if the primary node is unavailable.
+
+## Result
+
+Phase 3 establishes resilient local DNS with automatic failover, recursive DNS resolution, and configuration synchronization across both Pi-hole nodes.
