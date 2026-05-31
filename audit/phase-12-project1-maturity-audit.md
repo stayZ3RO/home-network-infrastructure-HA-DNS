@@ -2,11 +2,11 @@
 
 ## Summary
 
-- Total files scanned: 223
+- Total files scanned: 220
 - Markdown files scanned: 59
 - Image files scanned: 141
 - Broken relative links: 0
-- Backup/temp files: 3
+- Backup/temp files: 0
 - Image issues: 5
 - Likely blank screenshots: 0
 - Stale wording hits: 21
@@ -19,9 +19,7 @@
 
 ## Backup / Temporary Files
 
-- `README.md.bak`
-- `docs/phase-6-proxmox-omada-foundation/diagrams.md.bak`
-- `docs/phase-3-ha-dns/diagrams.md.bak`
+- None found.
 
 ## Image Issues
 
