@@ -53,7 +53,7 @@ Pi-hole + Unbound
 | [Jump Box Access](./jump-box-access.md) | SSH access and admin workflow |
 | [Validation and Failover Tests](./validation-and-failover-tests.md) | Proof of failover behavior |
 | [Diagrams](./diagrams.md) | HA DNS diagrams |
-| [DNS Recursion with Unbound](./docs/phase-3-ha-dns/unbound-recursive-dns.md) | Local recursive DNS notes |
+| [DNS Recursion with Unbound](unbound-recursive-dns.md) | Local recursive DNS notes |
 
 ---
 

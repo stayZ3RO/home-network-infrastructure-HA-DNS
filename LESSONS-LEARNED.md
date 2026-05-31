@@ -240,3 +240,25 @@ It demonstrated:
 - Documentation discipline
 
 The next logical step is a separate segmentation project focused on managed routing, switching, VLANs, and firewall policy.
+
+---
+
+## 13. Mature Repositories Need a Final Audit Pass
+
+A project can be technically complete but still need a maturity review before being used as portfolio material.
+
+The final review should check:
+
+- broken links
+- screenshot quality
+- stale wording
+- backup/temp files
+- public/private redaction boundaries
+- unsupported claims
+- CI coverage
+- repo navigation
+- beginner readability
+
+Key lesson:
+
+A repo is not portfolio-ready just because the infrastructure works. It is portfolio-ready when the documentation, evidence, safety review, and project boundary are clean.

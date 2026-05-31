@@ -2,11 +2,11 @@
 
 ## Overview
 
-This document covers the managed switch pre-staging completed before the Phase 7 router and switch cutover.
+This document covers managed switch pre-staging completed before the later managed network cutover work.
 
 The goal was to adopt the managed switch into Omada, validate connectivity, keep all ports on the default flat LAN, and prepare the switch to become the core switch during the ER605 cutover.
 
-This was completed before VLAN segmentation. VLANs will be handled later in Phase 8.
+This was completed before VLAN segmentation. VLANs are handled in the separate managed network / Project 2 scope.
 
 ---
 
@@ -22,7 +22,7 @@ The staging process confirmed:
 - the switch could be adopted into the Omada Controller
 - the switch could operate on the existing flat LAN
 - clients connected through the switch could reach DNS, Proxmox, Omada, and Grafana
-- the switch was ready to become the core switch during Phase 7
+- the switch was ready for later use as the core switch in the follow-up managed network project
 
 ---
 
@@ -39,11 +39,11 @@ During pre-staging, the switch received a temporary DHCP address from the curren
 
 The switch could not be reserved as `192.168.68.2` from the Deco DHCP interface during staging, so the temporary DHCP address was kept for Phase 6 validation.
 
-The final management IP of `192.168.68.2` will be assigned during Phase 7 after the ER605 becomes the active router/DHCP server.
+The target management IP for the switch was documented as `192.168.68.2` for the later managed network cutover.
 
 ---
 
-## Target Phase 7 Switch Configuration
+## Target Managed Network Switch Configuration
 
 | Item | Planned Value |
 |---|---:|
@@ -51,7 +51,7 @@ The final management IP of `192.168.68.2` will be assigned during Phase 7 after 
 | Gateway | `192.168.68.1` |
 | DNS | `192.168.68.20` |
 | Controller | `192.168.68.10` |
-| VLAN State | Flat LAN during cutover, VLANs later in Phase 8 |
+| VLAN State | Flat LAN during Project 1; VLANs deferred to separate managed network project |
 
 ---
 
@@ -70,7 +70,7 @@ The final management IP of `192.168.68.2` will be assigned during Phase 7 after 
 
 During Phase 6 staging, Port 1 was used as a temporary uplink to the existing working LAN.
 
-During Phase 7 cutover, Port 1 will become the uplink to the ER605 LAN.
+During the later managed network cutover, Port 1 is intended to become the uplink to the ER605 LAN.
 
 ---
 
@@ -150,7 +150,7 @@ This screenshot validates that a client connected through the managed switch cou
 
 The managed switch was successfully pre-staged.
 
-The switch was adopted into Omada, validated on the existing flat LAN, and confirmed ready for the Phase 7 cutover.
+The switch was adopted into Omada, validated on the existing flat LAN, and confirmed ready for the later managed network cutover.
 
 The final switch management IP of `192.168.68.2` will be assigned after the ER605 becomes the active router/DHCP server.
 
@@ -158,6 +158,6 @@ The final switch management IP of `192.168.68.2` will be assigned after the ER60
 
 ## Next Step
 
-Phase 7 will move the ER605 into the live network path, make the managed switch the core switch, and place the Deco mesh into AP mode.
+The follow-up managed network project moves the ER605 into the live network path, makes the managed switch the core switch, and places the Deco mesh into AP mode.
 
-VLAN segmentation will be completed later in Phase 8.
+VLAN segmentation is deferred to the separate managed network project.

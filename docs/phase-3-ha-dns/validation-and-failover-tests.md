@@ -10,9 +10,9 @@
 | Overview | [overview.md](overview.md) |
 | Step-by-Step Guide | [step-by-step.md](step-by-step.md) |
 | Jump Box Access | [jump-box-access.md](jump-box-access.md) |
-| Validation and Failover Tests | [validation-failover-tests.md](validation-failover-tests.md) |
+| Validation and Failover Tests | [validation-and-failover-tests.md](validation-and-failover-tests.md) |
 | Diagrams | [diagrams.md](diagrams.md) |
-| DNS Recursion with Unbound | [DNS-recursion-unbound.md](DNS-recursion-unbound.md) |
+| DNS Recursion with Unbound | [unbound-recursive-dns.md](unbound-recursive-dns.md) |
 | Documentation Hub | [docs/](../README.md) |
 
 ---
