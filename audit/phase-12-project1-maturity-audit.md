@@ -9,7 +9,7 @@
 - Backup/temp files: 3
 - Image issues: 5
 - Likely blank screenshots: 0
-- Stale wording hits: 31
+- Stale wording hits: 21
 - Public-safety keyword hits: 103
 - Pillow blank-image detection available: False
 
@@ -43,16 +43,6 @@
 - `docs/phase-6-proxmox-omada-foundation/overview.md:30` matched `\bDocker Desktop\b` — └── Docker Desktop / WSL
 - `docs/phase-6-proxmox-omada-foundation/overview.md:40` matched `\bDocker Desktop\b` — - Docker Desktop had to stay running
 - `docs/phase-6-proxmox-omada-foundation/step-by-step.md:74` matched `\bDocker Desktop\b` — Stopped the old Docker Desktop monitoring stack.
-- `docs/phase-6-proxmox-omada-foundation/managed-switch-prep.md:5` matched `\bPhase 7\b` — This document covers the managed switch pre-staging completed before the Phase 7 router and switch cutover.
-- `docs/phase-6-proxmox-omada-foundation/managed-switch-prep.md:25` matched `\bPhase 7\b` — - the switch was ready to become the core switch during Phase 7
-- `docs/phase-6-proxmox-omada-foundation/managed-switch-prep.md:42` matched `\bPhase 7\b` — The final management IP of `192.168.68.2` will be assigned during Phase 7 after the ER605 becomes the active router/DHCP server.
-- `docs/phase-6-proxmox-omada-foundation/managed-switch-prep.md:46` matched `\bPhase 7\b` — ## Target Phase 7 Switch Configuration
-- `docs/phase-6-proxmox-omada-foundation/managed-switch-prep.md:73` matched `\bPhase 7\b` — During Phase 7 cutover, Port 1 will become the uplink to the ER605 LAN.
-- `docs/phase-6-proxmox-omada-foundation/managed-switch-prep.md:153` matched `\bPhase 7\b` — The switch was adopted into Omada, validated on the existing flat LAN, and confirmed ready for the Phase 7 cutover.
-- `docs/phase-6-proxmox-omada-foundation/managed-switch-prep.md:161` matched `\bPhase 7\b` — Phase 7 will move the ER605 into the live network path, make the managed switch the core switch, and place the Deco mesh into AP mode.
-- `docs/phase-6-proxmox-omada-foundation/managed-switch-prep.md:9` matched `\bPhase 8\b` — This was completed before VLAN segmentation. VLANs will be handled later in Phase 8.
-- `docs/phase-6-proxmox-omada-foundation/managed-switch-prep.md:54` matched `\bPhase 8\b` — | VLAN State | Flat LAN during cutover, VLANs later in Phase 8 |
-- `docs/phase-6-proxmox-omada-foundation/managed-switch-prep.md:163` matched `\bPhase 8\b` — VLAN segmentation will be completed later in Phase 8.
 - `docs/phase-6-proxmox-omada-foundation/managed-switch-prep.md:81` matched `\bpending\b` — 3. Confirmed the switch appeared as pending adoption.
 - `docs/phase-6-proxmox-omada-foundation/managed-switch-prep.md:117` matched `\bpending\b` — ### Switch Pending Adoption
 - `docs/phase-6-proxmox-omada-foundation/managed-switch-prep.md:119` matched `\bpending\b` — ![Switch pending adoption](../../screenshots/phase-6/switch-prep/01-switch-pending-adoption.png)
