@@ -27,16 +27,15 @@ Managed routing cutover, managed switching production cutover, VLAN segmentation
 
 | Phase | Area | Documentation |
 |---|---|---|
-| Phase 1 | Network Control | [phase-1-network-control](./phase-1-network-control) |
-| Phase 1.5 | ISP Migration | [phase-1.5-isp-migration](./phase-1.5-isp-migration) |
-| Phase 2 | DNS Control | [phase-2-dns-control](./phase-2-dns-control) |
-| Phase 3 | High Availability DNS | [phase-3-ha-dns](./phase-3-ha-dns) |
-| Phase 4 | Monitoring & Alerting | [phase-4-monitoring-alerting](./phase-4-monitoring-alerting) |
-| Phase 5 | Tailscale Remote Access | [phase-5-tailscale-remote-access](./phase-5-tailscale-remote-access) |
-| [Phase 5.5 — Tailscale Subnet Router](phase-5.5-tailscale-subnet-router/) | Remote LAN access through Tailscale subnet routing |
-| Phase 6 | Proxmox & Service Migration | [phase-6-proxmox-omada-foundation](./phase-6-proxmox-omada-foundation) |
-| Phase 6.5 | RustDesk & VM Hardening | [phase-6.5-rustdesk-remote-access](./phase-6.5-rustdesk-remote-access) |
-| [Phase 6.5 — Remote Access, VM Hardening & Docker Visibility](phase-6.5-rustdesk-remote-access/) | RustDesk, VM hardening, Portainer, and Docker visibility |
+| Phase 1 | Network Control | [phase-1-network-control](phase-1-network-control/) |
+| Phase 1.5 | ISP Migration | [phase-1.5-isp-migration](phase-1.5-isp-migration/) |
+| Phase 2 | DNS Control | [phase-2-dns-control](phase-2-dns-control/) |
+| Phase 3 | High Availability DNS | [phase-3-ha-dns](phase-3-ha-dns/) |
+| Phase 4 | Monitoring & Alerting | [phase-4-monitoring-alerting](phase-4-monitoring-alerting/) |
+| Phase 5 | Tailscale Remote Access | [phase-5-tailscale-remote-access](phase-5-tailscale-remote-access/) |
+| Phase 5.5 | Remote LAN access through Tailscale subnet routing | [phase-5.5-tailscale-subnet-router](phase-5.5-tailscale-subnet-router/) |
+| Phase 6 | Proxmox & Service Migration | [phase-6-proxmox-omada-foundation](phase-6-proxmox-omada-foundation/) |
+| Phase 6.5 | RustDesk, VM hardening, Portainer, and Docker visibility | [phase-6.5-rustdesk-remote-access](phase-6.5-rustdesk-remote-access/) |
 
 ---
 
