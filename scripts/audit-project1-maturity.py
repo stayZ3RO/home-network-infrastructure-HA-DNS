@@ -12,7 +12,7 @@ from urllib.parse import unquote
 ROOT = Path(".").resolve()
 REPORT = ROOT / "audit" / "phase-12-project1-maturity-audit.md"
 
-EXCLUDE_DIRS = {".git", "__pycache__", ".venv", "node_modules"}
+EXCLUDE_DIRS = {".git", "__pycache__", ".venv", "node_modules", "audit"}
 TEXT_SUFFIXES = {".md", ".yml", ".yaml", ".txt", ".sh", ".json"}
 IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".webp"}
 

@@ -10,9 +10,9 @@
 | Overview | [overview.md](overview.md) |
 | Step-by-Step Guide | [step-by-step.md](step-by-step.md) |
 | Jump Box Access | [jump-box-access.md](jump-box-access.md) |
-| Validation and Failover Tests | [validation-failover-tests.md](validation-failover-tests.md) |
+| Validation and Failover Tests | [validation-and-failover-tests.md](validation-and-failover-tests.md) |
 | Diagrams | [diagrams.md](diagrams.md) |
-| DNS Recursion with Unbound | [DNS-recursion-unbound.md](DNS-recursion-unbound.md) |
+| DNS Recursion with Unbound | [unbound-recursive-dns.md](unbound-recursive-dns.md) |
 | Documentation Hub | [docs/](../README.md) |
 
 ---
@@ -157,10 +157,10 @@ Useful screenshots for this document include:
 
 Example image references:
 
-![Unbound ashpi-1 status](../../screenshots/phase-3/unbound-status-ashpi1.png)
-![Unbound ashpi-2 status](../../screenshots/phase-3/unbound-status-ashpi2.png)
-![Unbound ashpi-1 dig test](../../screenshots/phase-3/unbound-dig-ashpi1.png)
-![Unbound ashpi-2 dig test](../../screenshots/phase-3/unbound-dig-ashpi2.png)
+![Unbound ashpi-1 status](../../screenshots/phase-3/20-unbound-active-on-pi1.png)
+![Unbound ashpi-2 status](../../screenshots/phase-3/24-pi2-unbound-active.png)
+![Unbound ashpi-1 dig test](../../screenshots/phase-3/21-dns-recursion-validation-pi1.png)
+![Unbound ashpi-2 dig test](../../screenshots/phase-3/27-pi2-dig-test-after-dns-update.png)
 
 ---
 
