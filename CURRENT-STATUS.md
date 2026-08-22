@@ -58,6 +58,7 @@ HA DNS
 | Phase 3 | Complete | HA DNS |
 | Phase 4 | Complete | Monitoring and alerting |
 | Phase 5 | Complete | Tailscale remote access |
+| Phase 5.5 | Complete | Tailscale subnet router |
 | Phase 6 | Complete | Proxmox and service migration |
 | Phase 6.5 | Complete | RustDesk and VM hardening |
 
