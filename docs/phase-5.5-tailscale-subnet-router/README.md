@@ -1,4 +1,4 @@
-# Phase 5.5 — Tailscale Subnet Router & Remote LAN Access 🔐
+# Phase 5.5: Tailscale Subnet Router & Remote LAN Access 🔐
 
 ![status](https://img.shields.io/badge/status-complete-brightgreen)
 ![scope](https://img.shields.io/badge/scope-remote_access-blue)

@@ -1,4 +1,4 @@
-# Phase 5 — Tailscale Remote Access 🔐
+# Phase 5: Tailscale Remote Access 🔐
 
 ![status](https://img.shields.io/badge/status-complete-brightgreen)
 ![remote access](https://img.shields.io/badge/remote%20access-Tailscale-0ea5e9)

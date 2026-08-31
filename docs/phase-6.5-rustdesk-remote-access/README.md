@@ -1,4 +1,4 @@
-# Phase 6.5 — RustDesk Remote Access & VM Hardening 🔐
+# Phase 6.5: RustDesk Remote Access & VM Hardening 🔐
 
 ![status](https://img.shields.io/badge/status-complete-brightgreen)
 ![remote access](https://img.shields.io/badge/remote%20access-RustDesk-0ea5e9)

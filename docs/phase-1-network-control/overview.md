@@ -1,4 +1,4 @@
-# Phase 1 Overview — Network Control 🧱
+# Phase 1 Overview: Network Control 🧱
 
 ## Introduction
 

@@ -1,4 +1,4 @@
-# Phase 6 Overview — Proxmox, Omada & Docker Monitoring Foundation 🧱
+# Phase 6 Overview: Proxmox, Omada & Docker Monitoring Foundation 🧱
 
 ## 📌 Purpose
 

@@ -1,4 +1,4 @@
-# Phase 4 — Monitoring & Alerting 📊
+# Phase 4: Monitoring & Alerting 📊
 
 ![status](https://img.shields.io/badge/status-complete-brightgreen)
 ![monitoring](https://img.shields.io/badge/monitoring-Prometheus-orange)

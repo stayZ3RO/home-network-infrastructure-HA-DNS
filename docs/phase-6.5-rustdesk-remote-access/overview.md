@@ -1,4 +1,4 @@
-# Phase 6.5 Overview — RustDesk Remote Access & VM Hardening 🔐
+# Phase 6.5 Overview: RustDesk Remote Access & VM Hardening 🔐
 
 ---
 

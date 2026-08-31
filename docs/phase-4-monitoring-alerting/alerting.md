@@ -1,4 +1,4 @@
-# Phase 4 — Alerting 🚨
+# Phase 4: Alerting 🚨
 
 ---
 

@@ -1,4 +1,4 @@
-# Phase 6 — Proxmox, Omada & Docker Monitoring Foundation 🧱
+# Phase 6: Proxmox, Omada & Docker Monitoring Foundation 🧱
 
 ![status](https://img.shields.io/badge/status-complete-brightgreen)
 ![platform](https://img.shields.io/badge/platform-Proxmox-orange)

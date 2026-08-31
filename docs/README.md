@@ -58,10 +58,10 @@ Each phase is intended to include:
 
 For a portfolio/recruiter review, start here:
 
-1. [Phase 3 — High Availability DNS](./phase-3-ha-dns)
-2. [Phase 4 — Monitoring & Alerting](./phase-4-monitoring-alerting)
-3. [Phase 5 — Tailscale Remote Access](./phase-5-tailscale-remote-access)
-4. [Phase 6 — Proxmox & Service Migration](./phase-6-proxmox-omada-foundation)
-5. [Phase 6.5 — RustDesk & VM Hardening](./phase-6.5-rustdesk-remote-access)
+1. [Phase 3, High Availability DNS](./phase-3-ha-dns)
+2. [Phase 4, Monitoring & Alerting](./phase-4-monitoring-alerting)
+3. [Phase 5, Tailscale Remote Access](./phase-5-tailscale-remote-access)
+4. [Phase 6, Proxmox & Service Migration](./phase-6-proxmox-omada-foundation)
+5. [Phase 6.5, RustDesk & VM Hardening](./phase-6.5-rustdesk-remote-access)
 
 Those phases best demonstrate operational infrastructure work.

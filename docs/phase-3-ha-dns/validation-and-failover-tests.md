@@ -1,4 +1,4 @@
-# Phase 3 — Validation and Failover Tests 🧪
+# Phase 3: Validation and Failover Tests 🧪
 
 ---
 

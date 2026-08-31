@@ -1,4 +1,4 @@
-# Project 2 Notes — VLAN-Aware Remote Access
+# Project 2 Notes: VLAN-Aware Remote Access
 
 The current `tailscale-router` advertises only the flat LAN subnet:
 

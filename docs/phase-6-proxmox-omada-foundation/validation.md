@@ -1,4 +1,4 @@
-# Phase 6 Validation — Proxmox, Omada & Docker Monitoring Foundation ✅
+# Phase 6 Validation: Proxmox, Omada & Docker Monitoring Foundation ✅
 
 ## Validation Summary
 

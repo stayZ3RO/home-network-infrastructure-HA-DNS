@@ -1,4 +1,4 @@
-# Phase 3 — High Availability DNS 🛡️
+# Phase 3: High Availability DNS 🛡️
 
 ---
 

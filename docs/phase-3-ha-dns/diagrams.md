@@ -1,4 +1,4 @@
-# Phase 3 Diagrams — High Availability DNS
+# Phase 3 Diagrams: High Availability DNS
 
 ## Phase 3 HA DNS Architecture
 

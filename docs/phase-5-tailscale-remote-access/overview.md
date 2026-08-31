@@ -1,4 +1,4 @@
-# Phase 5 — Remote Access Overview 🔐
+# Phase 5: Remote Access Overview 🔐
 
 ---
 

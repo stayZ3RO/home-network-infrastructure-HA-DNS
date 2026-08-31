@@ -1,4 +1,4 @@
-# Phase 1 Step-by-Step — Network Control 🧱
+# Phase 1 Step-by-Step: Network Control 🧱
 
 ## Goal
 
@@ -6,7 +6,7 @@ Move the home network from ISP-controlled routing to a cleaner Deco-controlled b
 
 ---
 
-## Step 1 — Deploy Deco Mesh First
+## Step 1: Deploy Deco Mesh First
 
 1. Connect the main Deco node to the Xfinity gateway.
 2. Power on the Deco node.
@@ -24,7 +24,7 @@ Validation:
 
 ---
 
-## Step 2 — Enable Bridge Mode
+## Step 2: Enable Bridge Mode
 
 1. Log into the Xfinity gateway.
 2. Enable bridge mode.
@@ -39,7 +39,7 @@ Validation:
 
 ---
 
-## Step 3 — Disable ISP Wi-Fi If Needed
+## Step 3: Disable ISP Wi-Fi If Needed
 
 Bridge mode may not always disable ISP Wi-Fi automatically.
 
@@ -52,7 +52,7 @@ If the old Xfinity SSID is still visible:
 
 ---
 
-## Step 4 — Connect Wired Expansion
+## Step 4: Connect Wired Expansion
 
 1. Connect the switch to the main Deco node.
 2. Connect the desktop or other wired test client to the switch.
@@ -66,7 +66,7 @@ Validation:
 
 ---
 
-## Step 5 — Prepare For DNS Control
+## Step 5: Prepare For DNS Control
 
 Reserve or plan IP space for future infrastructure services.
 

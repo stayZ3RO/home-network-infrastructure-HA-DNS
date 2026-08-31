@@ -1,4 +1,4 @@
-# Phase 5.5 Validation — Tailscale Subnet Router
+# Phase 5.5 Validation: Tailscale Subnet Router
 
 ## Local VM Validation
 

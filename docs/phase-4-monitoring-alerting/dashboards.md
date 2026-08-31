@@ -1,4 +1,4 @@
-# Phase 4 — Dashboards 📊
+# Phase 4: Dashboards 📊
 
 ---
 
@@ -23,14 +23,14 @@ This document describes the Grafana dashboards created during Phase 4.
 
 Two dashboards were built:
 
-- **Phase 4 — Node Health**
-- **Phase 4 — DNS & Failover**
+- **Phase 4, Node Health**
+- **Phase 4, DNS & Failover**
 
 These dashboards were designed to provide quick operational visibility without creating unnecessary noise.
 
 ---
 
-## Dashboard 1 — Phase 4: Node Health 🖥️
+## Dashboard 1: Phase 4: Node Health 🖥️
 
 This dashboard focuses on host-level visibility for both Raspberry Pi nodes.
 
@@ -138,7 +138,7 @@ time() - node_boot_time_seconds{job="node"}
 
 ---
 
-## Dashboard 2 — Phase 4: DNS & Failover 🌐
+## Dashboard 2: Phase 4: DNS & Failover 🌐
 
 This dashboard focuses on service health for the HA DNS platform.
 

@@ -20,6 +20,6 @@ This folder contains sanitized configuration files used for Phase 4 monitoring a
 
 ## Monitored endpoints
 
-- `ashpi-1` — `192.168.68.60`
-- `ashpi-2` — `192.168.68.61`
-- HA DNS VIP — `192.168.68.20`
+- `ashpi-1`, `192.168.68.60`
+- `ashpi-2`, `192.168.68.61`
+- HA DNS VIP, `192.168.68.20`

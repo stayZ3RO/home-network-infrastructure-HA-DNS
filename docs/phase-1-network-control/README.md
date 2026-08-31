@@ -1,4 +1,4 @@
-# Phase 1 — Network Control 🧱
+# Phase 1: Network Control 🧱
 
 ![status](https://img.shields.io/badge/status-complete-brightgreen)
 ![scope](https://img.shields.io/badge/scope-network%20baseline-blue)

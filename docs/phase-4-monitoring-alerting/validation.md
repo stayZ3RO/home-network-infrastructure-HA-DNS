@@ -1,4 +1,4 @@
-# Phase 4 — Validation 🧪
+# Phase 4: Validation 🧪
 
 ---
 
@@ -32,7 +32,7 @@ The validation process focused on:
 
 ---
 
-## Validation 1 — Prometheus Scrape Health 📡
+## Validation 1: Prometheus Scrape Health 📡
 
 ### Queries used
 
@@ -60,7 +60,7 @@ Both Raspberry Pi nodes were successfully scraped through Node Exporter.
 
 ---
 
-## Validation 2 — DNS Probe Success 🌐
+## Validation 2: DNS Probe Success 🌐
 
 ### Query used
 
@@ -86,14 +86,14 @@ The VIP and both direct DNS node endpoints were successfully probed.
 
 ---
 
-## Validation 3 — Dashboard Rendering 📊
+## Validation 3: Dashboard Rendering 📊
 
 ### Validation performed
 
 Confirmed that both dashboards rendered correct live data:
 
-- **Phase 4 — Node Health**
-- **Phase 4 — DNS & Failover**
+- **Phase 4, Node Health**
+- **Phase 4, DNS & Failover**
 
 ### Additional cleanup performed
 
@@ -111,7 +111,7 @@ Passed ✅
 
 ---
 
-## Validation 4 — Alert Rule Loading 🚨
+## Validation 4: Alert Rule Loading 🚨
 
 ### Validation performed
 
@@ -131,7 +131,7 @@ Passed ✅
 
 ---
 
-## Validation 5 — SingleNodeDown Alert Lifecycle 🔁
+## Validation 5: SingleNodeDown Alert Lifecycle 🔁
 
 ### Test action
 
@@ -157,7 +157,7 @@ The full pending → firing → cleared lifecycle was observed successfully.
 
 ---
 
-## Validation 6 — Discord Alert Delivery 🔔
+## Validation 6: Discord Alert Delivery 🔔
 
 ### Validation performed
 
@@ -198,7 +198,7 @@ homelab-alerts
 
 ---
 
-## Validation 7 — Failover Monitoring Behavior 🔁
+## Validation 7: Failover Monitoring Behavior 🔁
 
 ### Test action
 
@@ -227,7 +227,7 @@ Monitoring correctly reflected healthy failover without misclassifying it as a s
 
 ---
 
-## Validation 8 — Dashboard Visibility During Failover 📋
+## Validation 8: Dashboard Visibility During Failover 📋
 
 ### Validation performed
 
@@ -252,7 +252,7 @@ Passed ✅
 
 ---
 
-## Validation 9 — Monitoring Configuration Backup 💾
+## Validation 9: Monitoring Configuration Backup 💾
 
 ### Validation performed
 

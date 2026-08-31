@@ -1,4 +1,4 @@
-# Phase 2 Step-by-Step — DNS Control with Pi-hole 🕳️
+# Phase 2 Step-by-Step: DNS Control with Pi-hole 🕳️
 
 ## Goal
 
@@ -6,7 +6,7 @@ Deploy Pi-hole and make clients use it for DNS resolution.
 
 ---
 
-## Step 1 — Prepare The Raspberry Pi
+## Step 1: Prepare The Raspberry Pi
 
 1. Connect the Pi to the network.
 2. Update the OS.
@@ -21,7 +21,7 @@ Validation:
 
 ---
 
-## Step 2 — Install Pi-hole
+## Step 2: Install Pi-hole
 
 Install Pi-hole on the Raspberry Pi and complete the web setup.
 
@@ -33,7 +33,7 @@ Validation:
 
 ---
 
-## Step 3 — Update Router DNS Settings
+## Step 3: Update Router DNS Settings
 
 In the router DHCP settings, set the DNS server to the Pi-hole IP.
 
@@ -45,7 +45,7 @@ Validation:
 
 ---
 
-## Step 4 — Confirm DNS Query Visibility
+## Step 4: Confirm DNS Query Visibility
 
 Open the Pi-hole dashboard.
 
@@ -58,7 +58,7 @@ Check for:
 
 ---
 
-## Step 5 — Validate From A Client
+## Step 5: Validate From A Client
 
 From a client machine:
 

@@ -1,4 +1,4 @@
-# Phase 5.5 Overview — Tailscale Subnet Router 🔐
+# Phase 5.5 Overview: Tailscale Subnet Router 🔐
 
 ![status](https://img.shields.io/badge/status-complete-brightgreen)
 ![scope](https://img.shields.io/badge/scope-remote_access-blue)

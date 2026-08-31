@@ -1,4 +1,4 @@
-# Phase 1.5 — ISP Migration 🌐
+# Phase 1.5: ISP Migration 🌐
 
 ![status](https://img.shields.io/badge/status-complete-brightgreen)
 ![scope](https://img.shields.io/badge/scope-ISP%20migration-blue)
