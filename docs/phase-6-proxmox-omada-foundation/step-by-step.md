@@ -1,6 +1,6 @@
-# Phase 6 Step-by-Step — Proxmox, Omada & Docker Monitoring Foundation 🧱
+# Phase 6 Step-by-Step: Proxmox, Omada & Docker Monitoring Foundation 🧱
 
-## Step 1 — Deploy Proxmox
+## Step 1: Deploy Proxmox
 
 Installed Proxmox on the Dell OptiPlex and assigned it the management IP:
 
@@ -12,7 +12,7 @@ Validation:
 
 ---
 
-## Step 2 — Review Storage
+## Step 2: Review Storage
 
 Validated active VM/LXC storage and backup storage.
 
@@ -20,7 +20,7 @@ Validated active VM/LXC storage and backup storage.
 
 ---
 
-## Step 3 — Deploy Omada Controller LXC
+## Step 3: Deploy Omada Controller LXC
 
 Created an LXC container for Omada Controller.
 
@@ -33,7 +33,7 @@ Created an LXC container for Omada Controller.
 
 ---
 
-## Step 4 — Preconfigure ER605
+## Step 4: Preconfigure ER605
 
 Configured the ER605 for the existing LAN plan.
 
@@ -49,7 +49,7 @@ Configured the ER605 for the existing LAN plan.
 
 ---
 
-## Step 5 — Create Docker Monitoring VM
+## Step 5: Create Docker Monitoring VM
 
 Created the Docker VM for the monitoring stack.
 
@@ -59,7 +59,7 @@ Created the Docker VM for the monitoring stack.
 
 ---
 
-## Step 6 — Migrate Monitoring Stack
+## Step 6: Migrate Monitoring Stack
 
 Migrated Grafana, Prometheus, Alertmanager, and Blackbox Exporter from the gaming PC to the Docker VM.
 
@@ -69,7 +69,7 @@ Migrated Grafana, Prometheus, Alertmanager, and Blackbox Exporter from the gamin
 
 ---
 
-## Step 7 — Stop Old Gaming PC Stack
+## Step 7: Stop Old Gaming PC Stack
 
 Stopped the old Docker Desktop monitoring stack.
 
@@ -77,7 +77,7 @@ Stopped the old Docker Desktop monitoring stack.
 
 ---
 
-## Step 8 — Back Up Workloads
+## Step 8: Back Up Workloads
 
 Created Proxmox backups to `hdd-storage`.
 
@@ -85,7 +85,7 @@ Created Proxmox backups to `hdd-storage`.
 
 ---
 
-## Step 9 — Pre-Stage Managed Switch
+## Step 9: Pre-Stage Managed Switch
 
 Adopted the managed switch into Omada while still on the existing flat LAN.
 

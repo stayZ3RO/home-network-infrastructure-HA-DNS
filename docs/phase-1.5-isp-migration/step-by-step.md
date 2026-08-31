@@ -1,4 +1,4 @@
-# Phase 1.5 Step-by-Step — ISP Migration 🌐
+# Phase 1.5 Step-by-Step: ISP Migration 🌐
 
 ## Goal
 
@@ -6,7 +6,7 @@ Move from Xfinity to AT&T Fiber while keeping the internal lab network stable.
 
 ---
 
-## Step 1 — Document The Existing Network
+## Step 1: Document The Existing Network
 
 Before changing the ISP path, document the working baseline:
 
@@ -23,7 +23,7 @@ Capture:
 
 ---
 
-## Step 2 — Install / Identify The Fiber Path
+## Step 2: Install / Identify The Fiber Path
 
 AT&T Fiber introduces an ONT.
 
@@ -41,7 +41,7 @@ Validation:
 
 ---
 
-## Step 3 — Configure IP Passthrough
+## Step 3: Configure IP Passthrough
 
 In the AT&T gateway:
 
@@ -58,7 +58,7 @@ Validation:
 
 ---
 
-## Step 4 — Preserve Internal Network Design
+## Step 4: Preserve Internal Network Design
 
 Do not redesign the LAN during the ISP migration.
 
@@ -71,7 +71,7 @@ Keep:
 
 ---
 
-## Step 5 — Validate DNS and Internet
+## Step 5: Validate DNS and Internet
 
 From a client:
 

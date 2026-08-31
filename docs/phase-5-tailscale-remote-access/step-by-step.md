@@ -1,4 +1,4 @@
-# Phase 5 — Step-by-Step Guide 🛠️
+# Phase 5: Step-by-Step Guide 🛠️
 
 ---
 

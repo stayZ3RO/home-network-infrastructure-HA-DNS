@@ -1,4 +1,4 @@
-# Phase 5 — Validation 🧪
+# Phase 5: Validation 🧪
 
 ---
 
@@ -29,7 +29,7 @@ The validation process focused on:
 
 ---
 
-## Validation 1 — Tailnet Creation 🌐
+## Validation 1: Tailnet Creation 🌐
 
 ### Validation performed
 
@@ -49,7 +49,7 @@ Passed ✅
 
 ---
 
-## Validation 2 — Windows Admin Device Enrollment 💻
+## Validation 2: Windows Admin Device Enrollment 💻
 
 ### Validation performed
 
@@ -67,7 +67,7 @@ Passed ✅
 
 ---
 
-## Validation 3 — Second Admin Device Enrollment 🖥️
+## Validation 3: Second Admin Device Enrollment 🖥️
 
 ### Validation performed
 
@@ -85,7 +85,7 @@ Passed ✅
 
 ---
 
-## Validation 4 — ashpi-1 Tailnet Enrollment 📡
+## Validation 4: ashpi-1 Tailnet Enrollment 📡
 
 ### Validation performed
 
@@ -112,7 +112,7 @@ Passed ✅
 
 ---
 
-## Validation 5 — ashpi-2 Tailnet Enrollment 📡
+## Validation 5: ashpi-2 Tailnet Enrollment 📡
 
 ### Validation performed
 
@@ -137,7 +137,7 @@ Passed ✅
 
 ---
 
-## Validation 6 — All Core Devices Visible in Tailnet ✅
+## Validation 6: All Core Devices Visible in Tailnet ✅
 
 ### Validation performed
 
@@ -160,7 +160,7 @@ Passed ✅
 
 ---
 
-## Validation 7 — Tailscale SSH Enabled 🔐
+## Validation 7: Tailscale SSH Enabled 🔐
 
 ### Validation performed
 
@@ -186,7 +186,7 @@ Passed ✅
 
 ---
 
-## Validation 8 — SSH Service Status on Pi Nodes 🧪
+## Validation 8: SSH Service Status on Pi Nodes 🧪
 
 ### Validation performed
 
@@ -215,7 +215,7 @@ Passed ✅
 
 ---
 
-## Validation 9 — Admin Endpoint Testing Note 📌
+## Validation 9: Admin Endpoint Testing Note 📌
 
 ### Validation performed
 
@@ -233,7 +233,7 @@ This clarified that the correct admin path was the Windows Tailscale client rath
 
 ---
 
-## Validation 10 — No Public SSH Exposure 🚫
+## Validation 10: No Public SSH Exposure 🚫
 
 ### Validation performed
 

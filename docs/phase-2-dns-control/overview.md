@@ -1,4 +1,4 @@
-# Phase 2 Overview — DNS Control with Pi-hole 🕳️
+# Phase 2 Overview: DNS Control with Pi-hole 🕳️
 
 ## Introduction
 

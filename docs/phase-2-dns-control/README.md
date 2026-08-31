@@ -1,4 +1,4 @@
-# Phase 2 — DNS Control with Pi-hole 🕳️
+# Phase 2: DNS Control with Pi-hole 🕳️
 
 ![status](https://img.shields.io/badge/status-complete-brightgreen)
 ![scope](https://img.shields.io/badge/scope-DNS%20control-blue)

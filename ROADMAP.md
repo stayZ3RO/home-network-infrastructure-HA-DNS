@@ -14,14 +14,14 @@ Future managed routing, switching, and VLAN segmentation work is intentionally m
 
 | Phase | Status | Focus |
 |---|---|---|
-| Phase 1 — Network Control | Complete | Baseline home network control and topology |
-| Phase 1.5 — ISP Migration | Complete | Xfinity to AT&T Fiber migration |
-| Phase 2 — DNS Control | Complete | Centralized DNS with Pi-hole |
-| Phase 3 — High Availability DNS | Complete | Keepalived, Gravity Sync, and Unbound |
-| Phase 4 — Monitoring & Alerting | Complete | Prometheus, Grafana, Alertmanager, Discord alerts |
-| Phase 5 — Tailscale Remote Access | Complete | Private remote administration |
-| Phase 6 — Proxmox, Omada & Docker Monitoring | Complete | Virtualization and service hosting foundation |
-| Phase 6.5 — RustDesk Remote Access & VM Hardening | Complete | RustDesk, SSH hardening, Docker retention, Portainer Agent, backups |
+| Phase 1, Network Control | Complete | Baseline home network control and topology |
+| Phase 1.5, ISP Migration | Complete | Xfinity to AT&T Fiber migration |
+| Phase 2, DNS Control | Complete | Centralized DNS with Pi-hole |
+| Phase 3, High Availability DNS | Complete | Keepalived, Gravity Sync, and Unbound |
+| Phase 4, Monitoring & Alerting | Complete | Prometheus, Grafana, Alertmanager, Discord alerts |
+| Phase 5, Tailscale Remote Access | Complete | Private remote administration |
+| Phase 6, Proxmox, Omada & Docker Monitoring | Complete | Virtualization and service hosting foundation |
+| Phase 6.5, RustDesk Remote Access & VM Hardening | Complete | RustDesk, SSH hardening, Docker retention, Portainer Agent, backups |
 
 ---
 

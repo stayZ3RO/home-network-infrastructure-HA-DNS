@@ -1,4 +1,4 @@
-# Phase 4 — Monitoring & Alerting Overview 📈
+# Phase 4: Monitoring & Alerting Overview 📈
 
 ---
 
@@ -115,11 +115,11 @@ The stack was later confirmed running with:
 
 The following targets were monitored during this phase:
 
-- `ashpi-1` node metrics — `192.168.68.60:9100`
-- `ashpi-2` node metrics — `192.168.68.61:9100`
-- HA DNS VIP probe — `192.168.68.20:53`
-- `ashpi-1` direct DNS probe — `192.168.68.60:53`
-- `ashpi-2` direct DNS probe — `192.168.68.61:53`
+- `ashpi-1` node metrics, `192.168.68.60:9100`
+- `ashpi-2` node metrics, `192.168.68.61:9100`
+- HA DNS VIP probe, `192.168.68.20:53`
+- `ashpi-1` direct DNS probe, `192.168.68.60:53`
+- `ashpi-2` direct DNS probe, `192.168.68.61:53`
 
 ---
 

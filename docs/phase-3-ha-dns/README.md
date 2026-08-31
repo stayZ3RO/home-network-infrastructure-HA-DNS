@@ -1,4 +1,4 @@
-# Phase 3 — High Availability DNS 🛡️
+# Phase 3: High Availability DNS 🛡️
 
 ![status](https://img.shields.io/badge/status-complete-brightgreen)
 ![scope](https://img.shields.io/badge/scope-HA%20DNS-blue)

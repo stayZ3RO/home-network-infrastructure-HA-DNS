@@ -1,4 +1,4 @@
-# Phase 4 — Step-by-Step Guide 🛠️
+# Phase 4: Step-by-Step Guide 🛠️
 
 ---
 
@@ -131,11 +131,11 @@ Prometheus was configured to scrape both host metrics and DNS probe targets.
 - Prometheus
 - Alertmanager
 - Blackbox Exporter
-- `ashpi-1` Node Exporter — `192.168.68.60:9100`
-- `ashpi-2` Node Exporter — `192.168.68.61:9100`
-- HA DNS VIP probe — `192.168.68.20:53`
-- `ashpi-1` direct DNS probe — `192.168.68.60:53`
-- `ashpi-2` direct DNS probe — `192.168.68.61:53`
+- `ashpi-1` Node Exporter, `192.168.68.60:9100`
+- `ashpi-2` Node Exporter, `192.168.68.61:9100`
+- HA DNS VIP probe, `192.168.68.20:53`
+- `ashpi-1` direct DNS probe, `192.168.68.60:53`
+- `ashpi-2` direct DNS probe, `192.168.68.61:53`
 
 ### Validation
 

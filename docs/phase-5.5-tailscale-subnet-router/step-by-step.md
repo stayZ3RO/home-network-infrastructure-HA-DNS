@@ -1,4 +1,4 @@
-# Phase 5.5 Step-by-Step — Tailscale Subnet Router
+# Phase 5.5 Step-by-Step: Tailscale Subnet Router
 
 ## 1. VM Creation
 

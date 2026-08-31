@@ -1,4 +1,4 @@
-# Project Closeout — HA DNS & Core Infrastructure Foundation
+# Project Closeout: HA DNS & Core Infrastructure Foundation
 
 ## Summary
 

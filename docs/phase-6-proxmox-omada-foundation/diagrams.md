@@ -1,4 +1,4 @@
-# Phase 6 Diagrams — Proxmox, Omada & Monitoring Foundation
+# Phase 6 Diagrams: Proxmox, Omada & Monitoring Foundation
 
 ## Phase 6 Proxmox Service Migration
 
