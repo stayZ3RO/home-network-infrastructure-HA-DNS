@@ -58,3 +58,6 @@ jobs:
           fi
 
           echo "No empty Markdown files found."
+
+      - name: Public safety check (MACs, public IPs, tailnet addresses)
+        run: python3 scripts/check-public-safety.py
